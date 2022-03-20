@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -10,17 +9,16 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link, StyledEngineProvider } from '@mui/material';
-import { Breadcrumbs } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import { Grid} from '@mui/material';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Slide from '@mui/material/Slide';
+import PropTypes from 'prop-types';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -70,7 +68,7 @@ const Item = styled(Typography)(({ theme }) => ({
     marginLeft: theme.spacing(2),
     fontWeight: 'bold'
   }));
-export default function Header() {
+export default function Header(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -169,8 +167,9 @@ export default function Header() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: '#EEEDE8' }} background='#EEEDE8'>
-      <AppBar position="static" sx={{ bgcolor: "#EEEDE8",
+    <React.Fragment sx={{ flexGrow: 1, bgcolor: '#EEEDE8' }}>
+        
+      <AppBar position="sticky" sx={{ bgcolor: "#EEEDE8",
                                      color: "#000000",
                                      fontWeight: 500 }}>
         <Toolbar sx={{
@@ -272,8 +271,9 @@ export default function Header() {
           
         </Toolbar>
       </AppBar>
+      
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </React.Fragment>
   );
 }

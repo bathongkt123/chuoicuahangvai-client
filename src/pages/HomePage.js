@@ -6,7 +6,25 @@ export default class HomePage extends React.Component {
 
     render() {
         return (
-            <h1>This is body</h1>
+            <div>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+                <h1>This is body</h1>
+            </div>
+            
+            
         );
     }
 }
