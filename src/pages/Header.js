@@ -63,12 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Item = styled(Typography)(({ theme }) => ({
-    marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    fontWeight: 'bold'
-  }));
-export default function Header(props) {
+export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -191,7 +186,10 @@ export default function Header(props) {
                     component="div"
                     sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 'bold'}}
                 >
-                    TROTK
+                    <Box sx={{fontWeight: 'bold'}}>
+                        TROTK
+                    </Box>
+                    
                 </Typography>
 
                 
@@ -209,19 +207,29 @@ export default function Header(props) {
 
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 
-                <Item sx={{
+                <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 mx: 3
          }}>
-                <Typography sx={{mr: 2, fontWeight: 'bold'}}>Tài khoản</Typography>
+                <Typography>
+                <Box sx={{fontWeight: 'bold', mx: 2}}>
+                Tài Khoản
+                        </Box>
+                    
+                </Typography>
 
-                <Typography sx={{fontWeight: 'bold'}}>Giỏ Hàng</Typography>
+                <Typography sx={{fontWeight: 'bold',}}>
+                <Box sx={{fontWeight: 'bold',  ml: 2}}>
+                Giỏ Hàng
+                        </Box>
+                   
+                </Typography>
                 <ShoppingCartIcon />
                 
-                </Item>
+                </Box>
             
                 </Box>
           
@@ -243,26 +251,29 @@ export default function Header(props) {
                             justifyContent: 'space-between',
                             pt: 1
                             }}>
-                    <Typography sx={{fontWeight: 'bold'}}>
-                    Danh mục sản phẩm
+                    <Typography >
+                        <Box sx={{fontWeight: 'bold'}}>
+                        Danh mục sản phẩm
+                        </Box>
                     </Typography>
                     <Box sx = {{ display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'flex-start',
                             fontWeight: 'bold'
                             }}>
-                        <Item>
-                   Hàng mới về
-                    </Item>
-                    <Item>
-                   Bán chạy nhất
-                    </Item>
-                    <Item>
-                   Giảm giá
-                    </Item>
-                    <Item>
+                                 <Box sx={{fontWeight: 'bold', mx: 2}}>
+                                 Hàng mới về
+                    </Box>
+                    <Box sx={{fontWeight: 'bold', mx: 2}}>
+                    Bán chạy nhất
+                    </Box>
+                    <Box sx={{fontWeight: 'bold', mx: 2}}>
+                    Giảm giá
+                    </Box>
+                    <Box sx={{fontWeight: 'bold', mx: 2}}>
                     Về chúng tôi
-                    </Item>
+                    </Box>
+                        
                     </Box>
                    
             </Box>
