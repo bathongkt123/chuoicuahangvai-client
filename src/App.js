@@ -1,6 +1,8 @@
 
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,12 +18,14 @@ function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       </head>
       <body>
+        <Header/>
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </Router>
+        <Footer/>
       </body>
     </html>   
   );
