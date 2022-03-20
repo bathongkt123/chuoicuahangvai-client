@@ -1,30 +1,279 @@
-import React from 'react';
-export default class Header extends React.Component {
-    constructor(props){
-        super(props);
-    }
 
-    render() {
-        return (
-            <div>
-                <div>
-                    <h3>Shop Name</h3>
-                    <p>Search bar</p>
-                    <p>Tài khoản</p>
-                    <p>Giỏ Hàng</p>
-                </div>
-                <div>
-                    <p>Danh mục sản phẩm</p>
-                    <p>Hàng mới về</p>
-                    <p>Bán chạy nhất</p>
-                    <p>Giảm giá</p>
-                    <p>Về chúng tôi</p>
-                </div>
-                <div>
-                    <p>Quảng cáo</p>
-                </div>
-            </div>
-           
-        );
-    }
+import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { Link, StyledEngineProvider } from '@mui/material';
+import { Breadcrumbs } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import { Grid} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  border: '1.5px solid',
+  borderColor: '#000000',
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+    minWidth: '500px',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const Item = styled(Typography)(({ theme }) => ({
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    fontWeight: 'bold'
+  }));
+export default function Header() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1, bgcolor: '#EEEDE8' }} background='#EEEDE8'>
+      <AppBar position="static" sx={{ bgcolor: "#EEEDE8",
+                                     color: "#000000",
+                                     fontWeight: 500 }}>
+        <Toolbar sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          fontWeight: 'bold'
+         }} >
+             <div style={{ width: '100%' }}>
+             <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: 1
+         }}>
+              <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 'bold'}}
+                >
+                    TROTK
+                </Typography>
+
+                
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Tìm kiếm..."
+                        inputProps={{ 'aria-label': 'search' }}
+                        
+                    />
+                    
+                </Search>
+
+                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                
+                <Item sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mx: 3
+         }}>
+                <Typography sx={{mr: 2, fontWeight: 'bold'}}>Tài khoản</Typography>
+
+                <Typography sx={{fontWeight: 'bold'}}>Giỏ Hàng</Typography>
+                <ShoppingCartIcon />
+                
+                </Item>
+            
+                </Box>
+          
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
+            </Box>
+            <Box sx = {{ display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            pt: 1
+                            }}>
+                    <Typography sx={{fontWeight: 'bold'}}>
+                    Danh mục sản phẩm
+                    </Typography>
+                    <Box sx = {{ display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            fontWeight: 'bold'
+                            }}>
+                        <Item>
+                   Hàng mới về
+                    </Item>
+                    <Item>
+                   Bán chạy nhất
+                    </Item>
+                    <Item>
+                   Giảm giá
+                    </Item>
+                    <Item>
+                    Về chúng tôi
+                    </Item>
+                    </Box>
+                   
+            </Box>
+             </div>
+
+          
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </Box>
+  );
 }
