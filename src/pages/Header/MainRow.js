@@ -7,6 +7,7 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { styled, alpha } from '@mui/material/styles';
+import Link from '@mui/material/Link';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as React from 'react';
@@ -99,7 +100,7 @@ export default function Row1() {
             <MenuItem>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
                     <AccountCircleIcon sx={{ mr: 0.5 }} />
-                    Tài khoản
+                    <Link href="/login" color="inherit" style={{ textDecoration: 'none' }}>Tài khoản</Link>
                 </Box>
             </MenuItem>
             <MenuItem>
@@ -124,7 +125,7 @@ export default function Row1() {
                 sx={{ display: 'block' }}
             >
                 <Box sx={{ fontWeight: 'bold' }}>
-                    TROLLER
+                <Link href="/" color="inherit" style={{ textDecoration: 'none' }}>TROLLER</Link>
                 </Box>
 
             </Typography>
@@ -150,7 +151,7 @@ export default function Row1() {
             }}>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
                     <AccountCircleIcon sx={{ mr: 0.5 }} />
-                    Tài khoản
+                    <Link href="/login" color="inherit" style={{ textDecoration: 'none' }}>Tài khoản</Link>
                 </Box>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
                     <ShoppingCartIcon sx={{ mr: 0.5 }} />
