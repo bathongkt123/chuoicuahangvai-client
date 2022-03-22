@@ -8,15 +8,15 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 export default function SlidesSection() {
     const items = [
         {
-            path: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/12/Aragorn-the-ranger.jpg",
+            path: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
             text: "Hàng mới"
         },
         {
-            path: "https://i2.wp.com/www.eargasmweb.com/wp-content/uploads/2015/02/ff.png?fit=917%2C527",
+            path: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
             text: "Bán chạy"
         },
         {
-            path: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/10/Gandalf-Name-Feature-Image.jpg",
+            path: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
             text: "Hàng thương hiệu"
         }
     ]
@@ -51,7 +51,7 @@ function Item(props) {
                 component="img"
                 sx={{
                     width: '100%',
-                    height: 520,
+                    height: 540,
                 }}
                 alt="Missing image"
                 src={props.item.path}
