@@ -9,7 +9,8 @@ export default function Footer() {
    
 
         return (
-            <div>
+            <div
+            >
                 <Box bgcolor="#2C3444" color='white'>
                     <Container maxWidth="lg">
                         <Grid container spacing={5}>

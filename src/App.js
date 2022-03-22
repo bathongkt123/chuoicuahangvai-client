@@ -1,8 +1,11 @@
 
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage"
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
+
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -23,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
           </Routes>
         </Router>
         <Footer/>

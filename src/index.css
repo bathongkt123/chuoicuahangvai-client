@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.register {
+  max-width: 600px;
+  margin: 0px auto;
+  text-align: left;
+  
+}
+.register input{
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0px;
+  box-sizing:border-box;
+  display: block;
+}
+
+.register button{
+  background-color: #384257;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px 0;
+}
