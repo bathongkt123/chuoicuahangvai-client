@@ -2,13 +2,9 @@ import Box from '@mui/material/Box';
 import { Typography } from '@material-ui/core';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { styled, alpha } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -61,50 +57,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Row1() {
 
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
+
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
+
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
+
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -127,14 +98,14 @@ export default function Row1() {
 
             <MenuItem>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
+                    <AccountCircleIcon sx={{ mr: 0.5 }} />
                     Tài khoản
-                    <AccountCircleIcon />
                 </Box>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
+                    <ShoppingCartIcon sx={{ mr: 0.5 }} />
                     Giỏ Hàng
-                    <ShoppingCartIcon />
                 </Box>
             </MenuItem>
         </Menu>
@@ -178,12 +149,12 @@ export default function Row1() {
 
             }}>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
+                    <AccountCircleIcon sx={{ mr: 0.5 }} />
                     Tài khoản
-                    <AccountCircleIcon />
                 </Box>
                 <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
+                    <ShoppingCartIcon sx={{ mr: 0.5 }} />
                     Giỏ Hàng
-                    <ShoppingCartIcon />
                 </Box>
             </Box>
 
@@ -200,7 +171,7 @@ export default function Row1() {
                 </IconButton>
             </Box>
             {renderMobileMenu}
-            {renderMenu}
+
         </Box >
 
     );

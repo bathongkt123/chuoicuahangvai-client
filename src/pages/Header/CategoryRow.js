@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
-import { Theme } from '@mui/material';
-export default function Row2() {
+export default function CategoryRow() {
     return (
         <Box sx={{
             display: 'flex',
