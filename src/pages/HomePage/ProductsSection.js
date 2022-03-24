@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { Box } from '@mui/material';
 function srcset(image, size, rows = 1, cols = 1) {
     return {
         src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
@@ -10,9 +11,10 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 export default function ProductsSection() {
+
     return (
         <ImageList
-            sx={{ width: '100%', mt: 0 }}
+            sx={{ width: '100%', mt: 1 }}
             variant="quilted"
             cols={4}
         >
@@ -23,6 +25,19 @@ export default function ProductsSection() {
                         alt={item.title}
                         loading="lazy"
                     />
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            color: 'white',
+                            top: "45%",
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            fontWeight: 'bold',
+                            fontSize: { xs: '1.5rem', md: '2.2rem' }
+                        }}
+                    >
+                        {item.title}
+                    </Box>
                 </ImageListItem>
             ))}
         </ImageList>
@@ -63,7 +78,7 @@ const itemData = [
     },
     {
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-        title: 'Hats',
+        title: 'Bicycle',
         cols: 2,
     },
 ];

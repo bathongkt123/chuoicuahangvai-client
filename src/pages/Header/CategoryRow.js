@@ -13,7 +13,7 @@ export default function CategoryRow() {
             </Box>
 
             <Box sx={{
-                display: 'flex',
+                display: { xs: 'none', md: 'flex' },
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 fontWeight: 'bold'
