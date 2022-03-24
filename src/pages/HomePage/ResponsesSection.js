@@ -37,6 +37,7 @@ export default function ResponsesSection() {
                                 component="img"
                                 image={item.image}
                                 alt="an avatar"
+                                loading="lazy"
                             />
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <FontAwesomeIcon icon={faCoffee} />

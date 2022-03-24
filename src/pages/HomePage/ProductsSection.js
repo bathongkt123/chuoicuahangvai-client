@@ -23,7 +23,7 @@ export default function ProductsSection() {
                     <img
                         {...srcset(item.img, 250, item.rows, item.cols)}
                         alt={item.title}
-                        loading="lazy"
+                    // loading="lazy"
                     />
                     <Box
                         sx={{
