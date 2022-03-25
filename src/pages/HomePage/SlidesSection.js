@@ -36,7 +36,7 @@ export default function SlidesSection() {
             NextIcon={<ArrowForwardIcon sx={{ color: 'white', fontSize: "30px", }} />}
             PrevIcon={<ArrowBackIcon sx={{ color: 'white', fontSize: "30px" }} />}
             indicatorContainerProps={{ sx: { zIndex: 1, position: 'absolute', top: '90%' } }}
-            sx={{ height: "70vh", }}
+            sx={{ height: "64vh", }}
         >
             {
                 items.map((item, i) => <Item key={i} item={item} />)
@@ -52,7 +52,7 @@ function Item(props) {
                 component="img"
                 sx={{
                     width: '100%',
-                    height: "70vh",
+                    height: "64vh",
                 }}
                 alt="Missing image"
                 src={props.item.path}

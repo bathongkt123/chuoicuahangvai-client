@@ -11,7 +11,7 @@ export default function ResponsesSection() {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="xl">
-                <Typography variant="h4" align='center' gutterBottom>
+                <Typography variant="h4" align='center'>
                     <Box fontWeight='bold'>
                         PHẢN HỒI TỪ KHÁCH HÀNG
                     </Box>

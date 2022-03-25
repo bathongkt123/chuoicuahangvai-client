@@ -1,15 +1,12 @@
 import Box from '@mui/material/Box';
-import { Typography } from '@material-ui/core';
-import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import InputBase from '@mui/material/InputBase';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { styled, alpha } from '@mui/material/styles';
-import Link from '@mui/material/Link';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MoreIconResponsive from './MoreIconResponsive';
 import * as React from 'react';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -27,7 +24,7 @@ const Search = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
         width: 'auto',
-        minWidth: '500px',
+
     },
 }));
 
@@ -49,68 +46,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            minWidth: '40ch',
+        },
         [theme.breakpoints.up('md')]: {
-            width: '20ch',
-            minWidth: '500px',
+            minWidth: '50ch',
+        },
+        [theme.breakpoints.up('lg')]: {
+            minWidth: '60ch',
         },
     },
 }));
-export default function Row1() {
-
-
-
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-
-
-            <MenuItem>
-                <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
-                    <AccountCircleIcon sx={{ mr: 0.5 }} />
-                    <Link href="/login" color="inherit" style={{ textDecoration: 'none' }}>Tài khoản</Link>
-                </Box>
-            </MenuItem>
-            <MenuItem>
-                <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
-                    <ShoppingCartIcon sx={{ mr: 0.5 }} />
-                    Giỏ Hàng
-                </Box>
-            </MenuItem>
-        </Menu>
-    );
+export default function MainRow() {
     return (
         <Box sx={{
             display: 'flex',
@@ -125,11 +72,9 @@ export default function Row1() {
                 sx={{ display: 'block' }}
             >
                 <Box sx={{ fontWeight: 'bold' }}>
-                <Link href="/" color="inherit" style={{ textDecoration: 'none' }}>TROLLER</Link>
+                    TROLLER
                 </Box>
-
             </Typography>
-
 
             <Search>
                 <SearchIconWrapper>
@@ -138,40 +83,36 @@ export default function Row1() {
                 <StyledInputBase
                     placeholder="Tìm kiếm..."
                     inputProps={{ 'aria-label': 'search' }}
-
                 />
-
             </Search>
 
             <Box sx={{
-                display: { xs: 'none', md: 'flex' }, flexDirection: 'row',
-                justifyContent: 'space-between',
+                display: { xs: 'none', md: 'flex' },
+                flexDirection: 'row',
                 alignItems: 'center',
-
             }}>
-                <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
-                    <AccountCircleIcon sx={{ mr: 0.5 }} />
-                    <Link href="/login" color="inherit" style={{ textDecoration: 'none' }}>Tài khoản</Link>
-                </Box>
-                <Box sx={{ fontWeight: 'bold', mx: 2, display: 'flex', alignItems: 'center' }}>
-                    <ShoppingCartIcon sx={{ mr: 0.5 }} />
+                <Button
+                    sx={{
+                        fontWeight: 'bold',
+                        border: 'none',
+                        p: 0,
+                        color: 'inherit',
+                        whiteSpace: 'nowrap',
+                    }}
+                >
+                    <AccountCircleIcon fontSize='small' sx={{ mr: 0.5 }} />
+                    Tài khoản
+                </Button>
+                <Box width={24}></Box>
+                <Button sx={{ fontWeight: 'bold', border: 'none', p: 0, color: 'inherit', whiteSpace: 'nowrap' }}>
+                    <ShoppingCartIcon fontSize='small' sx={{ mr: 0.5 }} />
                     Giỏ Hàng
-                </Box>
+                </Button>
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <MoreIconResponsive />
             </Box>
 
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                    size="large"
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    onClick={handleMobileMenuOpen}
-                    color="inherit"
-                >
-                    <MoreIcon />
-                </IconButton>
-            </Box>
-            {renderMobileMenu}
 
         </Box >
 

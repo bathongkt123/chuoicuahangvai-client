@@ -1,36 +1,35 @@
 import Box from '@mui/material/Box';
+import CategoryDropdown from './CategoryDropdown';
+import React from 'react';
+import { Divider } from '@mui/material';
+const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá', 'Về chúng tôi']
 export default function CategoryRow() {
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
             my: 1
         }}>
-
-            <Box sx={{ fontWeight: 'bold', whiteSpace: "nowrap" }}>
-                Danh mục sản phẩm
-            </Box>
-
+            <CategoryDropdown />
+            <Box sx={{ flexGrow: 1 }}></Box>
             <Box sx={{
                 display: { xs: 'none', md: 'flex' },
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
                 fontWeight: 'bold'
             }}>
-                <Box sx={{ fontWeight: 'bold', mx: 2, }}>
-                    Hàng mới về
-                </Box>
-                <Box sx={{ fontWeight: 'bold', mx: 2, }}>
-                    Bán chạy nhất
-                </Box>
-                <Box sx={{ fontWeight: 'bold', mx: 2, }}>
-                    Giảm giá
-                </Box>
-                <Box sx={{ fontWeight: 'bold', mx: 2, }}>
-                    Về chúng tôi
-                </Box>
+                {items.map((item, i, { length }) => (
+                    <React.Fragment>
+                        {item}
+                        {i + 1 === length ? null :
+                            (
+                                <React.Fragment>
+                                    <Box width={10} />
+                                    <Divider sx={{ bgcolor: '#dbd9ce' }} orientation="vertical" flexItem></Divider>
+                                    <Box width={10} />
+                                </React.Fragment>
+                            )}
+                    </React.Fragment>
 
+                ))}
             </Box>
         </Box>
     );

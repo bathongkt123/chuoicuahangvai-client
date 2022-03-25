@@ -17,12 +17,10 @@ export default function Header() {
                 <Toolbar sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    fontWeight: 'bold'
                 }} >
                     <Box sx={{ width: '100%' }}>
                         <MainRow />
                         <CategoryRow />
-
                     </Box>
                 </Toolbar>
                 <AdsRow />

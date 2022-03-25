@@ -2,7 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, Card, CardContent, CardMedia } from '@mui/material';
+import { Button, Card, CardContent } from '@mui/material';
 import { Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 export default function RegisterSection() {
@@ -21,7 +21,7 @@ export default function RegisterSection() {
                 <Box
                     sx={{
                         display: 'flex',
-                        flexWrap: 'nowrap',
+
                         flexDirection: { xs: 'column', md: 'row' },
                         alignItems: "stretch",
                         p: 1
@@ -53,7 +53,7 @@ export default function RegisterSection() {
                                 <TextField id="outlined-basic" label="Tên" variant="outlined" size="small" sx={{ flexGrow: 1 }} />
                             </Box>
                             <TextField id="outlined-basic" label="Email" variant="outlined" size="small" sx={{ display: 'flex', my: 1, flexGrow: 1 }} />
-                            <Button variant="contained" sx={{ my: 1, px: 10, bgcolor: '#384257' }}>Đăng ký nhận tin</Button>
+                            <Button variant="contained" sx={{ my: 1, px: 10, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>Đăng ký nhận tin</Button>
                             <Typography variant='body2'>
                                 Đăng ký nhận tin để nhận các thông tin mới nhất về email cá nhân và chấp nhận điều khoản của CỬA HÀNG VẢI.
                             </Typography>
