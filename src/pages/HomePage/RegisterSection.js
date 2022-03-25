@@ -21,7 +21,6 @@ export default function RegisterSection() {
                 <Box
                     sx={{
                         display: 'flex',
-
                         flexDirection: { xs: 'column', md: 'row' },
                         alignItems: "stretch",
                         p: 1
