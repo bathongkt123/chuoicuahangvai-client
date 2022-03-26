@@ -19,6 +19,16 @@ code {
   text-align: left;
   
 }
+.menu {
+  max-width: 300px;
+  padding: 5px;
+  text-align: left;
+}
+.product {
+  max-width: 500px;
+  padding: 5px;
+  text-align: left;
+}
 .register input{
   width: 100%;
   padding: 6px 10px;

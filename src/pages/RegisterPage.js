@@ -17,7 +17,7 @@ export default function RegisterPage() {
                     Trang chủ 
                 </Link>
                  /
-                <Link href="/" color="inherit" style={{padding:'0px 5px'}}>
+                <Link href="/login" color="inherit" style={{padding:'0px 5px'}}>
                     Tài khoản 
                 </Link>
                 /
