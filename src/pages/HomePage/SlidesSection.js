@@ -45,7 +45,7 @@ export default function SlidesSection() {
     )
 }
 
-function Item(props) {
+function Item({ item }) {
     return (
         <React.Fragment>
             <Box
@@ -55,7 +55,7 @@ function Item(props) {
                     height: "64vh",
                 }}
                 alt="Missing image"
-                src={props.item.path}
+                src={item.path}
             />
             <Box
                 sx={{
@@ -68,7 +68,7 @@ function Item(props) {
                     fontSize: { xs: '2rem', md: "2.5rem" }
                 }}
             >
-                {props.item.text}
+                {item.text}
             </Box>
         </React.Fragment >
     )
