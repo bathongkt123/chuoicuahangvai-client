@@ -11,7 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.rectangle {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  background: gray;
+}
 
 .register {
   max-width: 600px;
