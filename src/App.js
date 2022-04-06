@@ -5,13 +5,14 @@ import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
-
+import CartPage from "./pages/CartPage";
 
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
+
 function App() {
   return (
     <html lang="en">
@@ -22,10 +23,11 @@ function App() {
         <Header />
         <Router>
           <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/menu" element={<MenuPage/>}/>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </Router>
         <Footer />
