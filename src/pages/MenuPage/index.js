@@ -5,41 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import FilterSection from './FilterSection'
 import ProductSection from './ProductSection'
 
-var data = [{ "name": "Vải lanh",
-              "color": "đỏ",
-              "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-            { "name": "Vải lanh",
-            "color": "đỏ",
-            "price": "20000"
-            },
-    ];
-var rows = data.map(function(row){
-    return <Grid item xs={12} sm={6} md={4}>
-        <p style={{fontWeight: 'bold'}}> {row.name} - {row.color}</p>
-        <p> {row.price}đ trên mét</p>
-        </Grid>
-})
+
 export default function MenuPage() {
         return (
             <div style={{textAlign: 'center',  justifyContent:'center', alignItems:'center', margin: '50px'}}
