@@ -19,8 +19,6 @@ const items = [
     }
 ]
 export default function SlidesSection() {
-
-
     return (
         <Carousel
             indicatorIconButtonProps={{
