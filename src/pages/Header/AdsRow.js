@@ -9,7 +9,7 @@ export default function AdsRow() {
                 </svg>
             </Box>
             <Box sx={{ display: 'inline', alignSelf: "center", color: 'white' }}>
-                MIỄN PHÍ giao hàng cho các em gái miền Tây
+                MIỄN PHÍ giao hàng cho các hóa đơn trên 500,000 đồng
             </Box>
         </Box>
     )

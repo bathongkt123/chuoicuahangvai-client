@@ -1,7 +1,13 @@
+import Box from "@material-ui/core/Box";
 export default function Paying() {
     return (
-        <p>
-            adsdfdsfa
-        </p>
+        <Box
+            sx={{
+                display: 'flex',
+
+            }}
+        >
+
+        </Box>
     )
 }

@@ -6,7 +6,7 @@ import React from 'react';
 
 const items = [
     {
-        path: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+        path: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
         text: "Hàng mới về"
     },
     {
@@ -25,7 +25,7 @@ export default function SlidesSection() {
         <Carousel
             indicatorIconButtonProps={{
                 sx: {
-                    color: 'grey'       // 3
+                    color: 'grey'
                 }
             }}
             activeIndicatorIconButtonProps={{
