@@ -6,7 +6,7 @@ import MenuPage from "./pages/MenuPage";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
 import CartPage from "./pages/CartPage";
-
+import ProductPage from "./pages/ProductPage"
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,6 +28,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/menu/:productId" element={<ProductPage />} />
           </Routes>
         </Router>
         <Footer />
