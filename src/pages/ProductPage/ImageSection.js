@@ -1,10 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import {useParams} from "react-router-dom"
+import productData from '../../productData'
+
 export default function ImageSection() {
+    const {productId} = useParams()
+    const thisProduct = productData.find(prod => prod.id === productId)
     return (     
         <Box>
             Image Here
