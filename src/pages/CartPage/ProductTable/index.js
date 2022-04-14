@@ -1,12 +1,12 @@
-import { AddBox, IndeterminateCheckBox, Close } from "@mui/icons-material";
+import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { TableCell, Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, IconButton, InputBase } from "@mui/material";
 import { styled } from "@mui/material";
-import { Box } from "@mui/system";
+
 import React from "react";
 import { useState } from "react";
 import { tableCellClasses } from '@mui/material/TableCell';
 import ProductImage from "./ProductImage";
-const TAX_RATE = 0.07;
+const TAX_RATE = 0.1;
 
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -50,39 +50,38 @@ const CustomTableCell = styled(TableCell)(({ theme }) => (
 ));
 
 
-const demoProducts = [
-    {
+const products = {
+    2: {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         name: 'Breakfast',
-        number: 100,
-        unit: 1000
+        defaultNumber: 2,
+        unit: 40000
 
     },
-    {
+    10: {
         img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
         name: 'Burger',
-        number: 100,
-        unit: 1000
+        defaultNumber: 3,
+        unit: 20000
     },
-    {
+    20: {
         img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
         name: 'Coffee',
-        number: 100,
-        unit: 1000
+        defaultNumber: 1,
+        unit: 15000
     }
-]
+}
 
 
 export default function ProductTable() {
-    const [numbers, setNumbers] = useState([
-        ...demoProducts.map((row) =>
-            row.number
-        )
-    ]
+    const [numbers, setNumbers] = useState(
+        Object.entries(products).reduce((result, [key, value]) =>
+            ({ ...result, [key]: value.defaultNumber })
+            , {}),
     )
-
+    let total = 0
     return (
-        <TableContainer component={Paper} elevation={10} >
+        <TableContainer component={Paper} elevation={12} >
             <Table>
                 <TableHead >
                     <TableRow >
@@ -93,38 +92,43 @@ export default function ProductTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody >
-                    {demoProducts.map((row, i) =>
-                        <ProductRow
-                            row={row}
-                            number={numbers[i]}
+                    {Object.keys(numbers).map((key) => {
+                        const subTotal = numbers[key] * products[key].unit
+                        total += subTotal
+                        return <ProductRow
+                            row={products[key]}
+                            number={numbers[key]}
+                            subTotal={subTotal}
                             setNumber={(newNumber) =>
-                                setNumbers(prevNumbers => {
-                                    const newNumbers = [...prevNumbers]
-                                    newNumbers[i] = newNumber
-                                    return newNumbers
-                                }
+                                setNumbers((prevNumbers) => ({ ...prevNumbers, [key]: newNumber })
                                 )
                             }
-                        />
+                            deleteRow={() => setNumbers((prevNumbers) => {
+                                const { [key]: _, ...newNumbers } = prevNumbers
 
-                    )}
+                                return newNumbers
+                            }
+                            )}
+                        />
+                    }
+                    )
+                    }
+
                     <TableRow >
                         <CustomTableCell rowSpan={3} ></CustomTableCell>
                         <CustomTableCell colSpan={2} >TỔNG TRƯỚC THUẾ</CustomTableCell>
                         <CustomTableCell align="right" >
-                            {
-                                ccyFormat(invoiceSubtotal)
-                            }
+                            {ccyFormat(total)}
                         </CustomTableCell>
                     </TableRow>
                     <TableRow>
                         <CustomTableCell>VAT</CustomTableCell>
                         <CustomTableCell align="center">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
-                        <CustomTableCell align="right">{ccyFormat(invoiceTaxes)}</CustomTableCell>
+                        <CustomTableCell align="right">{ccyFormat(total * TAX_RATE)}</CustomTableCell>
                     </TableRow>
                     <TableRow>
                         <CustomTableCell colSpan={2}>TỔNG PHẢI TRẢ</CustomTableCell>
-                        <CustomTableCell align="right"><Typography variant="h5" color='red'>{ccyFormat(invoiceTotal)}</Typography></CustomTableCell>
+                        <CustomTableCell align="right"><Typography variant="h5" color='red'>{ccyFormat(total * (1 + TAX_RATE))}</Typography></CustomTableCell>
                     </TableRow>
                 </TableBody>
             </Table>
@@ -132,18 +136,17 @@ export default function ProductTable() {
     )
 }
 
-function ProductRow({ row, number, setNumber }) {
-
+function ProductRow({ row, number, setNumber, deleteRow, subTotal }) {
     return (
-        <TableRow >
+        <TableRow  >
             <CustomTableCell align="left">
-                <ProductImage name={row.name} img={row.img} />
+                <ProductImage name={row.name} img={row.img} deleteRow={deleteRow} />
             </CustomTableCell>
             <CustomTableCell align="right">{row.unit}</CustomTableCell>
             <CustomTableCell align='center' sx={{ whiteSpace: 'nowrap' }}>
                 <UnitSelect number={number} setNumber={setNumber} />
             </CustomTableCell>
-            <CustomTableCell align="right">{ccyFormat(row.number * row.unit)}</CustomTableCell>
+            <CustomTableCell align="right">{subTotal}</CustomTableCell>
         </TableRow>
     )
 
