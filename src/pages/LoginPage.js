@@ -24,8 +24,8 @@ export default function LoginPage() {
                    <div className="register">
                        <form>
            
-                                <h3>Email</h3>
-                                <input type="email" name="email" required/>
+                                <h3>Số điện thoại</h3>
+                                <input type="tel" name="tel" required/>
          
          
                                 <h3>
