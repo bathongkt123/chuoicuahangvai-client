@@ -2,10 +2,11 @@ import React from "react";
 import ProductImage from "./ProductImage";
 import UnitSelect from "./UnitSelect";
 import CustomTableCell from "components/CustomTableCell"
-
+import { TableRow } from "@mui/material";
+// import { memo } from 'react'
 export default function ProductRow({ row, number, setNumber, deleteRow, subTotal }) {
     return (
-        <React.Fragment  >
+        <TableRow>
             <CustomTableCell align="left">
                 <ProductImage name={row.name} img={row.img} deleteRow={deleteRow} />
             </CustomTableCell>
@@ -14,7 +15,7 @@ export default function ProductRow({ row, number, setNumber, deleteRow, subTotal
                 <UnitSelect number={number} setNumber={setNumber} />
             </CustomTableCell>
             <CustomTableCell align="right">{subTotal}</CustomTableCell>
-        </React.Fragment >
+        </TableRow >
     )
 
 }

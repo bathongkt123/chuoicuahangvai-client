@@ -27,12 +27,14 @@ export default function ResponsesSection() {
                     }}>
                     {items.map((item) =>
                     (
-                        <Card align="center" sx={{
-                            border: "black solid 1px",
-                            m: 1,
-                            display: "flex",
-                            flexDirection: "column",
-                        }}  >
+                        <Card align="center"
+                            key={item.name}
+                            sx={{
+                                border: "black solid 1px",
+                                m: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                            }}  >
                             <CardMedia
                                 component="img"
                                 image={item.image}
