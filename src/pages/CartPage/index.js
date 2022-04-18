@@ -2,11 +2,12 @@ import { Container } from "@mui/material";
 import React from "react";
 import Paying from "./Paying";
 import ProductTable from "./ProductTable";
-import Title from "./Title";
+import Heading from "./Heading";
+
 export default function CartPage() {
     return (
-        <Container maxWidth='lg'>
-            <Title />
+        <Container maxWidth='xl'>
+            <Heading />
             <ProductTable />
             <Paying />
         </Container>

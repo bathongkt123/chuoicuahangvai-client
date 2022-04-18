@@ -16,7 +16,7 @@ export default function RegisterSection() {
                     </Box>
                 </Typography>
                 <Typography variant="body1" align='center' gutterBottom>
-                    để sát cánh cùng vua Theoden
+                    để nhận được thông tin mới nhất
                 </Typography>
                 <Box
                     sx={{
@@ -25,8 +25,9 @@ export default function RegisterSection() {
                         alignItems: "stretch",
                         p: 1
                     }}>
+                    {/* Left Card */}
                     <Card sx={{
-                        border: "black solid 1px",
+                        border: 1,
                         my: 2,
                         flexGrow: 1,
                         flexBasis: { md: 0 },
@@ -38,6 +39,7 @@ export default function RegisterSection() {
                         </CardContent>
                     </Card>
                     <Box width={32}></Box>
+                    {/* Right Card */}
                     <Card sx={{
                         border: "black solid 1px",
                         my: 2,

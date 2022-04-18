@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <React.Fragment
         >
-            <Box bgcolor="#2C3444" color='white' marginTop={2}>
+            <Box bgcolor="#2C3444" color='white' marginTop={4}>
                 <Container maxWidth="lg">
                     <Grid container spacing={5}>
                         <Grid item xs={12} sm={3}>

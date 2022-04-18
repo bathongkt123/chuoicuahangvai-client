@@ -1,5 +1,6 @@
 import { Box, Typography, IconButton } from "@mui/material"
 import { Close } from "@mui/icons-material"
+
 export default function ProductImage({ img, name, deleteRow }) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
