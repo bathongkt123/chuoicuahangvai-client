@@ -34,9 +34,9 @@ export default function RegisterPage() {
                                 <input type="text" name="Fname" required/>
                  
                             <h3 >
-                            Email
+                            Số điện thoại
                                 </h3>
-                                <input type="email" name="email" required/>
+                                <input type="tel" name="tel" required/>
                     
      
                                 <h3>
