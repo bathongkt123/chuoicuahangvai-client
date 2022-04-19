@@ -16,20 +16,19 @@ export default function CategoryRow() {
                 display: { xs: 'none', md: 'flex' },
                 fontWeight: 'bold'
             }}>
-                {items.map((item, i, { length }) => (
-                    <React.Fragment>
+                {items.map((item, i, { length }) =>
+
+
+                    <React.Fragment key={item}>
+                        <Box width={10} />
                         {item}
-                        {i + 1 === length ? null :
-                            (
-                                <React.Fragment>
-                                    <Box width={10} />
-                                    <Divider sx={{ bgcolor: '#dbd9ce' }} orientation="vertical" flexItem></Divider>
-                                    <Box width={10} />
-                                </React.Fragment>
-                            )}
+                        <Box width={10} />
+                        <Divider sx={{ bgcolor: '#dbd9ce' }} orientation="vertical" />
                     </React.Fragment>
 
-                ))}
+
+
+                )}
             </Box>
         </Box>
     );

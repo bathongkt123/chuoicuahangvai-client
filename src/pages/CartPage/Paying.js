@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 import { Button, Checkbox, FormControl, FormControlLabel, InputBase } from '@mui/material';
 import { Typography } from '@mui/material';
-import { FormGroup } from '@material-ui/core';
+
 
 export default function Paying() {
     return (
@@ -56,7 +56,8 @@ export default function Paying() {
                     />
 
                     <Button variant="contained"
-                        sx={{ my: 1, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>
+
+                        sx={{ my: 1, px: 4, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>
                         Thanh toán
                     </Button>
                 </FormControl>

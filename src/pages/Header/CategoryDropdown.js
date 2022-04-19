@@ -8,10 +8,6 @@ const items = [
     "Vải ba tư",
     "Vải trung đông",
     "Vải hiếm",
-    "Vải hiếm",
-    "Vải hiếm",
-    "Vải hiếm",
-    "Vải hiếm",
 ]
 const ITEM_HEIGHT = 48;
 
@@ -48,7 +44,7 @@ export default function CategoryDropdown() {
             }}
         >
             {items.map((item) => (
-                <MenuItem sx={{ fontWeight: 'bold' }}>
+                <MenuItem sx={{ fontWeight: 'bold' }} key={item}>
                     {item}
                 </MenuItem>
             ))}

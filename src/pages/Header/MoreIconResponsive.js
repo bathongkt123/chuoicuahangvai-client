@@ -33,7 +33,7 @@ export default function MoreIconResponsive() {
             }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
-            sx={{ display: { md: 'none', xs: 'block' } }}
+
             PaperProps={{
                 style: {
                     maxHeight: ITEM_HEIGHT * 4.5,
@@ -41,7 +41,7 @@ export default function MoreIconResponsive() {
                 },
             }}
         >
-            <MenuItem>
+            <MenuItem key='account'>
                 <Button
                     sx={{
                         fontWeight: 'bold',
@@ -55,7 +55,7 @@ export default function MoreIconResponsive() {
                     Tài khoản
                 </Button>
             </MenuItem>
-            <MenuItem>
+            <MenuItem key='cart'>
                 <Button sx={{ fontWeight: 'bold', border: 'none', p: 0, color: 'inherit', whiteSpace: 'nowrap' }}>
                     <ShoppingCartIcon fontSize='small' sx={{ mr: 0.5 }} />
                     Giỏ Hàng
@@ -63,7 +63,7 @@ export default function MoreIconResponsive() {
             </MenuItem>
             <Divider flexItem />
             {items.map((item) => (
-                <MenuItem sx={{ fontWeight: 'bold' }}>
+                <MenuItem sx={{ fontWeight: 'bold' }} key={item}>
                     {item}
                 </MenuItem>
             ))}
