@@ -1,11 +1,10 @@
 import React from 'react';
 import {useParams} from "react-router-dom"
-import productData from '../../productData'
+import {Data} from '../../productData'
 import Button from '@mui/material/Button';
 import { useState } from "react";
 import { AddBox, IndeterminateCheckBox, Close } from "@mui/icons-material";
-import { TableCell, Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, IconButton, InputBase } from "@mui/material";
-import { styled } from "@mui/material";
+import { IconButton, InputBase } from "@mui/material";
 function UnitSelect({ number, setNumber}) {
 
     return (
@@ -34,7 +33,7 @@ export default function ProductInfoSection() {
     const [number, setNumber] = useState(0.25)
     
     const {productId} = useParams()
-    const thisProduct = productData.find(prod => prod.id === productId)
+    const thisProduct = Data.find(prod => prod.id === productId)
     const total = number*thisProduct.price
     return (     
         <div>
