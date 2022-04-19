@@ -1,15 +1,18 @@
 import Heading from "./Heading";
 import DeliveryForm from "./DeliveryForm";
-import { Container, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
+import { Fragment } from "react";
 
 
 export default function LeftPanel() {
     return (
-        <Container maxWidth='lg'>
+        <Fragment>
             <Heading />
             <Divider variant="middle" />
             <DeliveryForm />
             <Divider variant="middle" />
-        </Container>
+        </Fragment>
+
+
     )
 }

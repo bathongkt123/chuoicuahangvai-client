@@ -1,11 +1,21 @@
 
+import { Divider } from "@mui/material";
 import { Fragment } from "react";
-
+import ProductRow from "./ProductRow";
 export default function OrderInfo() {
     const keys = Object.keys(products)
+    const subTotal = key => products[key].defaultNumber * products[key].unit
+    const total = keys.reduce((init, current) => init + subTotal(current), 0)
     return (
         <Fragment>
-            { }
+            {keys.map(key =>
+            (
+                <Fragment>
+                    <ProductRow row={products[key]} subTotal={subTotal(key)} />
+                    <Divider />
+                </Fragment>
+            )
+            )}
         </Fragment>
 
     )

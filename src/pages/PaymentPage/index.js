@@ -6,7 +6,7 @@ import LeftPanel from "./LeftPanel";
 export default function PaymentPage() {
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-            <Container sx={{ flexGrow: 1, flexBasis: 0 }}>
+            <Container sx={{ flexGrow: 1, flexBasis: 0, bgcolor: '#EEEDE8' }}>
                 <LeftPanel />
             </Container>
             <Container sx={{ flexGrow: 1, flexBasis: 0 }}>
