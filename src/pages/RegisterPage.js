@@ -51,7 +51,7 @@ export default function RegisterPage() {
                                 <input type="password" name="password" required/>
                    
                         <FormGroup>
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật" />
+                        <FormControlLabel control={<Checkbox  />} label="Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật" />
                         </FormGroup>
                 
                         <button>

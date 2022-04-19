@@ -49,3 +49,30 @@ code {
   cursor: pointer;
   margin: 20px 0;
 }
+.addressinfo {
+  max-width: 1000px;
+  margin: 0px 0px;
+  text-align: left;
+}
+.addressinfo input{
+  width: 49%;
+  padding: 6px 10px;
+  margin: 10px 0px;
+  box-sizing:border-box;
+  display: inline;
+}
+
+.addressinfo select{
+  width: 49%;
+  padding: 6px 10px;
+  margin: 10px 0px;
+  box-sizing:border-box;
+  display: inline;
+}
+.address button{
+  background-color: #384257;
+  color: white;
+  padding: 5px;
+  margin: 10px 0px;
+  margin-right: 10px;
+}
