@@ -10,7 +10,7 @@ import ProductPage from "./pages/ProductPage"
 import AccountPage from "./pages/AccountPage"
 import AccountOrderPage from "pages/AccountOrderPage";
 import AddressPage from "pages/AccountAddressPage"
-import PaymentInfoPage from "pages/PaymentInfoPage"
+import PaymentPage from "pages/PaymentPage"
 import {
   BrowserRouter as Router,
   Routes,
@@ -31,7 +31,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/account/address" element={<AddressPage />} />
-          <Route path="/account/paymentinfo" element={<PaymentInfoPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
           <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
           <Route path="/menu/:productId" element={<ProductPage />} />
         </Routes>

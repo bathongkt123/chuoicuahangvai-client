@@ -11,8 +11,8 @@ export default function CartPage() {
             <Box sx={{ display: 'flex' }}>
                 <CustomerInfo />
                 <Box width={120} />
-                <Box width={700}><FormInfo /></Box>
-                
+                <FormInfo />
+
             </Box>
         </Container>
     )
