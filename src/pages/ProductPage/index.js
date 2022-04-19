@@ -4,12 +4,12 @@ import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import ImageSection from './ImageSection'
 import ProductInfoSection from './ProductInfoSection'
-import productData from '../../productData'
+import {Data} from '../../productData'
 import {useParams} from "react-router-dom"
 
 export default function ProductPage() {
     const {productId} = useParams()
-    const thisProduct = productData.find(prod => prod.id === productId)
+    const thisProduct = Data.find(prod => prod.id === productId)
         return (
             <div style={{textAlign: 'center',  justifyContent:'center', alignItems:'center', margin: '50px'}}
             >

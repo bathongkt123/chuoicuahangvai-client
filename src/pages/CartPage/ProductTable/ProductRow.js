@@ -1,8 +1,7 @@
 import React from "react";
 import ProductImage from "./ProductImage";
 import UnitSelect from "./UnitSelect";
-import CustomTableCell from "components/CustomTableCell"
-
+import CustomTableCell from "../../../components/CustomTableCell"
 export default function ProductRow({ row, number, setNumber, deleteRow, subTotal }) {
     return (
         <React.Fragment  >

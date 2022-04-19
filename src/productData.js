@@ -1,6 +1,5 @@
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default [
+export const Data= [
     {
     id: "1",
     name: "Vải a ",
