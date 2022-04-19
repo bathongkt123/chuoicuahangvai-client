@@ -1,13 +1,22 @@
-import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Link } from "@mui/material"
+import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Typography, InputBase, Box } from "@mui/material"
+import { useState } from "react";
 import CustomTableCell from "components/CustomTableCell"
-import React from "react";
+
+const TAX_RATE = 0.1;
+
+function ccyFormat(num) {
+    return `${num.toFixed(2)}`;
+}
 export default function OrderDetailTable() {
-    const [page, setPage] = React.useState(0);
+    const keys = Object.keys(products)
+    const subTotal = key => products[key].defaultNumber * products[key].unit
+    const total = keys.reduce((init, current) => init + subTotal(current), 0)
+    const [page, setPage] = useState(0);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-    const rowsPerPage = 5
-    const keys = Object.keys(orders)
+    const rowsPerPage = 4
+    const shipFee = 100000
     return (
         <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
             <Table>
@@ -15,12 +24,43 @@ export default function OrderDetailTable() {
                     <TableRow >
                         <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
                         <CustomTableCell align="right">ĐƠN GIÁ(/MÉT)</CustomTableCell>
-                        <CustomTableCell align="center">SỐ LƯỢNG</CustomTableCell>
+                        <CustomTableCell align="right">SỐ LƯỢNG</CustomTableCell>
                         <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody >
-
+                    {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
+                        return (
+                            <TableRow>
+                                <CustomTableCell align="left">
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box
+                                            component='img'
+                                            sx={{
+                                                width: 'auto',
+                                                height: 145
+                                            }}
+                                            src={products[key].img}
+                                        />
+                                        <Box width={20}></Box>
+                                        <Typography variant='h6'>
+                                            {products[key].name}
+                                        </Typography>
+                                        <Box />
+                                    </Box>
+                                </CustomTableCell>
+                                <CustomTableCell align="right">{products[key].unit}</CustomTableCell>
+                                <CustomTableCell align='right' sx={{ whiteSpace: 'nowrap' }}>
+                                    <InputBase sx={{ border: 1, borderColor: '#4e5b73', width: '6ch', px: 1 }}
+                                        inputProps={{ style: { textAlign: 'center' } }}
+                                        value={products[key].defaultNumber} readonly />
+                                </CustomTableCell>
+                                <CustomTableCell align="right">{subTotal(key)}</CustomTableCell>
+                            </TableRow >
+                        )
+                    }
+                    )
+                    }
                     <TableRow>
                         <TablePagination
                             rowsPerPage={rowsPerPage}
@@ -31,8 +71,8 @@ export default function OrderDetailTable() {
                             sx={{ backgroundColor: '#EEEDE8' }}
                         />
                     </TableRow>
-                    {/* <TableRow >
-                        <CustomTableCell rowSpan={3} ></CustomTableCell>
+                    <TableRow >
+                        <CustomTableCell rowSpan={5} ></CustomTableCell>
                         <CustomTableCell colSpan={2} >TỔNG TRƯỚC THUẾ</CustomTableCell>
                         <CustomTableCell align="right" >
                             {ccyFormat(total)}
@@ -40,27 +80,36 @@ export default function OrderDetailTable() {
                     </TableRow>
                     <TableRow>
                         <CustomTableCell>VAT</CustomTableCell>
-                        <CustomTableCell align="center">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
+                        <CustomTableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
                         <CustomTableCell align="right">{ccyFormat(total * TAX_RATE)}</CustomTableCell>
+                    </TableRow>
+                    <TableRow>
+                        <CustomTableCell colSpan={2}>TỔNG SAU THUẾ</CustomTableCell>
+                        <CustomTableCell align="right">
+
+                            {ccyFormat(total * (1 + TAX_RATE))}
+                        </CustomTableCell>
+                    </TableRow>
+                    <TableRow>
+                        <CustomTableCell colSpan={2}>PHÍ VẬN CHUYỂN</CustomTableCell>
+                        <CustomTableCell align="right">
+                            {ccyFormat(shipFee)}
+                        </CustomTableCell>
                     </TableRow>
                     <TableRow>
                         <CustomTableCell colSpan={2}>TỔNG PHẢI TRẢ</CustomTableCell>
                         <CustomTableCell align="right">
                             <Typography variant="h5" color='red'>
-                                {ccyFormat(total * (1 + TAX_RATE))}
+                                {ccyFormat(shipFee + total * (1 + TAX_RATE))}
                             </Typography>
-                            <Typography variant='body1'>
-                                (Chưa bao gồm chi phí vận chuyển)
-                            </Typography>
-
                         </CustomTableCell>
-                    </TableRow> */}
+                    </TableRow>
                 </TableBody>
             </Table>
         </TableContainer >
     )
 }
-const orders = {
+const products = {
     2: {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         name: 'Breakfast',

@@ -4,7 +4,7 @@ import Heading from "./Heading";
 import CustomerInfo from "./CustomerInfo";
 import OrderTable from "./OrderTabel";
 
-export default function CartPage() {
+export default function AccountPage() {
     return (
         <Container maxWidth='lg'>
             <Heading />
