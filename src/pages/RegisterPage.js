@@ -1,11 +1,15 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
-
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Breadcrumbs, Button, TextField, Typography } from "@mui/material";
+import {
+  Breadcrumbs,
+  Button,
+  TextField,
+  Typography,
+  Box,
+  Link,
+} from "@mui/material";
 export default function RegisterPage() {
   return (
     <Box>
