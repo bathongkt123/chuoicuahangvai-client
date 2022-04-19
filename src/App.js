@@ -9,6 +9,8 @@ import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage"
 import AccountPage from "./pages/AccountPage"
 import AccountOrderPage from "pages/AccountOrderPage";
+import AddressPage from "pages/AccountAddressPage"
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,6 +30,7 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/account/address" element={<AddressPage />} />
           <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
           <Route path="/menu/:productId" element={<ProductPage />} />
         </Routes>
