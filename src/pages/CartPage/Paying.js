@@ -47,20 +47,20 @@ export default function Paying() {
                         control={<Checkbox />}
                         label="Thanh toán đơn hàng này sau (mua nợ)"
                         labelPlacement="end"
-                        sx={{ alignSelf: 'flex-end' }}
                     />
                     <FormControlLabel
                         control={<Checkbox />}
                         label=" Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật"
                         labelPlacement="end"
                     />
-                    <Link href="/account/paymentinfo">
-                    <Button variant="contained" 
 
+                    <Button
+                        variant="contained"
+                        href='/payment'
                         sx={{ my: 1, px: 4, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>
                         Thanh toán
                     </Button>
-                    </Link>
+
                 </FormControl>
             </Box>
 
