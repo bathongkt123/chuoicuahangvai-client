@@ -4,24 +4,25 @@ import React from "react";
 export default function Heading() {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 2 }}>
-            <h2>Địa chỉ</h2>
+            <h2>Royal Fabric</h2>
             <Breadcrumbs aria-label="breadcrumb">
                 <Link
                     underline="hover"
                     color="inherit"
-                    href="/"
+                    href="/cart"
                 >
-                    Trang chủ
-                </Link>
-                <Link
-                    underline="hover"
-                    color="inherit"
-                    href="/"
-                >
-                   Tài khoản
+                    Giỏ hàng
                 </Link>
                 <Typography color="#0f0d0c">
-                    Địa chỉ
+                    <Box sx={{fontWeight:700}}>
+                    Thông tin
+                    </Box>
+                </Typography>
+                <Typography color="#0f0d0c">
+                    Vận chuyển
+                </Typography>
+                <Typography color="#0f0d0c">
+                    Thanh toán
                 </Typography>
             </Breadcrumbs>
         </Box>

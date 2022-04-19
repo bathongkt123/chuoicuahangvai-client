@@ -51,12 +51,12 @@ code {
 }
 .addressinfo {
   max-width: 1000px;
-  margin: 0px 0px;
+  margin: 5px 0px;
   text-align: left;
 }
 .addressinfo input{
   width: 49%;
-  padding: 6px 10px;
+  padding: 10px 20px;
   margin: 10px 0px;
   box-sizing:border-box;
   display: inline;
@@ -64,7 +64,7 @@ code {
 
 .addressinfo select{
   width: 49%;
-  padding: 6px 10px;
+  padding: 10px 20px;
   margin: 10px 0px;
   box-sizing:border-box;
   display: inline;
