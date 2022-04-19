@@ -31,7 +31,7 @@ export default function OrderDetailTable() {
                             sx={{ backgroundColor: '#EEEDE8' }}
                         />
                     </TableRow>
-                    <TableRow >
+                    {/* <TableRow >
                         <CustomTableCell rowSpan={3} ></CustomTableCell>
                         <CustomTableCell colSpan={2} >TỔNG TRƯỚC THUẾ</CustomTableCell>
                         <CustomTableCell align="right" >
@@ -54,13 +54,13 @@ export default function OrderDetailTable() {
                             </Typography>
 
                         </CustomTableCell>
-                    </TableRow>
+                    </TableRow> */}
                 </TableBody>
             </Table>
         </TableContainer >
     )
 }
-const products = {
+const orders = {
     2: {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         name: 'Breakfast',
