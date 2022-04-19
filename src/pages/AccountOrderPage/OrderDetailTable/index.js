@@ -1,7 +1,7 @@
 import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Typography, InputBase, Box } from "@mui/material"
 import { useState } from "react";
 import CustomTableCell from "components/CustomTableCell"
-
+import ProductRow from "./ProductRow";
 const TAX_RATE = 0.1;
 
 function ccyFormat(num) {
@@ -31,37 +31,15 @@ export default function OrderDetailTable() {
                 <TableBody >
                     {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
                         return (
-                            <TableRow>
-                                <CustomTableCell align="left">
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Box
-                                            component='img'
-                                            sx={{
-                                                width: 'auto',
-                                                height: 145
-                                            }}
-                                            src={products[key].img}
-                                        />
-                                        <Box width={20}></Box>
-                                        <Typography variant='h6'>
-                                            {products[key].name}
-                                        </Typography>
-                                        <Box />
-                                    </Box>
-                                </CustomTableCell>
-                                <CustomTableCell align="right">{products[key].unit}</CustomTableCell>
-                                <CustomTableCell align='right' sx={{ whiteSpace: 'nowrap' }}>
-                                    <InputBase sx={{ border: 1, borderColor: '#4e5b73', width: '6ch', px: 1 }}
-                                        inputProps={{ style: { textAlign: 'center' } }}
-                                        value={products[key].defaultNumber} readonly />
-                                </CustomTableCell>
-                                <CustomTableCell align="right">{subTotal(key)}</CustomTableCell>
-                            </TableRow >
+                            <ProductRow row={products[key]} subTotal={subTotal(key)} key={key} />
                         )
                     }
                     )
                     }
                     <TableRow>
+                        <CustomTableCell>
+                            Thông tin đơn hàng
+                        </CustomTableCell>
                         <TablePagination
                             rowsPerPage={rowsPerPage}
                             count={keys.length}
@@ -72,18 +50,29 @@ export default function OrderDetailTable() {
                         />
                     </TableRow>
                     <TableRow >
-                        <CustomTableCell rowSpan={5} ></CustomTableCell>
-                        <CustomTableCell colSpan={2} >TỔNG TRƯỚC THUẾ</CustomTableCell>
+                        <CustomTableCell>
+                            Họ và tên: Lê Bá Thông
+                        </CustomTableCell>
+                        <CustomTableCell colSpan={2}>TỔNG TRƯỚC THUẾ</CustomTableCell>
                         <CustomTableCell align="right" >
                             {ccyFormat(total)}
                         </CustomTableCell>
                     </TableRow>
                     <TableRow>
+                        <CustomTableCell>
+                            <Box sx={{ maxWidth: '45ch' }}>
+                                Địa chỉ: 268 Lý Thường Kiệt Phường 14 Quận 10 TP Hồ Chí Minh
+                            </Box>
+
+                        </CustomTableCell>
                         <CustomTableCell>VAT</CustomTableCell>
                         <CustomTableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
                         <CustomTableCell align="right">{ccyFormat(total * TAX_RATE)}</CustomTableCell>
                     </TableRow>
                     <TableRow>
+                        <CustomTableCell>
+                            Số điện thoại: (+84)911357191
+                        </CustomTableCell>
                         <CustomTableCell colSpan={2}>TỔNG SAU THUẾ</CustomTableCell>
                         <CustomTableCell align="right">
 
@@ -91,12 +80,19 @@ export default function OrderDetailTable() {
                         </CustomTableCell>
                     </TableRow>
                     <TableRow>
+                        <CustomTableCell>
+                            Phương thức thanh toán: COD
+                        </CustomTableCell>
                         <CustomTableCell colSpan={2}>PHÍ VẬN CHUYỂN</CustomTableCell>
                         <CustomTableCell align="right">
                             {ccyFormat(shipFee)}
                         </CustomTableCell>
                     </TableRow>
                     <TableRow>
+                        <CustomTableCell>
+
+                            Phương thức vận chuyển: Giao hàng miễn phí
+                        </CustomTableCell>
                         <CustomTableCell colSpan={2}>TỔNG PHẢI TRẢ</CustomTableCell>
                         <CustomTableCell align="right">
                             <Typography variant="h5" color='red'>

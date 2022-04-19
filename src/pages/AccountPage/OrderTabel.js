@@ -22,7 +22,7 @@ export default function OrderTable() {
                 <TableBody >
                     {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
                         return (
-                            <TableRow>
+                            <TableRow key={key}>
                                 <CustomTableCell align="left" >
                                     <Link color='inherit' underline="hover" href={'/account/order/' + key}>
                                         {key}
