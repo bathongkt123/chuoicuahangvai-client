@@ -24,7 +24,7 @@ export default function OrderTable() {
                         return (
                             <TableRow>
                                 <CustomTableCell align="left" >
-                                    <Link color='inherit' underline="hover" href={'/account/' + key}>
+                                    <Link color='inherit' underline="hover" href={'/account/order/' + key}>
                                         {key}
                                     </Link>
 
