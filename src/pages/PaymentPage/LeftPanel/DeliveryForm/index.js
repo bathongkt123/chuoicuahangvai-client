@@ -135,7 +135,7 @@ export default function DeliveryForm({ setPage }) {
                     </Button>
 
                     <Button
-                        href="/shipment"
+                        href="/payment/shipment"
                         variant="contained"
                         sx={{ backgroundColor: "#384257" }}
                     >

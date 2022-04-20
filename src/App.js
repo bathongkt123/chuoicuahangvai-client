@@ -11,7 +11,7 @@ import AccountOrderPage from "pages/AccountOrderPage";
 import AddressPage from "pages/AccountAddressPage"
 import PaymentPage from "pages/PaymentPage"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage"
-import { DeliveryForm } from "pages/PaymentPage/LeftPanel";
+import { DeliveryForm, ShipmentForm } from "pages/PaymentPage/LeftPanel";
 import {
   BrowserRouter as Router,
   Routes,
@@ -35,6 +35,7 @@ function App() {
           <Route path="account/address" element={<AddressPage />} />
           <Route path="payment" element={<PaymentPage />}>
             <Route path="delivery" element={<DeliveryForm />} />
+            <Route path="shipment" element={<ShipmentForm />} />
           </Route>
           <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
           <Route path="/menu/:productId" element={<ProductPage />} />

@@ -9,11 +9,13 @@ import {
   Link,
 } from "@mui/material";
 import React from "react";
-import { Button } from "@mui/material";
-
+import { Button, Divider } from "@mui/material";
+import Heading from "./Heading";
 export default function FormInfo() {
   return (
     <React.Fragment>
+      <Heading />
+      <Divider variant="middle" />
       <Box
         sx={{
           backgroundColor: "white",
@@ -121,7 +123,7 @@ export default function FormInfo() {
           alignItems="flex-start"
         >
           <Button
-            href="/payment"
+            href="/payment/delivery"
             variant="contained"
             sx={{ backgroundColor: "#384257" }}
           >
