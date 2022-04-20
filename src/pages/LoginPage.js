@@ -25,7 +25,11 @@ export default function LoginPage() {
           <Link underline="hover" color="inherit" href="/">
             Trang chủ
           </Link>
-          <Link underline="hover" color="inherit" href="/">
+          <Link
+            underline="hover"
+            color="inherit"
+            sx={{ pointerEvents: "none" }}
+          >
             Tài khoản
           </Link>
           <Typography color="#0f0d0c">Đăng nhập</Typography>

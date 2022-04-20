@@ -26,7 +26,11 @@ export default function ForgotPasswordPage() {
           <Link underline="hover" color="inherit" href="/">
             Trang chủ
           </Link>
-          <Link underline="hover" color="inherit" href="/">
+          <Link
+            underline="hover"
+            color="inherit"
+            sx={{ pointerEvents: "none" }}
+          >
             Tài khoản
           </Link>
           <Typography color="#0f0d0c"> Quên mật khẩu</Typography>

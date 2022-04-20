@@ -1,17 +1,20 @@
 import {
+  Link,
   Typography,
   Box,
   FormControl,
   Stack,
+  Divider,
   RadioGroup,
   FormControlLabel,
   Radio,
-  Link,
 } from "@mui/material";
 import React from "react";
-import { Button, Divider } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+
+import { Button } from "@mui/material";
 import Heading from "./Heading";
-export default function FormInfo() {
+export default function PaymentForm({ setPage }) {
   return (
     <React.Fragment>
       <Heading />
@@ -45,6 +48,7 @@ export default function FormInfo() {
             Thay đổi
           </Link>
         </Stack>
+        <Divider />
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -59,6 +63,29 @@ export default function FormInfo() {
           </Typography>
           <Link
             href="/payment/delivery"
+            variant="body1"
+            color="inherit"
+            underline="hover"
+          >
+            Thay đổi
+          </Link>
+        </Stack>
+        <Divider />
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={4}
+        >
+          <Box sx={{ mx: 1 }}>
+            <Typography variant="body1">Phương thức vận chuyển</Typography>
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <Typography variant="subtitle1">Vận chuyển miễn phí-</Typography>
+            <Typography variant="subtitle1">Miễn phí</Typography>
+          </Box>
+          <Link
+            href="/payment/shipment"
             variant="body1"
             color="inherit"
             underline="hover"
@@ -81,39 +108,41 @@ export default function FormInfo() {
           }}
         >
           <FormControl fullWidth>
-            <RadioGroup defaultValue="freeship" name="shipment" sx={{ mx: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <FormControlLabel
-                  value="freeship"
-                  control={<Radio />}
-                  label="Vận chuyển miễn phí - Thời gian 5-10 ngày"
-                />
-
-                <Typography variant="subtitle1">
-                  <Box sx={{ fontWeight: "bold" }}>Miễn phí</Box>
-                </Typography>
-              </Stack>
-
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <FormControlLabel
-                  value="paidship"
-                  control={<Radio />}
-                  label="Vận chuyển nhanh - Thời gian 1-2 ngày"
-                />
-                <Typography variant="subtitle1">
-                  <Box sx={{ fontWeight: "bold" }}>40000đ</Box>
-                </Typography>
-              </Stack>
+            <RadioGroup defaultValue="COD" name="shipment" sx={{ mx: 2 }}>
+              <FormControlLabel value="COD" control={<Radio />} label="COD" />
+              <Divider />
+              <FormControlLabel
+                value="VNPay"
+                control={<Radio />}
+                label="Thanh toán trực tuyến - VNPay"
+              />
+              <Divider />
+              <FormControlLabel
+                value="Momo"
+                control={<Radio />}
+                label="Thanh toán trực tuyến - Momo"
+              />
             </RadioGroup>
           </FormControl>
+        </Box>
+      </Box>
+      <Box sx={{ width: "100%", mt: 4 }}>
+        <Typography variant="h5">Nhớ thông tin đặt hàng</Typography>
+
+        <Box
+          sx={{
+            backgroundColor: "white",
+            my: 2,
+            borderRadius: 1,
+            border: 1,
+            py: 1,
+          }}
+        >
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Ghi nhớ thông tin để thanh toán nhanh hơn"
+            sx={{ mx: 1 }}
+          />
         </Box>
       </Box>
       <Box sx={{ my: 4 }}>
@@ -123,19 +152,19 @@ export default function FormInfo() {
           alignItems="flex-start"
         >
           <Button
-            href="/payment/delivery"
+            href="/payment/shipment"
             variant="contained"
             sx={{ backgroundColor: "#384257" }}
           >
-            {`< Trở về thông tin`}
+            {`< Trở về trang vận chuyển`}
           </Button>
 
           <Button
-            href="/payment/paymentfinish"
             variant="contained"
-            sx={{ backgroundColor: "#384257" }}
+            sx={{ backgroundColor: "#384257", px: 4, py: 2 }}
+            size="large"
           >
-            {`Chuyển đến trang thanh toán >`}
+            Đặt hàng
           </Button>
         </Stack>
       </Box>

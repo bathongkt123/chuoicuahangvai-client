@@ -1,4 +1,4 @@
-import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
+import { Breadcrumbs, Link, Box } from "@mui/material";
 import React from "react";
 
 export default function Heading() {
@@ -19,8 +19,10 @@ export default function Heading() {
         <Link underline="hover" color="inherit" href="/payment/delivery">
           Thông tin
         </Link>
-        <Box sx={{ fontWeight: 700, color: "#0f0d0c" }}>Vận chuyển</Box>
-        <Typography color="#0f0d0c">Thanh toán</Typography>
+        <Link underline="hover" color="inherit" href="/payment/shipment">
+          Vận chuyển
+        </Link>
+        <Box sx={{ fontWeight: 700, color: "#0f0d0c" }}>Thanh toán</Box>
       </Breadcrumbs>
     </Box>
   );
