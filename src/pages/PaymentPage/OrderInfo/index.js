@@ -7,7 +7,7 @@ export default function OrderInfo() {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const rowsPerPage = 2
+    const rowsPerPage = 3
     const keys = Object.keys(products)
     const subTotal = key => products[key].defaultNumber * products[key].unit
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
@@ -18,23 +18,26 @@ export default function OrderInfo() {
             my={2}
         >
             <Stack
-                divider={<Divider />}
-                spacing={2}
-                my={2}
             >
-                {keys.slice((page - 1) * rowsPerPage, page * rowsPerPage).map(key =>
-                (
-                    <ProductRow row={products[key]} subTotal={subTotal(key)} />
-                )
+                {keys.map((key, i) => {
+                    const rendered = i >= (page - 1) * rowsPerPage && i < page * rowsPerPage
+                    return (<ProductRow row={products[key]} subTotal={subTotal(key)} rendered={rendered} key={key} />
+                    )
+                }
                 )}
-                <Pagination count={Math.ceil(keys.length / rowsPerPage)} page={page} onChange={handleChange} />
+                <Pagination count={Math.ceil(keys.length / rowsPerPage)}
+                    page={page}
+                    variant="outlined" shape="rounded"
+                    onChange={handleChange}
+                    sx={{ mx: 'auto', mt: 2 }} />
             </Stack>
-            <Box sx={{ display: 'flex', my: 2 }}>
+            <Box sx={{ display: 'flex' }}>
                 <TextField label='Mã giảm giá' fullWidth />
                 <Box width={20} />
                 <Button
                     variant="contained"
                     sx={{
+                        size: 'small',
                         px: 4,
                         whiteSpace: 'nowrap',
                         textDecoration: 'none',

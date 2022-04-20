@@ -16,9 +16,9 @@ export default function Heading() {
         <Link underline="hover" color="inherit" href="/cart">
           Giỏ hàng
         </Link>
-        <Typography color="#0f0d0c">
-          <Box sx={{ fontWeight: 700 }}>Thông tin</Box>
-        </Typography>
+
+        <Box sx={{ fontWeight: 700, color: "#0f0d0c" }}>Thông tin</Box>
+
         <Typography color="#0f0d0c">Vận chuyển</Typography>
         <Typography color="#0f0d0c">Thanh toán</Typography>
       </Breadcrumbs>
