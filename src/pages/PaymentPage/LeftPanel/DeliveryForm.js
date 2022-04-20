@@ -130,7 +130,11 @@ export default function FormInfo() {
                         {`< Trở về giỏ hàng`}
                     </Button>
 
-                    <Button variant="contained" sx={{ backgroundColor: "#384257" }}>
+                    <Button
+                        href="/shipment"
+                        variant="contained"
+                        sx={{ backgroundColor: "#384257" }}
+                    >
                         {`Chuyển đến trang vận chuyển >`}
                     </Button>
                 </Stack>
