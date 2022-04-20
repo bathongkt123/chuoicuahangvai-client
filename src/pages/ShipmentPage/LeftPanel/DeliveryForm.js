@@ -1,15 +1,12 @@
 import {
   Typography,
   Box,
-  TextField,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Stack,
   RadioGroup,
   FormControlLabel,
   Radio,
+  Link,
 } from "@mui/material";
 import React from "react";
 import { Button } from "@mui/material";
@@ -24,6 +21,7 @@ export default function FormInfo() {
           borderRadius: 1,
           border: 1,
           py: 1,
+          px: 2,
         }}
       >
         <Stack
@@ -36,7 +34,14 @@ export default function FormInfo() {
             <Typography variant="body1">Thông tin liên hệ</Typography>
           </Box>
           <Typography variant="subtitle1">nguyenvana@gmail.com</Typography>
-          <Link variant="body1">Thay đổi</Link>
+          <Link
+            href="/payment"
+            variant="body1"
+            color="inherit"
+            underline="hover"
+          >
+            Thay đổi
+          </Link>
         </Stack>
         <Stack
           direction="row"
@@ -50,7 +55,14 @@ export default function FormInfo() {
           <Typography variant="subtitle1">
             268 Lý Thường Kiệt, P14, Q10, TP.HCM
           </Typography>
-          <Button variant="body1">Thay đổi</Button>
+          <Link
+            href="/payment"
+            variant="body1"
+            color="inherit"
+            underline="hover"
+          >
+            Thay đổi
+          </Link>
         </Stack>
       </Box>
 
