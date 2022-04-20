@@ -12,7 +12,7 @@ export default function OrderInfo() {
             (
                 <Fragment>
                     <ProductRow row={products[key]} subTotal={subTotal(key)} />
-                    <Divider />
+                    <Divider sx={{ background: 'black' }} />
                 </Fragment>
             )
             )}
