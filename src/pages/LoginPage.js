@@ -1,7 +1,12 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
-import { Breadcrumbs, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 export default function LoginPage() {
   return (
