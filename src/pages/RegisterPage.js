@@ -21,7 +21,7 @@ export default function RegisterPage() {
           my: 2,
         }}
       >
-        <h2>Đăng ký</h2>
+        <h2>ĐĂNG KÝ</h2>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">
             Trang chủ
@@ -43,33 +43,33 @@ export default function RegisterPage() {
         <TextField
           label="Họ và tên lót"
           size="small"
-          sx={{ minWidth: "50ch" }}
+          sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
           label="Tên"
           size="small"
-          sx={{ minWidth: "50ch" }}
+          sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
           label="Số điện thoại"
           size="small"
-          sx={{ minWidth: "50ch" }}
+          sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
           label="Mật khẩu"
           type="password"
           size="small"
-          sx={{ minWidth: "50ch" }}
+          sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
           label="Nhập lại mật khẩu"
           type="password"
           size="small"
-          sx={{ minWidth: "50ch" }}
+          sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <FormGroup>
