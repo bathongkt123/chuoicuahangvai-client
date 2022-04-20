@@ -8,15 +8,15 @@ import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 import AccountPage from "./pages/AccountPage";
 import AccountOrderPage from "pages/AccountOrderPage";
-import AddressPage from "pages/AccountAddressPage"
-import PaymentPage from "pages/PaymentPage"
-import ForgotPasswordPage from "./pages/ForgotPasswordPage"
-import { DeliveryForm, ShipmentForm } from "pages/PaymentPage/LeftPanel";
+import AddressPage from "pages/AccountAddressPage";
+import PaymentPage from "pages/PaymentPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+  DeliveryForm,
+  ShipmentForm,
+  PaymentForm,
+} from "pages/PaymentPage/LeftPanel";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 
 function App() {
@@ -36,8 +36,12 @@ function App() {
           <Route path="payment" element={<PaymentPage />}>
             <Route path="delivery" element={<DeliveryForm />} />
             <Route path="shipment" element={<ShipmentForm />} />
+            <Route path="paymentfinish" element={<PaymentForm />} />
           </Route>
-          <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
+          <Route
+            path="/account/order/:orderId"
+            element={<AccountOrderPage />}
+          />
           <Route path="/menu/:productId" element={<ProductPage />} />
         </Routes>
       </Router>
