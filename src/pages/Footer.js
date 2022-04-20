@@ -5,8 +5,6 @@ import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { Fragment } from 'react'
 import { Box, Container, Grid, Link } from '@mui/material';
 export default function Footer() {
-
-
     return (
         <Fragment>
 
@@ -91,14 +89,9 @@ export default function Footer() {
                                 </Link>
                             </Box>
                         </Box>
-
                     </Grid>
-
                 </Grid>
-
             </Container>
-
-
             <Box sx={{ bgcolor: "#212631", color: 'white', px: 3 }}>
                 Copyright © 2021 CỬA HÀNG VẢI
             </Box>
