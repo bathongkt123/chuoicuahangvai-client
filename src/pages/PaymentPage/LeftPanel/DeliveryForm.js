@@ -13,31 +13,41 @@ import { Button } from "@mui/material";
 export default function FormInfo() {
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", my: 2 }}>
-        <Typography variant="body1">Thông tin liên hệ</Typography>
+      <Box sx={{ display: "flex", my: 4 }}>
+        <Typography variant="h5">Thông tin liên hệ</Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <Typography variant="body1">
-          Đã có tài khoản ?<Link href>Đăng nhập</Link>
+        <Typography variant="h6">
+          Đã có tài khoản ?
+          <Link
+            href="/login"
+            color="inherit"
+            underline="hover"
+            sx={{ fontWeight: "bold", px: 1 }}
+          >
+            Đăng nhập
+          </Link>
         </Typography>
       </Box>
+
       <TextField
         label="Email"
-        size="small"
+        size="large"
         fullWidth
         sx={{ display: "inline-block" }}
       ></TextField>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ display: "flex", my: 2 }}>
+      <Box sx={{ width: "100%", mt: 4 }}>
+        <Typography variant="h5">Địa chỉ liên lạc</Typography>
+        <Box sx={{ display: "flex", my: 5 }}>
           <TextField
             label="Họ và tên lót"
-            size="small"
+            size="large"
             fullWidth
             sx={{ display: "inline-block" }}
           ></TextField>
           <Box width={20}></Box>
           <TextField
             label="Tên"
-            size="small"
+            size="large"
             fullWidth
             sx={{ display: "inline-block" }}
           ></TextField>
@@ -45,18 +55,18 @@ export default function FormInfo() {
 
         <TextField
           label="Địa chỉ"
-          size="small"
+          size="large"
           fullWidth
           sx={{ display: "inline-block" }}
         ></TextField>
 
-        <FormControl fullWidth sx={{ mt: 2 }}>
+        <FormControl fullWidth sx={{ mt: 5 }}>
           <InputLabel id="demo-simple-select-label">Chọn tỉnh/thành</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Chọn tỉnh/thành"
-            size="small"
+            size="large"
           >
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
@@ -65,7 +75,7 @@ export default function FormInfo() {
         </FormControl>
 
         <Box sx={{ display: "flex" }}>
-          <FormControl fullWidth sx={{ mt: 2 }}>
+          <FormControl fullWidth sx={{ mt: 5 }}>
             <InputLabel id="demo-simple-select-label">
               Chọn quận/huyện
             </InputLabel>
@@ -73,7 +83,7 @@ export default function FormInfo() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Chọn quận/huyện"
-              size="small"
+              size="large"
             >
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
@@ -81,7 +91,7 @@ export default function FormInfo() {
             </Select>
           </FormControl>
           <Box width={20}></Box>
-          <FormControl fullWidth sx={{ mt: 2 }}>
+          <FormControl fullWidth sx={{ mt: 5 }}>
             <InputLabel id="demo-simple-select-label">
               Chọn phường/xã
             </InputLabel>
@@ -89,7 +99,7 @@ export default function FormInfo() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Chọn phường/xã"
-              size="small"
+              size="large"
             >
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
@@ -100,9 +110,9 @@ export default function FormInfo() {
 
         <TextField
           label="Số điện thoại"
-          size="small"
+          size="large"
           fullWidth
-          sx={{ display: "inline-block", mt: 2 }}
+          sx={{ display: "inline-block", mt: 5 }}
         ></TextField>
       </Box>
       <Box sx={{ mt: 2 }}>
