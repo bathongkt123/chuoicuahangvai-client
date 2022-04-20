@@ -1,6 +1,6 @@
 import Heading from "./Heading";
 import Footer from "./Footer";
-import DeliveryForm from "./DeliveryForm";
+import ShipmentForm from "./ShipmentForm";
 import { Divider } from "@material-ui/core";
 import { Fragment } from "react";
 export default function LeftPanel() {
@@ -8,7 +8,7 @@ export default function LeftPanel() {
     <Fragment>
       <Heading />
       <Divider variant="middle" />
-      <DeliveryForm />
+      <ShipmentForm />
 
       <Divider variant="middle" sx={{ my: 2 }} />
       <Footer />

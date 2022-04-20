@@ -1,6 +1,7 @@
 import Heading from "./Heading";
 import Footer from "./Footer";
 import DeliveryForm from "./DeliveryForm";
+import ShipmentForm from "./ShipmentForm";
 import { Divider } from "@material-ui/core";
 import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
@@ -15,4 +16,4 @@ export default function LeftPanel() {
     </Fragment>
   );
 }
-export { DeliveryForm }
+export { DeliveryForm, ShipmentForm };
