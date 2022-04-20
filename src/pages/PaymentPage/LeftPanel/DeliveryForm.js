@@ -7,6 +7,7 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    Stack,
 } from "@mui/material";
 import React from "react";
 import { Button } from "@mui/material";
@@ -115,21 +116,24 @@ export default function FormInfo() {
                     sx={{ display: "inline-block", mt: 5 }}
                 ></TextField>
             </Box>
-            <Box sx={{ my: 2 }}>
-                <Button
-                    href="/cart"
-                    variant="contained"
-                    sx={{ backgroundColor: "#384257" }}
+            <Box sx={{ mt: 2 }}>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
                 >
-                    {`< Trở về giỏ hàng`}
-                </Button>
+                    <Button
+                        href="/cart"
+                        variant="contained"
+                        sx={{ backgroundColor: "#384257" }}
+                    >
+                        {`< Trở về giỏ hàng`}
+                    </Button>
 
-                <Button
-                    variant="contained"
-                    sx={{ backgroundColor: "#384257", float: "right" }}
-                >
-                    {`Chuyển đến trang vận chuyển>`}
-                </Button>
+                    <Button variant="contained" sx={{ backgroundColor: "#384257" }}>
+                        {`Chuyển đến trang vận chuyển >`}
+                    </Button>
+                </Stack>
             </Box>
         </React.Fragment>
     );

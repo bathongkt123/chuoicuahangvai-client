@@ -11,6 +11,7 @@ import AccountPage from "./pages/AccountPage"
 import AccountOrderPage from "pages/AccountOrderPage";
 import AddressPage from "pages/AccountAddressPage"
 import PaymentPage from "pages/PaymentPage"
+import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/account" element={<AccountPage />} />
