@@ -5,7 +5,8 @@ export default function Footer() {
             direction="row"
             justifyContent="space-between"
             alignItems="flex-start"
-            my='auto'
+            mt={2}
+            mb={4}
         >
             <Link variant="body1" href="/" color="inherit" underline="hover">
                 Chính sách bảo mật

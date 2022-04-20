@@ -64,6 +64,7 @@ export default function ProductTable() {
                     }
                     <TableRow>
                         <TablePagination
+
                             rowsPerPage={rowsPerPage}
                             count={keys.length}
                             page={page}

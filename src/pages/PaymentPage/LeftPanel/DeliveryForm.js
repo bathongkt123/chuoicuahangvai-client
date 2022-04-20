@@ -116,7 +116,7 @@ export default function FormInfo() {
                     sx={{ display: "inline-block", mt: 5 }}
                 ></TextField>
             </Box>
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ my: 2 }}>
                 <Stack
                     direction="row"
                     justifyContent="space-between"

@@ -12,6 +12,7 @@ import AccountOrderPage from "pages/AccountOrderPage";
 import AddressPage from "pages/AccountAddressPage"
 import PaymentPage from "pages/PaymentPage"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage"
+import { DeliveryForm } from "pages/PaymentPage/LeftPanel";
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,15 +26,17 @@ function App() {
       <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/account/address" element={<AddressPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="" element={<HomePage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="forgotpassword" element={<ForgotPasswordPage />} />
+          <Route path="menu" element={<MenuPage />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="account" element={<AccountPage />} />
+          <Route path="account/address" element={<AddressPage />} />
+          <Route path="payment" element={<PaymentPage />}>
+            <Route path="delivery" element={<DeliveryForm />} />
+          </Route>
           <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
           <Route path="/menu/:productId" element={<ProductPage />} />
         </Routes>
