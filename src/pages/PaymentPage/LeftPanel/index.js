@@ -10,6 +10,7 @@ export default function LeftPanel() {
       <Divider variant="middle" />
       <DeliveryForm />
 
+      <Divider variant="middle" sx={{ my: 2 }} />
       <Footer />
     </Fragment>
   );

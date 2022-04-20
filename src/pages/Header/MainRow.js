@@ -12,6 +12,8 @@ import * as React from 'react';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
+    display: 'flex',
+    flexGrow: 0.5,
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -42,24 +44,14 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
+    width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('xs')]: {
-            minWidth: '35ch',
-        },
-        [theme.breakpoints.up('sm')]: {
-            minWidth: '40ch',
-        },
-        [theme.breakpoints.up('md')]: {
-            minWidth: '50ch',
-        },
-        [theme.breakpoints.up('lg')]: {
-            minWidth: '60ch',
-        },
+
+
     },
 }));
 export default function MainRow() {
