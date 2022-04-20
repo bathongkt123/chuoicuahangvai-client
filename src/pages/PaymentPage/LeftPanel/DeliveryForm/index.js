@@ -13,7 +13,8 @@ import {
 import React from "react";
 import { Button } from "@mui/material";
 import Heading from "./Heading";
-export default function DeliveryForm({ setPage }) {
+export default function DeliveryForm() {
+
     return (
         <React.Fragment>
             <Heading />
