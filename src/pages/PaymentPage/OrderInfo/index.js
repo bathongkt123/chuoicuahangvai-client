@@ -27,7 +27,9 @@ export default function OrderInfo() {
                 )}
                 <Pagination count={Math.ceil(keys.length / rowsPerPage)}
                     page={page}
-                    variant="outlined" shape="rounded"
+                    variant="outlined"
+                    shape="rounded"
+                    size="large"
                     onChange={handleChange}
                     sx={{ mx: 'auto', mt: 2 }} />
             </Stack>

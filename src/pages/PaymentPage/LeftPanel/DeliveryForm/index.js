@@ -8,12 +8,16 @@ import {
     Select,
     MenuItem,
     Stack,
+    Divider
 } from "@mui/material";
 import React from "react";
 import { Button } from "@mui/material";
-export default function FormInfo() {
+import Heading from "./Heading";
+export default function DeliveryForm({ setPage }) {
     return (
         <React.Fragment>
+            <Heading />
+            <Divider variant="middle" />
             <Box sx={{ display: "flex", my: 4 }}>
                 <Typography variant="h5">Thông tin liên hệ</Typography>
                 <Box sx={{ flexGrow: 1 }} />
