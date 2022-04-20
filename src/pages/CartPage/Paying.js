@@ -56,7 +56,7 @@ export default function Paying() {
 
                     <Button
                         variant="contained"
-                        href='/payment'
+                        href='/payment/delivery'
                         sx={{ my: 1, px: 4, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>
                         Thanh toán
                     </Button>

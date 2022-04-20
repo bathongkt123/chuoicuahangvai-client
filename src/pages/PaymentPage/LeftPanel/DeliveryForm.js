@@ -114,7 +114,7 @@ export default function FormInfo() {
                     size="large"
                     fullWidth
                     sx={{ display: "inline-block", mt: 5 }}
-                ></TextField>
+                />
             </Box>
             <Box sx={{ my: 2 }}>
                 <Stack
