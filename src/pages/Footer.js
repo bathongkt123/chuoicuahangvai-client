@@ -103,7 +103,7 @@ export default function Footer() {
         </Grid>
       </Container>
 
-      <Box sx={{ bgcolor: "#212631", color: "white", px: 3 }}>
+      <Box sx={{ bgcolor: "#212631", color: "white", px: 2 }}>
         Copyright © 2021 CỬA HÀNG VẢI
       </Box>
     </Fragment>

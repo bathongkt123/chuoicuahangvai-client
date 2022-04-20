@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function ProductRow({ row, subTotal }) {
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box
                 component='img'
                 sx={{

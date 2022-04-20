@@ -1,22 +1,95 @@
 
-import { Divider } from "@mui/material";
-import { Fragment } from "react";
+import { Button, Divider, TextField, Box, Typography, Stack, Pagination } from "@mui/material";
 import ProductRow from "./ProductRow";
+import { useState } from "react";
 export default function OrderInfo() {
+    const [page, setPage] = useState(1);
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+    const rowsPerPage = 2
     const keys = Object.keys(products)
     const subTotal = key => products[key].defaultNumber * products[key].unit
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
     return (
-        <Fragment>
-            {keys.map(key =>
-            (
-                <Fragment>
+        <Stack
+            divider={<Divider />}
+            spacing={2}
+            my={2}
+        >
+            <Stack
+                divider={<Divider />}
+                spacing={2}
+                my={2}
+            >
+                {keys.slice((page - 1) * rowsPerPage, page * rowsPerPage).map(key =>
+                (
                     <ProductRow row={products[key]} subTotal={subTotal(key)} />
-                    <Divider sx={{ background: 'black' }} />
-                </Fragment>
-            )
-            )}
-        </Fragment>
+                )
+                )}
+                <Pagination count={Math.ceil(keys.length / rowsPerPage)} page={page} onChange={handleChange} />
+            </Stack>
+            <Box sx={{ display: 'flex', my: 2 }}>
+                <TextField label='Mã giảm giá' fullWidth />
+                <Box width={20} />
+                <Button
+                    variant="contained"
+                    sx={{
+                        px: 4,
+                        whiteSpace: 'nowrap',
+                        textDecoration: 'none',
+                        bgcolor: "#384257",
+                        "&:hover": { bgcolor: "#242e45" },
+                    }}
+                >
+                    Áp dụng
+                </Button>
+            </Box>
+
+            <Stack spacing={2}>
+                <Box sx={{ display: 'flex' }}>
+                    <Typography variant='h6'>
+                        Tổng sau thuế
+                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        {total}
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex' }}>
+                    <Typography variant='h6'>
+                        Mã giảm giá
+                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        -10000
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex' }}>
+                    <Typography variant='h6'>
+                        Phí vận chuyển
+                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        Miễn phí
+                    </Box>
+                </Box>
+            </Stack>
+
+
+            <Box sx={{ display: 'flex', my: 2 }}>
+                <Typography variant='h6'>
+                    Tổng phải trả
+                </Typography>
+                <Box sx={{ flexGrow: 1 }} />
+                <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                    {total - 10000}
+                </Box>
+            </Box>
+        </Stack>
+
+
+
 
     )
 }
