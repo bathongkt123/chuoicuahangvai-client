@@ -6,8 +6,9 @@ import { styled, alpha } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MoreIconResponsive from './MoreIconResponsive';
-
+import { useCookies } from 'react-cookie';
 import * as React from 'react';
+import { Badge } from '@mui/material';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -50,11 +51,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
-
-
     },
 }));
 export default function MainRow() {
+    const [cookies] = useCookies(['cart']);
+    const products = cookies.cart
+    const cartNumber = products ? Object.keys(products).length : 0
     return (
         <Box sx={{
             display: 'flex',
@@ -99,14 +101,20 @@ export default function MainRow() {
                     }}
                     href='/login'
                 >
-                    <AccountCircleIcon fontSize='small' sx={{ mr: 0.5 }} />
+
                     Tài khoản
                 </Button>
                 <Box width={24}></Box>
+
                 <Button sx={{ fontWeight: 'bold', border: 'none', p: 0, color: 'inherit', whiteSpace: 'nowrap' }} href='/cart'>
-                    <ShoppingCartIcon fontSize='small' sx={{ mr: 0.5 }} />
                     Giỏ Hàng
+                    <Badge invisible={!cartNumber} badgeContent={cartNumber} color="secondary" sx={{ p: 0.8 }}>
+                        <ShoppingCartIcon fontSize='small' />
+                    </Badge>
+
                 </Button>
+
+
             </Box>
 
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
