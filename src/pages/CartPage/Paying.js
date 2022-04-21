@@ -39,7 +39,7 @@ export default function Paying() {
       <ToastContainer
         position="top-right"
         autoClose={1500}
-        hideProgressBar={false}
+        hideProgressBar
         newestOnTop={false}
         closeOnClick
         rtl={false}
