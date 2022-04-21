@@ -1,7 +1,8 @@
 import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Heading() {
+  const navigate = useNavigate()
   return (
     <Box
       sx={{
@@ -13,7 +14,9 @@ export default function Heading() {
     >
       <h2>Royal Fabric</h2>
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/cart">
+        <Link underline="hover" color="inherit" component="button" variant="body1" onClick={() => {
+          navigate('/cart');
+        }}>
           Giỏ hàng
         </Link>
 

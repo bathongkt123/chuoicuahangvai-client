@@ -1,20 +1,15 @@
-
-
 import Box from '@mui/material/Box';
-
-import { Button, Checkbox, FormControl, FormControlLabel, InputBase, Link } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, InputBase } from '@mui/material';
 import { Typography } from '@mui/material';
-import { createSlice, configureStore } from '@reduxjs/toolkit'
 
+import { useNavigate } from 'react-router-dom';
 export default function Paying() {
-    store.subscribe(() => console.log(store.getState()))
+    const navigate = useNavigate()
 
-    // Still pass action objects to `dispatch`, but they're created for us
-    store.dispatch(incremented())
-    // {value: 1}
-    store.dispatch(incremented())
-    // {value: 2}
-    store.dispatch(decremented())
+    const handlePaying = () => {
+
+        navigate('/payment/delivery')
+    }
     return (
 
         <Box
@@ -64,13 +59,8 @@ export default function Paying() {
 
                     <Button
                         variant="contained"
-                        href='/payment/delivery'
-                        to={{
-                            pathname: "/payment/delivery",
-                            data: 'abc'
-                        }}
+                        onClick={handlePaying}
                         sx={{ my: 1, px: 4, bgcolor: '#384257', "&:hover": { bgcolor: "#242e45" } }}>
-
                         Thanh toán
                     </Button>
 
@@ -82,26 +72,56 @@ export default function Paying() {
 
     )
 }
-const counterSlice = createSlice({
-    name: 'counter',
-    initialState: {
-        value: 0
-    },
-    reducers: {
-        incremented: state => {
-            // Redux Toolkit allows us to write "mutating" logic in reducers. It
-            // doesn't actually mutate the state because it uses the Immer library,
-            // which detects changes to a "draft state" and produces a brand new
-            // immutable state based off those changes
-            state.value += 1
-        },
-        decremented: state => {
-            state.value -= 1
-        }
-    }
-})
-export const { incremented, decremented } = counterSlice.actions
+const products = {
+    2: {
+        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        name: 'Breakfast',
+        defaultNumber: 2,
+        unit: 40000
 
-const store = configureStore({
-    reducer: counterSlice.reducer
-})
+    },
+    10: {
+        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+        name: 'Burger',
+        defaultNumber: 3,
+        unit: 20000
+    },
+    20: {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        name: 'Coffee',
+        defaultNumber: 1,
+        unit: 15000
+    },
+    40: {
+        img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
+        name: 'Hats',
+        defaultNumber: 2,
+        unit: 15000
+
+    },
+    80: {
+        img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
+        name: 'Honey',
+        defaultNumber: 3,
+        unit: 50000
+    },
+    100: {
+        img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
+        name: 'Bicycle',
+        defaultNumber: 1,
+        unit: 100000
+    },
+    120: {
+        img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+        name: "Starfish",
+        defaultNumber: 2,
+        unit: 1000000
+    },
+    140: {
+        img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+        name: "Mushroom",
+        defaultNumber: 4,
+        unit: 100000
+    },
+
+}

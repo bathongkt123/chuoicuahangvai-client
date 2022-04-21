@@ -121,16 +121,16 @@ export default function DeliveryForm() {
                     sx={{ display: "inline-block", mt: 5 }}
                 />
             </Box>
-            <Box sx={{ my: 2 }}>
+            <Box>
                 <Stack
-                    direction="row"
+                    direction={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
                     <Button
                         href="/cart"
                         variant="contained"
-                        sx={{ backgroundColor: "#384257" }}
+                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.75rem' }}
                     >
                         {`< Trở về giỏ hàng`}
                     </Button>
@@ -138,7 +138,7 @@ export default function DeliveryForm() {
                     <Button
                         href="/payment/shipment"
                         variant="contained"
-                        sx={{ backgroundColor: "#384257" }}
+                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.75rem' }}
                     >
                         {`Chuyển đến trang vận chuyển >`}
                     </Button>
