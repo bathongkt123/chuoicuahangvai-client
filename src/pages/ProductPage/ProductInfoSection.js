@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Data } from "../../productData";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "features/cartState";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase } from "@mui/material";
 function UnitSelect({ number, setNumber }) {
@@ -40,6 +42,10 @@ export default function ProductInfoSection() {
 
   const { productId } = useParams();
   const thisProduct = Data.find((prod) => prod.id === productId);
+  const dispatch = useDispatch();
+  const haddleAddProduct = (thisProduct) => {
+    dispatch(addToCart(thisProduct));
+  };
   const total = number * thisProduct.price;
   return (
     <div>
@@ -54,7 +60,11 @@ export default function ProductInfoSection() {
       <h2 style={{ display: "inline" }}>{number} mét</h2>
       <br></br>
       <div style={{ margin: "10px" }}>
-        <Button variant="contained" sx={{ p: 2, backgroundColor: "#384257" }}>
+        <Button
+          onClick={() => haddleAddProduct(thisProduct)}
+          variant="contained"
+          sx={{ p: 2, backgroundColor: "#384257" }}
+        >
           Thêm vào giỏ hàng
         </Button>
 
