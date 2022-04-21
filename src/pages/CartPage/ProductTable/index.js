@@ -11,7 +11,6 @@ function ccyFormat(num) {
     return `${num.toFixed(2)}`;
 }
 
-
 export default function ProductTable() {
     const [numbers, setNumbers] = useState(
         Object.entries(products).reduce((result, [key, value]) =>
@@ -64,7 +63,7 @@ export default function ProductTable() {
                     }
                     <TableRow>
                         <TablePagination
-                            size="large"
+                            size="medium"
                             rowsPerPage={rowsPerPage}
                             count={keys.length}
                             page={page}
