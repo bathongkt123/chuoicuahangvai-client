@@ -3,12 +3,24 @@ import { Button, Checkbox, FormControl, FormControlLabel, InputBase } from '@mui
 import { Typography } from '@mui/material';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 export default function Paying() {
     const navigate = useNavigate()
     const [cookies, setCookie] = useCookies(['cart']);
+    const [checkTerm, setCheckTerm] = useState(false)
+
     const handlePaying = () => {
-        setCookie('cart', products, { path: '/' })
-        navigate('/payment/delivery')
+        if (checkTerm) {
+            setCookie('cart', products, { path: '/' })
+            navigate('/payment/delivery')
+        }
+        else {
+
+        }
+
+    }
+    const handleCheckTerm = e => {
+        setCheckTerm(e.target.checked)
     }
     return (
 
@@ -52,7 +64,7 @@ export default function Paying() {
                         labelPlacement="end"
                     />
                     <FormControlLabel
-                        control={<Checkbox />}
+                        control={<Checkbox checked={checkTerm} onChange={handleCheckTerm} />}
                         label=" Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật"
                         labelPlacement="end"
                     />
