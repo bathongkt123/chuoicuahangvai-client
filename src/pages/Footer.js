@@ -5,9 +5,9 @@ import { Box, Container, Grid, Link } from "@mui/material";
 export default function Footer() {
   return (
     <Fragment>
-      <Container
+      <Box
         maxWidth="xl"
-        sx={{ display: "flex", mt: "auto", bgcolor: "#2C3444", color: "white" }}
+        sx={{ display: "flex", mt: "auto", bgcolor: "#2C3444", color: "white", px: 2 }}
       >
         <Grid container spacing={5}>
           <Grid item xs={12} md={3}>
@@ -101,7 +101,7 @@ export default function Footer() {
             </Box>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
 
       <Box sx={{ bgcolor: "#212631", color: "white", px: 2 }}>
         Copyright © 2021 CỬA HÀNG VẢI

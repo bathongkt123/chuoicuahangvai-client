@@ -11,7 +11,6 @@ function ccyFormat(num) {
     return `${num.toFixed(2)}`;
 }
 
-
 export default function ProductTable() {
     const [numbers, setNumbers] = useState(
         Object.entries(products).reduce((result, [key, value]) =>
