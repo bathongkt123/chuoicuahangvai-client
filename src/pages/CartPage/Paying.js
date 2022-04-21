@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Paying() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["cart"]);
+  const [setCookie] = useCookies(["cart"]);
   const [checkTerm, setCheckTerm] = useState(false);
 
   const handlePaying = () => {
