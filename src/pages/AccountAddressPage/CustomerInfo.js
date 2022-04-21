@@ -1,27 +1,27 @@
-import { Typography, Box, Button, ButtonGroup, Divider } from "@mui/material";
+import { Box, Button, Divider, Stack } from "@mui/material";
+import React from "react";
+import SingleContact from "./SingleContact";
 
-export default function CustomerInfo() {
+export default function CustomerInfo({
+  contacts,
+  deleteContact,
+  setEdit,
+  edit,
+}) {
+  const keys = Object.keys(contacts);
   return (
-    <Box>
-      <h2>Lê Bá Thông</h2>
-      <Typography variant="body1">268 Lý Thường Kiệt</Typography>
-      <Typography variant="body1">Phường 14</Typography>
-      <Typography variant="body1">Quận 10</Typography>
-      <Typography variant="body1">TP Hồ Chí Minh</Typography>
-      <Typography variant="body1">(+84)911357191</Typography>
-      <ButtonGroup sx={{ whiteSpace: "nowrap", my: 2 }}>
-        <Button variant="contained" sx={{ backgroundColor: "#384257" }}>
-          Chỉnh sửa
-        </Button>
-        <Box width={20}></Box>
-        <Button variant="contained" sx={{ backgroundColor: "#384257" }}>
-          Xóa
-        </Button>
-      </ButtonGroup>
-      <Divider />
-      <Button variant="contained" sx={{ backgroundColor: "#384257", my: 2 }}>
-        Thêm địa chỉ mới
-      </Button>
+    <Box sx={{ my: 2 }}>
+      <Stack divider={<Divider />} spacing={2}>
+        {keys.map((key) => (
+          <SingleContact
+            contact={contacts[key]}
+            deleteContact={deleteContact(key)}
+            setEdit={() => setEdit(key)}
+            id={key}
+            edit={edit}
+          />
+        ))}
+      </Stack>
     </Box>
   );
 }
