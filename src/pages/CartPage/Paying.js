@@ -1,13 +1,13 @@
 import Box from '@mui/material/Box';
 import { Button, Checkbox, FormControl, FormControlLabel, InputBase } from '@mui/material';
 import { Typography } from '@mui/material';
-
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 export default function Paying() {
     const navigate = useNavigate()
-
+    const [cookies, setCookie] = useCookies(['cart']);
     const handlePaying = () => {
-
+        setCookie('cart', products, { path: '/' })
         navigate('/payment/delivery')
     }
     return (
