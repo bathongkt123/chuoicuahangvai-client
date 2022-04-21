@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 export default function Paying() {
     const navigate = useNavigate()
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [_, setCookie] = useCookies(['cart']);
     const [checkTerm, setCheckTerm] = useState(false)
 
     const handlePaying = () => {

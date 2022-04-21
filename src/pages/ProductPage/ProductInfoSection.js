@@ -39,10 +39,12 @@ function UnitSelect({ number, setNumber }) {
 }
 
 export default function ProductInfoSection() {
-  console.log('abc')
-  const [cookies, setCookie, removeCookie] = useCookies();
-  // removeCookie('cart', { path: '/' })
+
+  const [cookies, setCookie, removeCookie] = useCookies(['cart']);
+
   const addToCart = () => {
+    removeCookie('cart', { path: '/' })
+    console.log('abc')
     toast.success("Đã thêm vào giỏ hàng");
     const currentCart = cookies.cart || {}
     const newCart = { ...currentCart, [productId]: (currentCart[productId] || 0) + number }
