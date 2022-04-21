@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Data } from "../../productData";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase } from "@mui/material";
 function UnitSelect({ number, setNumber }) {
@@ -36,13 +38,25 @@ function UnitSelect({ number, setNumber }) {
 }
 
 export default function ProductInfoSection() {
-  const [number, setNumber] = useState(0.25);
+  const notify = () => toast.success("Đã thêm vào giỏ hàng");
 
+  const [number, setNumber] = useState(0.25);
   const { productId } = useParams();
   const thisProduct = Data.find((prod) => prod.id === productId);
   const total = number * thisProduct.price;
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
       <h1>{thisProduct.name}</h1>
       <h2>{thisProduct.price}đ trên mét</h2>
       <p>{thisProduct.description}</p>
@@ -54,7 +68,11 @@ export default function ProductInfoSection() {
       <h2 style={{ display: "inline" }}>{number} mét</h2>
       <br></br>
       <div style={{ margin: "10px" }}>
-        <Button variant="contained" sx={{ p: 2, backgroundColor: "#384257" }}>
+        <Button
+          onClick={notify}
+          variant="contained"
+          sx={{ p: 2, backgroundColor: "#384257" }}
+        >
           Thêm vào giỏ hàng
         </Button>
 
