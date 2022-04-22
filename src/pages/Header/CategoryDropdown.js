@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from "@mui/material";
+import axios from 'axios'
+import qs from 'qs'
 const items = [
     "Vải lụa hà đông",
     "Vải ba tư",
@@ -12,6 +14,22 @@ const items = [
 const ITEM_HEIGHT = 48;
 
 export default function CategoryDropdown() {
+    const [categories, setCategories] = useState([])
+    const fetchData = async () => {
+        const query = qs.stringify(
+            {},
+            { encodeValuesOnly: true },
+        )
+        const result = await axios.get(
+            `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`,
+        )
+        setCategories(result.data.data)
+        console.log(result)
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
+    ////
     const [dropdownAnchor, setDropdownAnchor] = React.useState(null);
     const isDropdown = Boolean(dropdownAnchor);
     const handleMenuClose = () => {
@@ -43,9 +61,9 @@ export default function CategoryDropdown() {
                 },
             }}
         >
-            {items.map((item) => (
-                <MenuItem sx={{ fontWeight: 'bold' }} key={item}>
-                    {item}
+            {categories.map((item) => (
+                <MenuItem sx={{ fontWeight: 'bold' }} key={item.id}>
+                    {item.attributes.name}
                 </MenuItem>
             ))}
         </Menu>

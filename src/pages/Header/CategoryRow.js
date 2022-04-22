@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import CategoryDropdown from './CategoryDropdown';
 import React from 'react';
 import { Divider } from '@mui/material';
-const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá', 'Về chúng tôi']
+const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá']
 export default function CategoryRow() {
     return (
         <Box sx={{
