@@ -4,40 +4,36 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
-
-
+import { Breadcrumbs, Container, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 export default function MenuPage() {
+  const navigate = useNavigate()
   return (
-    <div
-      style={{
-        textAlign: "center",
-        justifyContent: "center",
+    <Container
+      sx={{
         alignItems: "center",
-        margin: "50px",
+        display: 'flex',
+        flexDirection: 'column',
       }}
+      maxWidth='xl'
     >
-      <Box>
-        <h1>HÀNG BÁN CHẠY NHẤT</h1>
-        <Link href="/" color="inherit" style={{ paddingRight: "5px" }}>
+
+      <h1>HÀNG BÁN CHẠY NHẤT</h1>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" component="button" variant='body1' color="inherit" onClick={() => navigate('/')} >
           Trang chủ
         </Link>
-        /
-        <Link href="/menu" color="inherit" style={{ padding: "0px 5px" }}>
-          Sản phẩm
-        </Link>
-        /
-        <p style={{ display: "inline-block", paddingLeft: "5px" }}>
-          Bán chạy nhất
-        </p>
-        <Grid container spacing={10}>
-          <Grid item xs={12} sm={3}>
-            <FilterSection />
-          </Grid>
-          <Grid item xs={12} sm={8} style={{ marginTop: "20px" }}>
-            <ProductSection />
-          </Grid>
+        <Typography color="#0f0d0c">Sản phẩm</Typography>
+      </Breadcrumbs>
+      <Grid container spacing={10}>
+        <Grid item xs={12} sm={3}>
+          <FilterSection />
         </Grid>
-      </Box>
-    </div>
+        <Grid item xs={12} sm={8} style={{ marginTop: "20px" }}>
+          <ProductSection />
+        </Grid>
+      </Grid>
+
+    </Container>
   );
 }

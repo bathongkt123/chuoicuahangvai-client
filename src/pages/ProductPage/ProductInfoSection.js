@@ -67,7 +67,7 @@ export default function ProductInfoSection({
   const [number, setNumber] = useState(0.25);
 
   const thisProduct = Data.find((prod) => prod.id === productId);
-  const total = number * thisProduct.price;
+  const total = number * productPrice;
 
   return (
     <div>
