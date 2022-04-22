@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 import { Button } from "@mui/material";
 import axios from "axios";
 import qs from "qs";
-
+const items = ["Vải lụa hà đông", "Vải ba tư", "Vải trung đông", "Vải hiếm"];
 const ITEM_HEIGHT = 48;
 
 export default function CategoryDropdown() {
