@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, Fragment } from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from "@mui/material";
-import axios from 'axios'
-import qs from 'qs'
 
 const ITEM_HEIGHT = 48;
 export default function CategoryDropdown({ categories }) {
-    const [dropdownAnchor, setDropdownAnchor] = React.useState(null);
+    const [dropdownAnchor, setDropdownAnchor] = useState(null);
     const isDropdown = Boolean(dropdownAnchor);
     const handleMenuClose = () => {
         setDropdownAnchor(null);
@@ -47,7 +45,7 @@ export default function CategoryDropdown({ categories }) {
         </Menu>
     );
     return (
-        <React.Fragment>
+        <Fragment>
             <Button sx={{
                 fontWeight: 'bold',
                 color: 'inherit',
@@ -62,7 +60,7 @@ export default function CategoryDropdown({ categories }) {
                 Danh mục sản phẩm
             </Button>
             {renderCategoryMenu}
-        </React.Fragment>
+        </Fragment>
 
     )
 }

@@ -6,9 +6,6 @@ import { Card, CardContent, CardMedia } from "@mui/material";
 import { Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import axios from 'axios'
-import qs from 'qs'
-import { useState, useEffect } from 'react';
 export default function ResponsesSection({ responses }) {
 
   return (
