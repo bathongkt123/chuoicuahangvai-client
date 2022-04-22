@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Data } from "../../productData";
+import React from "react";
+
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
@@ -66,8 +65,7 @@ export default function ProductInfoSection({
 
   const [number, setNumber] = useState(0.25);
 
-  const thisProduct = Data.find((prod) => prod.id === productId);
-  const total = number * thisProduct.price;
+  const total = number * productPrice;
 
   return (
     <div>
