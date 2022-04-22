@@ -47,7 +47,7 @@ export default function SlidesSection() {
 
 function Item({ item }) {
   return (
-    <React.Fragment>
+    <Box>
       <Box
         component="img"
         sx={{
@@ -70,6 +70,6 @@ function Item({ item }) {
       >
         {item.text}
       </Box>
-    </React.Fragment>
+    </Box>
   );
 }
