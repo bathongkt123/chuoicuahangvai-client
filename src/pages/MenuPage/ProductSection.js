@@ -18,7 +18,6 @@ export default function ProductSection() {
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
-    console.log(resultProducts);
     setProducts(resultProducts.data.data);
 
   };

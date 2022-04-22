@@ -33,9 +33,7 @@ export default function HomePage() {
     const result = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/homepage?${query}`
     );
-
     setHomePage(result.data.data.attributes);
-    console.log(result.data.data.attributes);
   };
   useEffect(() => {
     fetchData();

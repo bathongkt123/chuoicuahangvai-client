@@ -15,9 +15,9 @@ export default function ProductPage() {
   const [productOrigin, setProductOrigin] = useState("");
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
-  const [productImages, setProductImages] = useState([]);
+  const [productImages, setProductImages] = useState('');
   const { productId } = useParams();
-  const fetchProductData = async () => {
+  const fetchData = async () => {
     if (productId === null) return;
     const query = qs.stringify(
       {
@@ -36,20 +36,19 @@ export default function ProductPage() {
     const response = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
     );
-    console.log(response);
     const data = response.data.data;
-    setProductName(data.attributes.product.data.attributes.name);
-    setProductPrice(data.attributes.price);
-    setProductDescription(data.attributes.product.data.attributes.description);
-    setProductPattern(data.attributes.pattern.data.attributes.name);
-    setProductOrigin(data.attributes.origin.data.attributes.name);
-    setProductWidth(data.attributes.width.data.attributes.name);
-    setProductStretch(data.attributes.stretch.data.attributes.name);
-    setProductImages(data.attributes.images.data[0].attributes.url);
-    console.log(productImages);
+    setProductName(data.attributes.product.data.attributes.name || '');
+    setProductPrice(data.attributes.price || 0);
+    setProductDescription(data.attributes.product.data.attributes.description || '');
+    setProductPattern(data.attributes.pattern.data.attributes.name || '');
+    setProductOrigin(data.attributes.origin.data.attributes.name || '');
+    setProductWidth(data.attributes.width.data.attributes.name || '');
+    setProductStretch(data.attributes.stretch.data.attributes.name || '');
+    setProductImages(data.attributes.images.data[0].attributes.url || '');
+    console.log(`${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`);
   };
   useEffect(() => {
-    fetchProductData();
+    fetchData();
   }, []);
 
   return (
