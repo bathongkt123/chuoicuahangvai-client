@@ -4,36 +4,42 @@ import SlidesSection from "./SlidesSection";
 import ProductsSection from "./ProductsSection";
 import RegisterSection from "./RegisterSection";
 import ResponsesSection from "./ResponsesSection";
-import axios from 'axios'
-import qs from 'qs'
-import { useState, useEffect } from 'react';
+import axios from "axios";
+import qs from "qs";
+import { useState, useEffect } from "react";
 export default function HomePage() {
   const [homepage, setHomePage] = useState({
     member_responses: [],
     new_products_banners: {
-      data: []
+      data: [],
     },
     features_sku: {
-      data: []
+      data: [],
     },
-  })
+  });
   const fetchData = async () => {
     const query = qs.stringify(
       {
-        populate: ['member_responses', 'member_responses.avatar', 'new_products_banners', 'features_sku', 'features_sku.images']
+        populate: [
+          "member_responses",
+          "member_responses.avatar",
+          "new_products_banners",
+          "features_sku",
+          "features_sku.images",
+        ],
       },
-      { encodeValuesOnly: true },
-    )
+      { encodeValuesOnly: true }
+    );
     const result = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/homepage?${query}`,
-    )
+      `${process.env.REACT_APP_STRAPI_URL}/api/homepage?${query}`
+    );
 
-    setHomePage(result.data.data.attributes)
-    console.log(result.data.data.attributes)
-  }
+    setHomePage(result.data.data.attributes);
+    console.log(result.data.data.attributes);
+  };
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
   return (
     <Box
       component="div"

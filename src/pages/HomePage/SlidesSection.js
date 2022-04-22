@@ -57,7 +57,5 @@ function Item({ item }) {
         SẢN PHẨM MỚI
       </Box>
     </Box>
-
-
   );
 }

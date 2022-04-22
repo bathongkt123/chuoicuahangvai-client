@@ -6,7 +6,6 @@ import { Button, Card, CardContent } from "@mui/material";
 import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 export default function RegisterSection({ signupContent }) {
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -35,9 +34,7 @@ export default function RegisterSection({ signupContent }) {
             }}
           >
             <CardContent>
-              <Typography variant="body2">
-                {signupContent}
-              </Typography>
+              <Typography variant="body2">{signupContent}</Typography>
             </CardContent>
           </Card>
           <Box width={32}></Box>

@@ -7,7 +7,6 @@ import { Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 export default function ResponsesSection({ responses }) {
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -54,32 +53,3 @@ export default function ResponsesSection({ responses }) {
     </React.Fragment >
   );
 }
-const items = [
-  {
-    name: "Aragorn",
-    review:
-      "asdfadsfdadfssdfdfsadfdsfadfsaafdsdfLorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Boromir",
-    review: "Lorem ipsum dolor sit amet, us in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Faramir",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Gandalf",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Homeless",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-];
