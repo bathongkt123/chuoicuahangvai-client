@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import MoreIconResponsive from './MoreIconResponsive';
 import { useCookies } from 'react-cookie';
 import * as React from 'react';

@@ -6,7 +6,11 @@ import { Card, CardContent, CardMedia } from "@mui/material";
 import { Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-export default function ResponsesSection() {
+import axios from 'axios'
+import qs from 'qs'
+import { useState, useEffect } from 'react';
+export default function ResponsesSection({ responses }) {
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -24,11 +28,12 @@ export default function ResponsesSection() {
             p: 1,
           }}
         >
-          {items.map((item) => (
+          {responses.map((item) => (
             <Card
-              align="center"
+              align='center'
               key={item.name}
               sx={{
+                alignItems: 'center',
                 border: "black solid 1px",
                 m: 1,
                 display: "flex",
@@ -37,15 +42,16 @@ export default function ResponsesSection() {
             >
               <CardMedia
                 component="img"
-                image={item.image}
+                image={`${process.env.REACT_APP_STRAPI_URL}${item.avatar.data.attributes.url}`}
                 alt="an avatar"
                 loading="lazy"
+                sx={{ width: 210, height: 210 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <FontAwesomeIcon icon={faCoffee} />
                 <FontAwesomeIcon icon={faCoffee} />
-                <Typography variant="body2" color="text.secondary">
-                  {item.review}
+                <Typography variant="body2" color="text.secondary" width='40ch'>
+                  {item.description}
                 </Typography>
               </CardContent>
               <CardContent>
@@ -60,7 +66,7 @@ export default function ResponsesSection() {
           ))}
         </Box>
       </Container>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 const items = [

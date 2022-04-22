@@ -5,7 +5,8 @@ import Container from "@mui/material/Container";
 import { Button, Card, CardContent } from "@mui/material";
 import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
-export default function RegisterSection() {
+export default function RegisterSection({ signupContent }) {
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -35,21 +36,7 @@ export default function RegisterSection() {
           >
             <CardContent>
               <Typography variant="body2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                congue velit ut tempor tincidunt. Mauris feugiat sagittis
-                viverra. Mauris luctus in diam sit amet ultricies. Donec
-                tincidunt, ligula in dignissim consectetur, nunc velit fringilla
-                lectus, sit amet molestie risus diam non felis. Vivamus
-                consectetur faucibus ex. Fusce lacinia massa ut ligula
-                efficitur, at ultricies metus maximus. Fusce porta, nunc in
-                feugiat efficitur, mauris mi tempus magna, et interdum neque
-                odio quis est. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Donec nulla augue, finibus quis mi eget,
-                accumsan dignissim enim. Nulla quis pulvinar turpis. Vestibulum
-                sit amet faucibus lorem, vel vehicula sapien. Suspendisse
-                potenti. Nam porta aliquam lorem id semper. Quisque ligula
-                metus, rutrum eget pulvinar vel, gravida vitae sapien. Mauris ut
-                volutpat quam, sed condimentum felis. Aenean ac finibus est.
+                {signupContent}
               </Typography>
             </CardContent>
           </Card>

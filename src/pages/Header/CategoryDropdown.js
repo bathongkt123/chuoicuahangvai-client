@@ -5,31 +5,9 @@ import Menu from '@mui/material/Menu';
 import { Button } from "@mui/material";
 import axios from 'axios'
 import qs from 'qs'
-const items = [
-    "Vải lụa hà đông",
-    "Vải ba tư",
-    "Vải trung đông",
-    "Vải hiếm",
-]
-const ITEM_HEIGHT = 48;
 
-export default function CategoryDropdown() {
-    const [categories, setCategories] = useState([])
-    const fetchData = async () => {
-        const query = qs.stringify(
-            {},
-            { encodeValuesOnly: true },
-        )
-        const result = await axios.get(
-            `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`,
-        )
-        setCategories(result.data.data)
-        console.log(result)
-    }
-    useEffect(() => {
-        fetchData()
-    }, [])
-    ////
+const ITEM_HEIGHT = 48;
+export default function CategoryDropdown({ categories }) {
     const [dropdownAnchor, setDropdownAnchor] = React.useState(null);
     const isDropdown = Boolean(dropdownAnchor);
     const handleMenuClose = () => {

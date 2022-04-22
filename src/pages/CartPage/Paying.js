@@ -13,15 +13,9 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Paying() {
-<<<<<<< HEAD
     const navigate = useNavigate()
     const [_, setCookie] = useCookies(['cart']);
     const [checkTerm, setCheckTerm] = useState(false)
-=======
-  const navigate = useNavigate();
-  const [setCookie] = useCookies(["cart"]);
-  const [checkTerm, setCheckTerm] = useState(false);
->>>>>>> b2160b7b4f36bc46256ef876a3f0bb317470d8d1
 
     const handlePaying = () => {
         if (checkTerm) {

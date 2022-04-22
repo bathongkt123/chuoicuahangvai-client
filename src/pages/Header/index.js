@@ -8,6 +8,9 @@ import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import PropTypes from 'prop-types';
+import axios from 'axios'
+import qs from 'qs'
+import { useState, useEffect } from 'react';
 function HideOnScroll(props) {
     const { children } = props;
     const trigger = useScrollTrigger();
@@ -20,8 +23,19 @@ function HideOnScroll(props) {
 HideOnScroll.propTypes = {
     children: PropTypes.element.isRequired,
 };
-export default function Header() {
 
+export default function Header() {
+    const [ads, setAds] = useState('')
+    const [categories, setCategories] = useState([])
+    const fetchData = async () => {
+        let result = await axios.get(`${process.env.REACT_APP_STRAPI_URL}/api/product-categories`)
+        setCategories(result.data.data)
+        result = await axios.get(`${process.env.REACT_APP_STRAPI_URL}/api/homepage`)
+        setAds(result.data.data.attributes.header_banner)
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
     return (
         <React.Fragment>
             <HideOnScroll>
@@ -35,10 +49,10 @@ export default function Header() {
                     }} >
                         <Box sx={{ width: '100%' }}>
                             <MainRow />
-                            <CategoryRow />
+                            <CategoryRow categories={categories} />
                         </Box>
                     </Toolbar>
-                    <AdsRow />
+                    <AdsRow ads={ads} />
                 </AppBar>
             </HideOnScroll>
 

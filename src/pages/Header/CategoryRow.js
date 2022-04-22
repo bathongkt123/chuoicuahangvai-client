@@ -3,14 +3,14 @@ import CategoryDropdown from './CategoryDropdown';
 import React from 'react';
 import { Divider } from '@mui/material';
 const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá']
-export default function CategoryRow() {
+export default function CategoryRow({ categories }) {
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'row',
             my: 1
         }}>
-            <CategoryDropdown />
+            <CategoryDropdown categories={categories} />
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box sx={{
                 display: { xs: 'none', md: 'flex' },
