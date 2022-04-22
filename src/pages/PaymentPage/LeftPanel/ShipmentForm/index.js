@@ -11,7 +11,9 @@ import {
 import React from "react";
 import { Button, Divider } from "@mui/material";
 import Heading from "./Heading";
-export default function FormInfo() {
+import { useNavigate } from "react-router-dom";
+export default function ShipmentForm() {
+  const navigate = useNavigate()
   return (
     <React.Fragment>
       <Heading />
@@ -123,19 +125,19 @@ export default function FormInfo() {
           alignItems="flex-start"
         >
           <Button
-            href="/payment/delivery"
+            onClick={() => navigate('/payment/delivery')}
             variant="contained"
-            sx={{ backgroundColor: "#384257" }}
+            sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
           >
             {`< Trở về thông tin`}
           </Button>
 
           <Button
-            href="/payment/paymentfinish"
+            onClick={() => navigate('/payment/paymentfinish')}
             variant="contained"
-            sx={{ backgroundColor: "#384257" }}
+            sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
           >
-            {`Chuyển đến trang thanh toán >`}
+            {`Đến trang thanh toán >`}
           </Button>
         </Stack>
       </Box>

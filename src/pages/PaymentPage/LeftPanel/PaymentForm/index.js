@@ -14,7 +14,9 @@ import Checkbox from "@mui/material/Checkbox";
 
 import { Button } from "@mui/material";
 import Heading from "./Heading";
-export default function PaymentForm({ setPage }) {
+import { useNavigate } from "react-router-dom";
+export default function PaymentForm() {
+  const navigate = useNavigate()
   return (
     <React.Fragment>
       <Heading />
@@ -152,16 +154,16 @@ export default function PaymentForm({ setPage }) {
           alignItems="flex-start"
         >
           <Button
-            href="/payment/shipment"
+            onClick={() => navigate('/payment/shipment')}
             variant="contained"
-            sx={{ backgroundColor: "#384257" }}
+            sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
           >
             {`< Trở về trang vận chuyển`}
           </Button>
 
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#384257", px: 4, py: 2 }}
+            sx={{ backgroundColor: "#384257", p: 2, "&:hover": { bgcolor: "#242e45" }, }}
             size="large"
           >
             Đặt hàng

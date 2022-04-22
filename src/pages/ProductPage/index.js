@@ -16,9 +16,7 @@ export default function ProductPage() {
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
   const [productImages, setProductImages] = useState([]);
-
   const { productId } = useParams();
-
   const fetchProductData = async () => {
     if (productId === null) return;
     const query = qs.stringify(
@@ -51,10 +49,7 @@ export default function ProductPage() {
     console.log(productImages);
   };
   useEffect(() => {
-    async function fetchData() {
-      fetchProductData();
-    }
-    fetchData();
+    fetchProductData();
   }, []);
 
   return (

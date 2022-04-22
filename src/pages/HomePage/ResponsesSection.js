@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,34 +8,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 export default function ResponsesSection({ responses }) {
   return (
-    <React.Fragment>
-      <CssBaseline />
-
-      <Typography variant="h4" align="center">
+    <Container maxWidth='xl'>
+      <Typography variant="h4" align="center" my={3}>
         <Box fontWeight="bold">PHẢN HỒI TỪ KHÁCH HÀNG</Box>
       </Typography>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' }, gap: 2, p: 2 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' }, gap: 2 }}>
         {responses.map((item) => (
-          <Card align='center' sx={{
-            border: "black solid 1px",
-            display: "flex",
-            flexDirection: "column",
-
-          }}>
+          <Card
+            key={item.id}
+            align='center'
+            sx={{
+              border: "black solid 1px",
+              display: "flex",
+              flexDirection: "column",
+            }}>
             <CardMedia
               component="img"
               image={`${process.env.REACT_APP_STRAPI_URL}${item.avatar.data.attributes.url}`}
               alt="an avatar"
               loading="lazy"
-              sx={{ height: '10rem', objectFit: 'contain', pt: 2 }}
+              sx={{ height: '15rem', objectFit: 'fill' }}
             />
-            <CardContent sx={{ flexGrow: 1 }}>
+            <CardContent>
               <FontAwesomeIcon icon={faCoffee} />
               <FontAwesomeIcon icon={faCoffee} />
+
               <Typography paragraph component="div">
                 {item.description}
               </Typography>
             </CardContent>
+            <Box sx={{ flexGrow: 1 }} />
             <CardContent>
               <Typography gutterBottom variant="h6" component="div">
                 {item.name}
@@ -50,6 +52,6 @@ export default function ResponsesSection({ responses }) {
         ))}
       </Box>
 
-    </React.Fragment >
+    </Container >
   );
 }

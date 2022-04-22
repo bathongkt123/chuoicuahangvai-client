@@ -1,15 +1,13 @@
-import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import * as React from 'react';
-import { Button, Divider } from '@mui/material';
+import { useState, Fragment } from 'react';
+import { Badge, Link, MenuItem, Menu, IconButton, Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const ITEM_HEIGHT = 48;
-const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá', 'Về chúng tôi']
-export default function MoreIconResponsive() {
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+export default function MoreIconResponsive({ cartNumber }) {
+    const navigate = useNavigate()
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
@@ -42,24 +40,42 @@ export default function MoreIconResponsive() {
             }}
         >
             <MenuItem key='account'>
-                <Button
+                <Link
+                    component="button"
+                    underline="none"
                     sx={{
-                        fontWeight: 'bold',
-                        border: 'none',
-                        p: 0,
-                        color: 'inherit',
-                        whiteSpace: 'nowrap',
+                        fontSize: '1rem',
+                        fontWeight: "bold",
+                        color: "inherit",
+                        whiteSpace: "nowrap",
                     }}
+                    onClick={() => navigate('/login')}
                 >
-                    <AccountCircleIcon fontSize='small' sx={{ mr: 0.5 }} />
                     Tài khoản
-                </Button>
+                </Link>
             </MenuItem>
             <MenuItem key='cart'>
-                <Button sx={{ fontWeight: 'bold', border: 'none', p: 0, color: 'inherit', whiteSpace: 'nowrap' }}>
-                    <ShoppingCartIcon fontSize='small' sx={{ mr: 0.5 }} />
-                    Giỏ Hàng
-                </Button>
+                <Link
+                    component="button"
+                    underline="none"
+                    sx={{
+                        fontSize: '1rem',
+                        fontWeight: "bold",
+                        color: "inherit",
+                        whiteSpace: "nowrap",
+                    }}
+                    onClick={() => navigate('/cart')}
+                >
+                    Giỏ hàng
+                    <Badge
+                        invisible={!cartNumber}
+                        badgeContent={cartNumber}
+                        color="secondary"
+                        sx={{ p: 0.8 }}
+                    >
+                        <ShoppingCartIcon fontSize="small" />
+                    </Badge>
+                </Link>
             </MenuItem>
             <Divider flexItem />
             {items.map((item) => (
@@ -70,7 +86,7 @@ export default function MoreIconResponsive() {
         </Menu>
     );
     return (
-        <React.Fragment>
+        <Fragment>
             <IconButton
                 size="large"
                 aria-label="show more"
@@ -83,6 +99,7 @@ export default function MoreIconResponsive() {
                 <MoreIcon />
             </IconButton>
             {renderMobileMenu}
-        </React.Fragment>
+        </Fragment>
     )
 }
+const items = ['Hàng mới về', 'Bán chạy nhất', 'Giảm giá']

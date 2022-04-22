@@ -10,7 +10,9 @@ import {
   Box,
   Link,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 export default function RegisterPage() {
+  const navigate = useNavigate()
   return (
     <Box>
       <Box
@@ -23,15 +25,8 @@ export default function RegisterPage() {
       >
         <h2>ĐĂNG KÝ</h2>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
+          <Link underline="hover" component="button" variant='body1' color="inherit" onClick={() => navigate('/')} >
             Trang chủ
-          </Link>
-          <Link
-            underline="hover"
-            color="inherit"
-            sx={{ pointerEvents: "none" }}
-          >
-            Tài khoản
           </Link>
           <Typography color="#0f0d0c">Đăng ký</Typography>
         </Breadcrumbs>
@@ -84,7 +79,7 @@ export default function RegisterPage() {
         </FormGroup>
 
         <Button
-          href="/register"
+          onClick={() => navigate('/register')}
           variant="contained"
           sx={{ backgroundColor: "#384257" }}
         >
