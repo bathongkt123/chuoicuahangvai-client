@@ -24,11 +24,12 @@ export default function ResponsesSection({ responses }) {
             p: 1,
           }}
         >
-          {items.map((item) => (
+          {responses.map((item) => (
             <Card
               align="center"
               key={item.name}
               sx={{
+                alignItems: "center",
                 border: "black solid 1px",
                 m: 1,
                 display: "flex",
@@ -37,15 +38,16 @@ export default function ResponsesSection({ responses }) {
             >
               <CardMedia
                 component="img"
-                image={item.image}
+                image={`${process.env.REACT_APP_STRAPI_URL}${item.avatar.data.attributes.url}`}
                 alt="an avatar"
                 loading="lazy"
+                sx={{ width: 210, height: 210 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <FontAwesomeIcon icon={faCoffee} />
                 <FontAwesomeIcon icon={faCoffee} />
-                <Typography variant="body2" color="text.secondary">
-                  {item.review}
+                <Typography variant="body2" color="text.secondary" width="40ch">
+                  {item.description}
                 </Typography>
               </CardContent>
               <CardContent>
@@ -63,32 +65,3 @@ export default function ResponsesSection({ responses }) {
     </React.Fragment>
   );
 }
-const items = [
-  {
-    name: "Aragorn",
-    review:
-      "asdfadsfdadfssdfdfsadfdsfadfsaafdsdfLorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Boromir",
-    review: "Lorem ipsum dolor sit amet, us in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Faramir",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Gondor",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-  {
-    name: "Gandalf",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue velit ut tempor tincidunt. Mauris feugiat sagittis viverra. Mauris luctus in diam sit amet ultricies.",
-    address: "Middle Earth, Homeless",
-    image: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-  },
-];

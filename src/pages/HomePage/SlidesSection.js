@@ -22,7 +22,7 @@ export default function SlidesSection({ slides }) {
       indicatorContainerProps={{
         sx: { zIndex: 1, position: "absolute", top: "90%" },
       }}
-      sx={{ height: "64vh" }}
+      sx={{ height: "75vh" }}
     >
       {slides.map((item, i) => (
         <Item key={i} item={item} />
@@ -38,23 +38,23 @@ function Item({ item }) {
         component="img"
         sx={{
           width: "100%",
-          height: "64vh",
+          height: "75vh",
         }}
         alt="Missing image"
-        src={item.path}
+        src={`${process.env.REACT_APP_STRAPI_URL}${item.attributes.url}`}
       />
       <Box
         sx={{
           position: "absolute",
           color: "white",
-          top: "45%",
+          top: "33.75vh",
           left: "50%",
           transform: "translateX(-50%)",
           fontWeight: "bold",
-          fontSize: { xs: "2rem", md: "2.5rem" },
+          fontSize: { xs: "1.5rem", md: "2.2rem" },
         }}
       >
-        {item.text}
+        SẢN PHẨM MỚI
       </Box>
     </Box>
   );
