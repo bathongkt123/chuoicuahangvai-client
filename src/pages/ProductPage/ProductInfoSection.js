@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Data } from "../../productData";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { useCookies, remove } from 'react-cookie';
+import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
@@ -39,17 +39,19 @@ function UnitSelect({ number, setNumber }) {
 }
 
 export default function ProductInfoSection() {
-
-  const [cookies, setCookie, removeCookie] = useCookies(['cart']);
+  const [cookies, setCookie, removeCookie] = useCookies(["cart"]);
 
   const addToCart = () => {
-    removeCookie('cart', { path: '/' })
-    console.log('abc')
+    removeCookie("cart", { path: "/" });
+    console.log("abc");
     toast.success("Đã thêm vào giỏ hàng");
-    const currentCart = cookies.cart || {}
-    const newCart = { ...currentCart, [productId]: (currentCart[productId] || 0) + number }
-    setCookie('cart', newCart, { path: '/' })
-  }
+    const currentCart = cookies.cart || {};
+    const newCart = {
+      ...currentCart,
+      [productId]: (currentCart[productId] || 0) + number,
+    };
+    setCookie("cart", newCart, { path: "/" });
+  };
 
   const [number, setNumber] = useState(0.25);
   const { productId } = useParams();
