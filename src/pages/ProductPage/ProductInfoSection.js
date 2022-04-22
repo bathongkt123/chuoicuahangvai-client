@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Data } from "../../productData";
 import Button from "@mui/material/Button";
@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase } from "@mui/material";
+
 function UnitSelect({ number, setNumber }) {
   return (
     <React.Fragment>
@@ -38,7 +39,17 @@ function UnitSelect({ number, setNumber }) {
   );
 }
 
-export default function ProductInfoSection() {
+export default function ProductInfoSection({
+  productId,
+  productName,
+  productPrice,
+  productDescription,
+  productPattern,
+  productOrigin,
+  productWidth,
+  productStretch,
+  productImages,
+}) {
   const [cookies, setCookie, removeCookie] = useCookies(["cart"]);
 
   const addToCart = () => {
@@ -54,9 +65,10 @@ export default function ProductInfoSection() {
   };
 
   const [number, setNumber] = useState(0.25);
-  const { productId } = useParams();
+
   const thisProduct = Data.find((prod) => prod.id === productId);
   const total = number * thisProduct.price;
+
   return (
     <div>
       <ToastContainer
@@ -70,13 +82,13 @@ export default function ProductInfoSection() {
         draggable
         pauseOnHover={false}
       />
-      <h1>{thisProduct.name}</h1>
-      <h2>{thisProduct.price}đ trên mét</h2>
-      <p>{thisProduct.description}</p>
-      <h4>Chất liệu: {thisProduct.material}</h4>
-      <h4>Xuất xứ: {thisProduct.origin}</h4>
-      <h4>Chiều rộng: {thisProduct.width}cm</h4>
-      <h4>Cân nặng: {thisProduct.weight}gsm</h4>
+      <h1> {productName}</h1>
+      <h2> {productPrice}đ trên mét</h2>
+      <p> {productDescription}</p>
+      <h4>Kiểu mẫu: {productPattern}</h4>
+      <h4>Xuất xứ: {productOrigin}</h4>
+      <h4>Chiều rộng: {productWidth}cm</h4>
+      <h4>Co giãn: {productStretch}</h4>
       <UnitSelect number={number} setNumber={setNumber} />
       <h2 style={{ display: "inline" }}>{number} mét</h2>
       <br></br>
