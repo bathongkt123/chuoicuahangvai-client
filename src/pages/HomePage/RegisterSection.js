@@ -70,12 +70,12 @@ export default function RegisterSection({ signupContent }) {
                 label="Email"
                 variant="outlined"
                 size="small"
-                sx={{ display: "flex", my: 1, flexGrow: 1 }}
+                sx={{ display: "flex", my: 2, flexGrow: 1 }}
               />
               <Button
                 variant="contained"
                 sx={{
-                  my: 1,
+                  mb: 1,
                   px: 10,
                   bgcolor: "#384257",
                   "&:hover": { bgcolor: "#242e45" },

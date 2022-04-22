@@ -15,14 +15,14 @@ export default function ProductsSection({ products }) {
     <ImageList sx={{ width: "100%", mt: 1 }} variant="quilted" cols={4}>
       {products.map((item, i) => (
         <ImageListItem
-          key={item.attributes.id}
+          key={item.id}
           cols={layout[i].cols || 1}
           rows={layout[i].rows || 1}
         >
           <img
             {...srcset(`${process.env.REACT_APP_STRAPI_URL}${item.attributes.images.data[0].attributes.url}`,
               250, layout[i].rows, layout[i].cols)}
-            alt={item.attributes.images.data.name}
+            alt={item.attributes.sku}
           />
           <Box
             sx={{
@@ -35,7 +35,7 @@ export default function ProductsSection({ products }) {
               fontSize: { xs: "1.5rem", md: "2.2rem" },
             }}
           >
-            {item.attributes.images.data.name}
+            {item.attributes.sku}
           </Box>
         </ImageListItem>
       ))}

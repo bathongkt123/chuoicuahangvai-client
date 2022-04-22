@@ -13,26 +13,30 @@ import {
 import React from "react";
 import { Button } from "@mui/material";
 import Heading from "./Heading";
+import { useNavigate } from "react-router-dom";
 export default function DeliveryForm() {
-
+    const navigate = useNavigate()
     return (
         <React.Fragment>
             <Heading />
             <Divider variant="middle" />
-            <Box sx={{ display: "flex", my: 4 }}>
+            <Box sx={{ display: "flex", my: 4, alignItems: 'center' }}>
                 <Typography variant="h5">Thông tin liên hệ</Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <Typography variant="h6">
-                    Đã có tài khoản ?
-                    <Link
-                        href="/login"
-                        color="inherit"
-                        underline="hover"
-                        sx={{ fontWeight: "bold", px: 1 }}
-                    >
-                        Đăng nhập
-                    </Link>
+                <Typography variant="body1">
+                    Đã có tài khoản?
                 </Typography>
+                <Box width={8} />
+                <Link
+                    onClick={() => navigate('login')}
+                    component='button'
+                    variant="h6"
+                    color="inherit"
+                    underline="hover"
+                    sx={{ fontWeight: "bold" }}
+                >
+                    Đăng nhập
+                </Link>
             </Box>
 
             <TextField
@@ -123,24 +127,23 @@ export default function DeliveryForm() {
             </Box>
             <Box>
                 <Stack
-                    direction={{ xs: 'column', md: 'row' }}
+                    direction={{ xs: 'row' }}
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
                     <Button
-                        href="/cart"
+                        onClick={() => navigate('/cart')}
                         variant="contained"
-                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.75rem' }}
+                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
                     >
                         {`< Trở về giỏ hàng`}
                     </Button>
-
                     <Button
-                        href="/payment/shipment"
+                        onClick={() => navigate('/payment/shipment')}
                         variant="contained"
-                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.75rem' }}
+                        sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
                     >
-                        {`Chuyển đến trang vận chuyển >`}
+                        {`Đến trang vận chuyển >`}
                     </Button>
                 </Stack>
             </Box>

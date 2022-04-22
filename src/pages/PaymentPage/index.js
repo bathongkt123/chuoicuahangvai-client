@@ -2,7 +2,6 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import OrderInfo from "./OrderInfo";
 import LeftPanel from "./LeftPanel";
-import { useLocation } from 'react-router-dom';
 export default function PaymentPage() {
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>

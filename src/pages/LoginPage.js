@@ -8,8 +8,11 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+    const navigate = useNavigate()
+
     return (
         <Box>
             <Box
@@ -22,16 +25,10 @@ export default function LoginPage() {
             >
                 <h2>ĐĂNG NHẬP</h2>
                 <Breadcrumbs aria-label="breadcrumb">
-                    <Link underline="hover" color="inherit" href="/">
+                    <Link underline="hover" component="button" variant='body1' color="inherit" onClick={() => navigate('/')} >
                         Trang chủ
                     </Link>
-                    <Link
-                        underline="hover"
-                        color="inherit"
-                        sx={{ pointerEvents: "none" }}
-                    >
-                        Tài khoản
-                    </Link>
+
                     <Typography color="#0f0d0c">Đăng nhập</Typography>
                 </Breadcrumbs>
             </Box>
@@ -51,24 +48,20 @@ export default function LoginPage() {
                 <Box sx={{ my: 1 }}></Box>
                 <Box sx={{ mt: 2 }}>
                     <Button
-                        href="/register"
+                        onClick={() => navigate('/login')}
                         variant="contained"
                         sx={{ backgroundColor: "#384257" }}
                     >
                         Đăng nhập
                     </Button>
-                    <Link
-                        href="/forgotpassword"
-                        color="inherit"
-                        underline="hover"
-                        sx={{ fontWeight: "bold", px: 1 }}
-                    >
+                    <Link underline="hover" component="button" color="inherit"
+                        onClick={() => navigate('/forgotpassword')} sx={{ mx: 2, fontWeight: 'bold', fontSize: '1rem' }} >
                         Quên mật khẩu ?
                     </Link>
                 </Box>
                 <h1 style={{ textAlign: "left" }}>KHÁCH HÀNG MỚI ?</h1>
                 <Button
-                    href="/register"
+                    onClick={() => navigate('/register')}
                     variant="contained"
                     sx={{ backgroundColor: "#384257" }}
                 >

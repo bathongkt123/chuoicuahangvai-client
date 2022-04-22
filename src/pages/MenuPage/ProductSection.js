@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import qs from "qs";
-import { Box, CardMedia } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function ProductSection() {
   const [products, setProducts] = useState([]);
@@ -16,11 +16,13 @@ export default function ProductSection() {
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
-    setProducts(resultProducts.data.data);
     console.log(resultProducts);
+    setProducts(resultProducts.data.data);
+
   };
   useEffect(() => {
     fetchData();
+
   }, []);
 
   return (
@@ -29,11 +31,11 @@ export default function ProductSection() {
         return (
           <Grid item xs={12} sm={6} md={4} key={item.id}>
             <a href={`/menu/${item.id}`}>
-              <CardMedia
+              <Box
                 component="img"
-                image={`${process.env.REACT_APP_STRAPI_URL}${item.attributes.images.data[0].attributes.url}`}
+                src={`${process.env.REACT_APP_STRAPI_URL}${item.attributes.images.data[0].attributes.url}`}
                 loading="lazy"
-                sx={{ height: 150 }}
+                sx={{ width: '15rem', height: '12rem', objectFit: 'fill' }}
               />
             </a>
             <p style={{ fontWeight: "bold" }}> </p>

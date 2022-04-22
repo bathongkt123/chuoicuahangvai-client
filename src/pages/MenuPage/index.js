@@ -4,7 +4,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
-import { Data } from "../../productData";
+
 
 export default function MenuPage() {
   return (

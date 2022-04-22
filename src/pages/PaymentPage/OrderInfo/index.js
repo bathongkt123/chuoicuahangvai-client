@@ -41,7 +41,7 @@ export default function OrderInfo() {
                 <Box width={20} />
                 <Button
                     variant="contained"
-                    size='small'
+                    size='large'
                     sx={{
                         px: 4,
                         whiteSpace: 'nowrap',
