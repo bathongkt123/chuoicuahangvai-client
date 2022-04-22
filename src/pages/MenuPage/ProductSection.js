@@ -40,26 +40,28 @@ export default function ProductSection() {
                   sx={{ width: '15rem', height: '12rem', objectFit: 'fill' }}
                 />
               </Link>
-
-              <Typography variant='h6'>{item.attributes.product.data.attributes.name}</Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="body1">{item.attributes.color.data.attributes.name}:</Typography>
+              <Stack>
+                <Typography variant='h6'>{item.attributes.product.data.attributes.name}</Typography>
                 <Box
                   sx={{
-                    bgcolor: item.attributes.color.data.attributes.color,
-                    width: "1.5rem",
-                    height: "1.5rem",
-                    borderRadius: "50%",
-                    mx: 1,
+                    display: "flex",
+                    alignItems: "center",
                   }}
-                />
-              </Box>
-              <Typography variant="body1"> {item.attributes.price}đ/mét</Typography>
+                >
+                  <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.attributes.color.data.attributes.name}:</Box>
+                  <Box
+                    sx={{
+                      bgcolor: item.attributes.color.data.attributes.color,
+                      width: "1.5rem",
+                      height: "1.5rem",
+                      borderRadius: "50%",
+                      mx: 1,
+                    }}
+                  />
+                </Box>
+                <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>Giá(vnđ/mét): {item.attributes.price}</Box>
+              </Stack>
+
             </Stack>
 
           </Grid>
