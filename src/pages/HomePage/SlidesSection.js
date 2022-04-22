@@ -4,21 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import React from "react";
 
-const items = [
-  {
-    path: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    text: "Hàng mới về",
-  },
-  {
-    path: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    text: "Bán chạy",
-  },
-  {
-    path: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    text: "Hàng thương hiệu",
-  },
-];
-export default function SlidesSection() {
+export default function SlidesSection({ slides }) {
   return (
     <Carousel
       indicatorIconButtonProps={{
@@ -38,7 +24,7 @@ export default function SlidesSection() {
       }}
       sx={{ height: "64vh" }}
     >
-      {items.map((item, i) => (
+      {slides.map((item, i) => (
         <Item key={i} item={item} />
       ))}
     </Carousel>

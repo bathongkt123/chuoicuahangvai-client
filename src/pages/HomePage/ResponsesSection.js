@@ -6,7 +6,7 @@ import { Card, CardContent, CardMedia } from "@mui/material";
 import { Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-export default function ResponsesSection() {
+export default function ResponsesSection({ responses }) {
   return (
     <React.Fragment>
       <CssBaseline />
