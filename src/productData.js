@@ -12,7 +12,7 @@ export const Data = [
     price: "20000",
   },
   {
-    id: "2",
+    id: "27",
     name: "Vải b ",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse elementum leo ex, non ullamcorper velit placerat ut. Nunc varius urna ultrices arcu faucibus, ut fringilla magna suscipit. Sed ac eleifend nunc, vel maximus magna. Ut iaculis dolor vel convallis convallis. Phasellus ex quam, lobortis non varius eget, viverra vitae urna. Etiam convallis nunc diam, euismod commodo erat venenatis vitae. Morbi vestibulum sagittis varius. Ut volutpat ex eu purus pulvinar, sed congue nisi tempus. Nam sed metus id quam elementum malesuada quis ullamcorper enim. Cras pulvinar eleifend vestibulum. Morbi dapibus euismod eros quis malesuada. Maecenas eget commodo neque, ac mattis velit.",
@@ -24,7 +24,7 @@ export const Data = [
     price: "20000",
   },
   {
-    id: "3",
+    id: "30",
     name: "Vải c ",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse elementum leo ex, non ullamcorper velit placerat ut. Nunc varius urna ultrices arcu faucibus, ut fringilla magna suscipit. Sed ac eleifend nunc, vel maximus magna. Ut iaculis dolor vel convallis convallis. Phasellus ex quam, lobortis non varius eget, viverra vitae urna. Etiam convallis nunc diam, euismod commodo erat venenatis vitae. Morbi vestibulum sagittis varius. Ut volutpat ex eu purus pulvinar, sed congue nisi tempus. Nam sed metus id quam elementum malesuada quis ullamcorper enim. Cras pulvinar eleifend vestibulum. Morbi dapibus euismod eros quis malesuada. Maecenas eget commodo neque, ac mattis velit.",

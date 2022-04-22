@@ -1,14 +1,11 @@
-import React from 'react';
-import Box from '@material-ui/core/Box'
-import {useParams} from "react-router-dom"
-import {Data} from '../../productData'
+import React from "react";
+import Box from "@material-ui/core/Box";
+import { Card, CardMedia } from "@mui/material";
 
-export default function ImageSection() {
-    const {productId} = useParams()
-    const thisProduct = Data.find(prod => prod.id === productId)
-    return (     
-        <Box>
-            Image Here
-        </Box>
-    );
+export default function ImageSection(productImages) {
+  return (
+    <Box>
+      <CardMedia component="img" image={productImages} loading="lazy" />
+    </Box>
+  );
 }

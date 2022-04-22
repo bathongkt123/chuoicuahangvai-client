@@ -45,7 +45,8 @@ export default function ProductPage() {
     setProductOrigin(data.attributes.origin.data.attributes.name);
     setProductWidth(data.attributes.width.data.attributes.name);
     setProductStretch(data.attributes.stretch.data.attributes.name);
-    setProductImages(data.attributes.stretch.data);
+    setProductImages(data.attributes.images.data[0].attributes.url);
+    console.log(productImages);
   };
   useEffect(() => {
     fetchProductData();
@@ -78,7 +79,7 @@ export default function ProductPage() {
           style={{ margin: "10px", textAlign: "left" }}
         >
           <Grid item xs={12} sm={5}>
-            <ImageSection />
+            <ImageSection productImages={productImages} />
           </Grid>
           <Grid item xs={12} sm={7}>
             <ProductInfoSection
@@ -90,7 +91,6 @@ export default function ProductPage() {
               productOrigin={productOrigin}
               productWidth={productWidth}
               productStretch={productStretch}
-              productImages={productImages}
             />
           </Grid>
         </Grid>
