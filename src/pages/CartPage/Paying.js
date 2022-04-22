@@ -16,7 +16,6 @@ export default function Paying() {
     const navigate = useNavigate()
     const [_, setCookie] = useCookies(['cart']);
     const [checkTerm, setCheckTerm] = useState(false)
-
     const handlePaying = () => {
         if (checkTerm) {
             setCookie("cart", products, { path: "/" });
