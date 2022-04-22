@@ -1,40 +1,38 @@
-import React from "react";
-
-import Button from "@mui/material/Button";
+import { Fragment } from "react";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
-import { IconButton, InputBase } from "@mui/material";
-
-function UnitSelect({ number, setNumber }) {
+import { IconButton, InputBase, Button } from "@mui/material";
+const MAX_LENGTH = 500
+function UnitSelect({ length, setLength }) {
   return (
-    <React.Fragment>
+    <Fragment>
       <IconButton
         sx={{ color: "#4e5b73" }}
         component="span"
-        onClick={() => number > 0.25 && setNumber(number - 0.25)}
+        onClick={() => length > 0.25 && setLength(length - 0.25)}
       >
         <IndeterminateCheckBox />
       </IconButton>
       <InputBase
         sx={{ border: 1, borderColor: "#4e5b73", width: "6ch", px: 1 }}
         inputProps={{ style: { textAlign: "center" } }}
-        value={number}
+        value={length}
         onChange={(e) => {
           const tmp = parseInt(e.target.value);
-          setNumber(tmp ? (tmp < 999 ? tmp : 999) : 0.25);
+          setLength(tmp ? (tmp < MAX_LENGTH ? tmp : MAX_LENGTH) : 0.25);
         }}
       ></InputBase>
       <IconButton
         sx={{ color: "#4e5b73" }}
         component="span"
-        onClick={() => number < 999 && setNumber(number + 0.25)}
+        onClick={() => length < MAX_LENGTH && setLength(length + 0.25)}
       >
         <AddBox />
       </IconButton>
-    </React.Fragment>
+    </Fragment>
   );
 }
 
@@ -49,24 +47,29 @@ export default function ProductInfoSection({
   productStretch,
   productImages,
 }) {
-  const [cookies, setCookie, removeCookie] = useCookies(["cart"]);
+
+  const [length, setLength] = useState(0.25);
+  const total = length * productPrice;
+
+  const [cookies, setCookie] = useCookies(["cart"]);
 
   const addToCart = () => {
-    removeCookie("cart", { path: "/" });
-    console.log("abc");
     toast.success("Đã thêm vào giỏ hàng");
-    const currentCart = cookies.cart || {};
-    const newCart = {
-      ...currentCart,
-      [productId]: (currentCart[productId] || 0) + number,
-    };
-    setCookie("cart", newCart, { path: "/" });
+    const { ...currentCart } = cookies['cart'] || {};
+    if (currentCart[productId]) {
+      currentCart[productId].length += length
+      currentCart[productId].length > MAX_LENGTH && (currentCart[productId].length = MAX_LENGTH)
+    }
+    else {
+      currentCart[productId] = {
+        name: productName,
+        price: productPrice,
+        length: length,
+        image: productImages
+      }
+    }
+    setCookie("cart", currentCart, { path: "/" });
   };
-
-  const [number, setNumber] = useState(0.25);
-
-  const total = number * productPrice;
-
   return (
     <div>
       <ToastContainer
@@ -87,8 +90,8 @@ export default function ProductInfoSection({
       <h4>Xuất xứ: {productOrigin}</h4>
       <h4>Chiều rộng: {productWidth}cm</h4>
       <h4>Co giãn: {productStretch}</h4>
-      <UnitSelect number={number} setNumber={setNumber} />
-      <h2 style={{ display: "inline" }}>{number} mét</h2>
+      <UnitSelect length={length} setLength={setLength} />
+      <h2 style={{ display: "inline" }}>{length} mét</h2>
       <br></br>
       <div style={{ margin: "10px" }}>
         <Button
@@ -98,7 +101,6 @@ export default function ProductInfoSection({
         >
           Thêm vào giỏ hàng
         </Button>
-
         <h2 style={{ display: "inline", padding: "10px" }}>{total} đồng</h2>
       </div>
     </div>

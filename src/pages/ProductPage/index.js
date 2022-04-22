@@ -84,6 +84,7 @@ export default function ProductPage() {
             <ProductInfoSection
               productId={productId}
               productName={productName}
+              productImages={productImages}
               productPrice={productPrice}
               productDescription={productDescription}
               productPattern={productPattern}
