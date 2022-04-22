@@ -45,8 +45,8 @@ export default function HomePage() {
       }}
     >
       <SlidesSection slides={homepage.new_products_banners.data} />
-      <ProductsSection products={homepage.features_sku.data} />
-      <ResponsesSection responses={homepage.member_responses} />
+      <ProductsSection products={homepage.features_sku.data.slice(0, 7)} />
+      <ResponsesSection responses={homepage.member_responses.slice(0, 4)} />
       <RegisterSection signupContent={homepage.signup_section} />
     </Box>
   );
