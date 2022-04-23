@@ -57,7 +57,7 @@ export default function ProductInfoSection({
     toast.success("Đã thêm vào giỏ hàng");
     const { ...currentCart } = cookies['cart'] || {};
     if (currentCart[productId]) {
-      currentCart[productId].length += length
+      currentCart[productId].length = parseFloat(currentCart[productId].length) + length
       currentCart[productId].length > MAX_LENGTH && (currentCart[productId].length = MAX_LENGTH)
     }
     else {

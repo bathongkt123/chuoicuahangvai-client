@@ -8,8 +8,9 @@ export default function ProductRow({ row, subTotal }) {
                     <Box
                         component='img'
                         sx={{
-                            width: 'auto',
-                            height: 145
+                            width: 210,
+                            height: 145,
+                            objectFit: 'fill'
                         }}
                         src={row.img}
                     />

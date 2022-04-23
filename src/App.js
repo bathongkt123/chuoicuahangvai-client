@@ -16,34 +16,37 @@ import {
   ShipmentForm,
   PaymentForm,
 } from "pages/PaymentPage/LeftPanel";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
+import { Fragment } from "react";
 
 function App() {
   return (
     <Router>
-      <Header />
       <Routes>
-        <Route path="" element={<HomePage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="menu" element={<MenuPage />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="account" element={<AccountPage />} />
-        <Route path="account/address" element={<AddressPage />} />
         <Route path="payment" element={<PaymentPage />}>
           <Route path="delivery" element={<DeliveryForm />} />
           <Route path="shipment" element={<ShipmentForm />} />
           <Route path="paymentfinish" element={<PaymentForm />} />
         </Route>
-        <Route
-          path="/account/order/:orderId"
-          element={<AccountOrderPage />}
-        />
-        <Route path="/menu/:productId" element={<ProductPage />} />
+        <Route path="" element={
+          <Fragment>
+            <Header />
+            <Outlet />
+            <Footer />
+          </Fragment>
+        }>
+          <Route path="" element={<HomePage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="forgotpassword" element={<ForgotPasswordPage />} />
+          <Route path="menu" element={<MenuPage />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="account" element={<AccountPage />} />
+          <Route path="account/address" element={<AddressPage />} />
+          <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
+          <Route path="/menu/:productId" element={<ProductPage />} />
+        </Route>
       </Routes>
-      <Footer />
     </Router>
   );
 }

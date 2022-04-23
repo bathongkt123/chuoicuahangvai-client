@@ -5,14 +5,15 @@ export default function ProductRow({ row, subTotal, rendered }) {
     return (
         <Fragment>
             <Box sx={{ display: rendered ? 'flex' : 'none', alignItems: 'center', my: 2 }}>
-                <Badge badgeContent={row.defaultNumber} color="secondary">
+                <Badge badgeContent={row.length} color="secondary">
                     <Box
                         component='img'
                         sx={{
                             width: 210,
-                            height: 145
+                            height: 145,
+                            objectFit: 'fill'
                         }}
-                        src={row.img}
+                        src={`${process.env.REACT_APP_STRAPI_URL}${row.image}`}
                     />
                 </Badge>
 
