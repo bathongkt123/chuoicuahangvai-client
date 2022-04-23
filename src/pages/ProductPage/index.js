@@ -37,6 +37,7 @@ export default function ProductPage() {
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
     );
     const data = response.data.data;
+    console.log(response)
     setProductName(data.attributes.product.data.attributes.name || '');
     setProductPrice(data.attributes.price || 0);
     setProductDescription(data.attributes.product.data.attributes.description || '');
@@ -45,7 +46,7 @@ export default function ProductPage() {
     setProductWidth(data.attributes.width.data.attributes.name || '');
     setProductStretch(data.attributes.stretch.data.attributes.name || '');
     setProductImages(data.attributes.images.data[0].attributes.url || '');
-    console.log(`${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`);
+
   };
   useEffect(() => {
     fetchData();
