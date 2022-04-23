@@ -37,18 +37,6 @@ export default function ProductPage() {
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
     );
     const data = response.data.data;
-<<<<<<< HEAD
-    console.log(response)
-    setProductName(data.attributes.product.data.attributes.name || '');
-    setProductPrice(data.attributes.price || 0);
-    setProductDescription(data.attributes.product.data.attributes.description || '');
-    setProductPattern(data.attributes.pattern.data.attributes.name || '');
-    setProductOrigin(data.attributes.origin.data.attributes.name || '');
-    setProductWidth(data.attributes.width.data.attributes.name || '');
-    setProductStretch(data.attributes.stretch.data.attributes.name || '');
-    setProductImages(data.attributes.images.data[0].attributes.url || '');
-
-=======
     if (data.attributes.product.data.attributes) {
       setProductName(data.attributes.product.data.attributes.name);
     } else setProductName("");
@@ -62,11 +50,7 @@ export default function ProductPage() {
     if (data.attributes.pattern.data) {
       setProductPattern(data.attributes.pattern.data.attributes.dname);
     } else setProductPattern("");
-    setProductOrigin(
-      data.attributes.origin.data
-        ? data.attributes.origin.data.attributes.name
-        : ""
-    );
+    data.attributes.origin.data && setProductOrigin(data.attributes.origin.data.attributes.name);
 
     setProductWidth(
       data.attributes.width.data
@@ -84,7 +68,6 @@ export default function ProductPage() {
       `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
     );
     console.log(data);
->>>>>>> 44ee7ae0bf5f2a974bd4b5bee50db65d4598dce5
   };
   useEffect(() => {
     fetchData();
