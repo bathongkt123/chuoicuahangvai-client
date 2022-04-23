@@ -6,7 +6,7 @@ import Heading from "./Heading";
 import { useCookies } from "react-cookie";
 export default function CartPage() {
     const [cookie, setCookie] = useCookies(["cart"]);
-    const cart = cookie['cart']
+    const cart = cookie['cart'] || {}
     const setCart = (cart) => setCookie("cart", cart, { path: "/" })
     return (
         <Container maxWidth='lg'>
