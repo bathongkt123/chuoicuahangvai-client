@@ -6,7 +6,7 @@ import { Box, Typography, Link, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductSection() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const fetchData = async () => {
     const query = qs.stringify(
@@ -19,7 +19,6 @@ export default function ProductSection() {
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
     setProducts(resultProducts.data.data);
-
   };
   useEffect(() => {
     fetchData();
@@ -36,21 +35,30 @@ export default function ProductSection() {
                   component="img"
                   src={`${process.env.REACT_APP_STRAPI_URL}${item.attributes.images.data[0].attributes.url}`}
                   loading="lazy"
-                  sx={{ width: '15rem', height: '12rem', objectFit: 'fill' }}
+                  sx={{ width: "15rem", height: "12rem", objectFit: "fill" }}
                 />
               </Link>
               <Stack>
-                <Typography variant='h6'>{item.attributes.product.data.attributes.name}</Typography>
+                <Typography variant="h6">
+                  {item.attributes.product.data.attributes.name}
+                </Typography>
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
                   }}
                 >
-                  <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.attributes.color.data.attributes.name}:</Box>
+                  <Box sx={{ fontSize: "1rem", fontWeight: "bold" }}>
+                    {item.attributes.color.data
+                      ? item.attributes.color.data.attributes.name
+                      : ""}
+                    :
+                  </Box>
                   <Box
                     sx={{
-                      bgcolor: item.attributes.color.data.attributes.color,
+                      bgcolor: item.attributes.color.data
+                        ? item.attributes.color.data.attributes.color
+                        : "",
                       width: "1.5rem",
                       height: "1.5rem",
                       borderRadius: "50%",
@@ -58,11 +66,11 @@ export default function ProductSection() {
                     }}
                   />
                 </Box>
-                <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>Giá(vnđ/mét): {item.attributes.price}</Box>
+                <Box sx={{ fontSize: "1rem", fontWeight: "bold" }}>
+                  Giá(vnđ/mét): {item.attributes.price}
+                </Box>
               </Stack>
-
             </Stack>
-
           </Grid>
         );
       })}

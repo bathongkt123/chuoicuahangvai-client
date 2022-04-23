@@ -15,7 +15,7 @@ export default function ProductPage() {
   const [productOrigin, setProductOrigin] = useState("");
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
-  const [productImages, setProductImages] = useState('');
+  const [productImages, setProductImages] = useState("");
   const { productId } = useParams();
   const fetchData = async () => {
     if (productId === null) return;
@@ -37,15 +37,41 @@ export default function ProductPage() {
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
     );
     const data = response.data.data;
-    setProductName(data.attributes.product.data.attributes.name || '');
-    setProductPrice(data.attributes.price || 0);
-    setProductDescription(data.attributes.product.data.attributes.description || '');
-    setProductPattern(data.attributes.pattern.data.attributes.name || '');
-    setProductOrigin(data.attributes.origin.data.attributes.name || '');
-    setProductWidth(data.attributes.width.data.attributes.name || '');
-    setProductStretch(data.attributes.stretch.data.attributes.name || '');
-    setProductImages(data.attributes.images.data[0].attributes.url || '');
-    console.log(`${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`);
+    if (data.attributes.product.data.attributes) {
+      setProductName(data.attributes.product.data.attributes.name);
+    } else setProductName("");
+    setProductPrice(data.attributes.price);
+
+    if (data.attributes.product.data) {
+      setProductDescription(
+        data.attributes.product.data.attributes.description
+      );
+    } else setProductDescription("");
+    if (data.attributes.pattern.data) {
+      setProductPattern(data.attributes.pattern.data.attributes.dname);
+    } else setProductPattern("");
+    setProductOrigin(
+      data.attributes.origin.data
+        ? data.attributes.origin.data.attributes.name
+        : ""
+    );
+
+    setProductWidth(
+      data.attributes.width.data
+        ? data.attributes.width.data.attributes.name
+        : ""
+    );
+
+    setProductStretch(
+      data.attributes.stretch.data
+        ? data.attributes.stretch.data.attributes.name
+        : ""
+    );
+    setProductImages(data.attributes.images.data[0].attributes.url);
+    console.log(
+      `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
+    );
+    console.log(data);
   };
   useEffect(() => {
     fetchData();
