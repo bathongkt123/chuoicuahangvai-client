@@ -28,7 +28,7 @@ export default function DeliveryForm() {
                 </Typography>
                 <Box width={8} />
                 <Link
-                    onClick={() => navigate('login')}
+                    onClick={() => navigate('/login')}
                     component='button'
                     variant="h6"
                     color="inherit"
