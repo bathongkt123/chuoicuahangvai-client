@@ -24,7 +24,7 @@ export default function OrderDetailTable() {
                     <TableRow >
                         <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
                         <CustomTableCell align="right">ĐƠN GIÁ(/MÉT)</CustomTableCell>
-                        <CustomTableCell align="right">SỐ LƯỢNG</CustomTableCell>
+                        <CustomTableCell align="right">ĐỘ DÀI</CustomTableCell>
                         <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
                     </TableRow>
                 </TableHead>

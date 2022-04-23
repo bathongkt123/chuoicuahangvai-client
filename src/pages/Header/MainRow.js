@@ -6,7 +6,6 @@ import { styled, alpha } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import MoreIconResponsive from "./MoreIconResponsive";
-
 import { Badge, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -87,7 +86,6 @@ export default function MainRow({ cartNumber }) {
             <Box
                 sx={{
                     display: { xs: "none", md: "flex" },
-                    flexDirection: "row",
                     alignItems: "center",
                 }}
             >
@@ -103,8 +101,9 @@ export default function MainRow({ cartNumber }) {
                     onClick={() => navigate('/login')}
                 >
                     Tài khoản
+
                 </Link>
-                <Box width={24}></Box>
+                <Box width={20}></Box>
 
                 <Link
                     component="button"
