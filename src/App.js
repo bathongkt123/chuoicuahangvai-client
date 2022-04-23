@@ -11,6 +11,8 @@ import AccountOrderPage from "pages/AccountOrderPage";
 import AddressPage from "pages/AccountAddressPage";
 import PaymentPage from "pages/PaymentPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import {
   DeliveryForm,
   ShipmentForm,
@@ -18,6 +20,8 @@ import {
 } from "pages/PaymentPage/LeftPanel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
+
+const Signin = React.lazy(() => import("./pages/LoginPage"));
 
 function App() {
   return (
@@ -37,10 +41,7 @@ function App() {
           <Route path="shipment" element={<ShipmentForm />} />
           <Route path="paymentfinish" element={<PaymentForm />} />
         </Route>
-        <Route
-          path="/account/order/:orderId"
-          element={<AccountOrderPage />}
-        />
+        <Route path="/account/order/:orderId" element={<AccountOrderPage />} />
         <Route path="/menu/:productId" element={<ProductPage />} />
       </Routes>
       <Footer />
