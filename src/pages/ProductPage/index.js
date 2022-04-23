@@ -37,33 +37,30 @@ export default function ProductPage() {
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
     );
     const data = response.data.data;
-    if (data.attributes.product.data.attributes) {
+    data.attributes.product.data &&
       setProductName(data.attributes.product.data.attributes.name);
-    } else setProductName("");
+
     setProductPrice(data.attributes.price);
 
-    if (data.attributes.product.data) {
+    data.attributes.product.data &&
       setProductDescription(
         data.attributes.product.data.attributes.description
       );
-    } else setProductDescription("");
-    if (data.attributes.pattern.data) {
-      setProductPattern(data.attributes.pattern.data.attributes.dname);
-    } else setProductPattern("");
-    data.attributes.origin.data && setProductOrigin(data.attributes.origin.data.attributes.name);
 
-    setProductWidth(
-      data.attributes.width.data
-        ? data.attributes.width.data.attributes.name
-        : ""
-    );
+    data.attributes.pattern.data &&
+      setProductPattern(data.attributes.pattern.data.attributes.name);
 
-    setProductStretch(
-      data.attributes.stretch.data
-        ? data.attributes.stretch.data.attributes.name
-        : ""
-    );
-    setProductImages(data.attributes.images.data[0].attributes.url);
+    data.attributes.origin.data &&
+      setProductOrigin(data.attributes.origin.data.attributes.name);
+
+    data.attributes.width.data &&
+      setProductWidth(data.attributes.width.data.attributes.name);
+
+    data.attributes.stretch.data &&
+      setProductStretch(data.attributes.stretch.data.attributes.name);
+
+    data.attributes.images.data[0] &&
+      setProductImages(data.attributes.images.data[0].attributes.url);
     console.log(
       `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
     );
