@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { CookiesProvider } from 'react-cookie';
 
-
 ReactDOM.render(
   <CookiesProvider>
     <App />

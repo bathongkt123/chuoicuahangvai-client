@@ -4,10 +4,11 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
+import AccountDropdown from "./AccountDropdown";
 import MoreIconResponsive from "./MoreIconResponsive";
 import { Badge, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import useAuth from "auth/useAuth";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -51,6 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 export default function MainRow({ cartNumber }) {
     const navigate = useNavigate()
+    const { auth } = useAuth()
     return (
         <Box
             sx={{
@@ -98,21 +100,6 @@ export default function MainRow({ cartNumber }) {
                         color: "inherit",
                         whiteSpace: "nowrap",
                     }}
-                    onClick={() => navigate('/login')}
-                >
-                    Tài khoản
-
-                </Link>
-                <Box width={20}/>
-                <Link
-                    component="button"
-                    underline="none"
-                    sx={{
-                        fontSize: '1rem',
-                        fontWeight: "bold",
-                        color: "inherit",
-                        whiteSpace: "nowrap",
-                    }}
                     onClick={() => navigate('/cart')}
                 >
                     Giỏ hàng
@@ -120,11 +107,29 @@ export default function MainRow({ cartNumber }) {
                         invisible={!cartNumber}
                         badgeContent={cartNumber}
                         color="secondary"
-                        sx={{ p: 0.8 }}
+                        sx={{ p: 0.5 }}
                     >
                         <ShoppingCartIcon fontSize="small" />
                     </Badge>
                 </Link>
+                <Box width={32} />
+                {auth.isAuthenticated ?
+                    <AccountDropdown /> :
+                    <Link
+                        component="button"
+                        underline="none"
+                        sx={{
+                            fontSize: '1rem',
+                            fontWeight: "bold",
+                            color: "inherit",
+                            whiteSpace: "nowrap",
+                        }}
+                        onClick={() => navigate('/login')}
+                    >
+                        Đăng nhập
+
+                    </Link>
+                }
             </Box>
 
             <Box sx={{ display: { xs: "block", md: "none" } }}>

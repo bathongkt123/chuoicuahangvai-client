@@ -1,9 +1,11 @@
 import Box from "@mui/material/Box";
 import CategoryDropdown from "./CategoryDropdown";
 import React from "react";
-import { Divider } from "@mui/material";
+import { Divider, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryRow({ categories }) {
+    const navigate = useNavigate()
     return (
         <Box
             sx={{
@@ -23,7 +25,7 @@ export default function CategoryRow({ categories }) {
                 {items.map((item, i, { length }) => (
                     <React.Fragment key={item}>
                         <Box width={10} />
-                        {item}
+                        <Link onClick={() => navigate('/menu')} component='button' underline="hover" sx={{ fontSize: '1rem', fontWeight: 'bold', color: 'inherit' }}>{item}</Link>
                         <Box width={10} />
                         <Divider sx={{ bgcolor: "#dbd9ce" }} orientation="vertical" />
                     </React.Fragment>

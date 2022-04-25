@@ -133,7 +133,7 @@ export default function ShipmentForm() {
           </Button>
 
           <Button
-            onClick={() => navigate('/payment/paymentfinish')}
+            onClick={() => navigate('/payment/complete')}
             variant="contained"
             sx={{ backgroundColor: "#384257", my: 2, fontSize: '0.8rem', "&:hover": { bgcolor: "#242e45" }, }}
           >

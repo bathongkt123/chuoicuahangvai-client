@@ -11,9 +11,8 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-
-import { useCookies } from "react-cookie";
 import axios from "axios";
+import useAuth from "auth/useAuth";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function LoginPage() {
   const [invalidLogin, setInvalidLogin] = useState(false);
   const [loginMessage, setLoginMessage] = useState("Đăng nhập thất bại");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookies, setCookie] = useCookies([process.env.REACT_APP_COOKIE_NAME]);
+  const { setUserSession } = useAuth()
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -41,12 +40,7 @@ export default function LoginPage() {
       })
       .then((response) => {
         setIsLoading(false);
-        setCookie(process.env.REACT_APP_COOKIE_NAME, response.data.jwt, {
-          path: "/",
-          expires: new Date(Date.now() + 16 * 60 * 60 * 1000),
-          secure: true,
-          sameSite: "strict",
-        });
+        setUserSession(response.data.jwt)
         navigate("/", { replace: true });
       })
       .catch((error) => {

@@ -8,7 +8,6 @@ import axios from "axios";
 import qs from "qs";
 import { useState, useEffect } from "react";
 export default function HomePage() {
-  console.log('render')
   const [homepage, setHomePage] = useState({
     member_responses: [],
     new_products_banners: {
@@ -51,7 +50,7 @@ export default function HomePage() {
       }}
     >
       <SlidesSection slides={homepage.new_products_banners.data} />
-      <ProductsSection products={homepage.features_sku.data.slice(0, 7)} />
+      <ProductsSection products={homepage.features_sku ? homepage.features_sku.data.slice(0, 7) : []} />
       <ResponsesSection responses={homepage.member_responses.slice(0, 4)} />
       <RegisterSection signupContent={homepage.signup_section} />
     </Box>
