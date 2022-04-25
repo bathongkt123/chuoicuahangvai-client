@@ -3,7 +3,6 @@ import { Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function CustomerInfo() {
-
   const navigate = useNavigate();
   const handleChange = () => {
     navigate("/account/address");
@@ -29,7 +28,6 @@ export default function CustomerInfo() {
       >
         Chỉnh sửa địa chỉ
       </Button>
-
     </Box>
   );
 }
