@@ -103,8 +103,7 @@ export default function MainRow({ cartNumber }) {
                     Tài khoản
 
                 </Link>
-                <Box width={20}></Box>
-
+                <Box width={20}/>
                 <Link
                     component="button"
                     underline="none"

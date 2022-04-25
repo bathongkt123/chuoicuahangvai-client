@@ -1,11 +1,17 @@
 import { Typography, Box, Button } from "@mui/material";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function CustomerInfo() {
+  const [cookie, setCookie, removeCookie] = useCookies([process.env.REACT_APP_COOKIE_NAME])
   const navigate = useNavigate();
   const handleChange = () => {
     navigate("/account/address");
   };
+  const handleLogout = () => {
+    removeCookie(process.env.REACT_APP_COOKIE_NAME)
+    navigate('/')
+  }
   return (
     <Box sx={{ whiteSpace: "nowrap" }}>
       <h2>Lê Bá Thông</h2>
@@ -25,6 +31,19 @@ export default function CustomerInfo() {
         onClick={handleChange}
       >
         Chỉnh sửa địa chỉ
+      </Button>
+      <Button
+        variant="outlined"
+        sx={{
+          display: 'block',
+          fontWeight: "bold",
+          fontSize: '1rem',
+          p: 0,
+        }}
+        color="inherit"
+        onClick={handleLogout}
+      >
+        Đăng xuất
       </Button>
     </Box>
   );

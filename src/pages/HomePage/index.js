@@ -8,6 +8,7 @@ import axios from "axios";
 import qs from "qs";
 import { useState, useEffect } from "react";
 export default function HomePage() {
+  console.log('render')
   const [homepage, setHomePage] = useState({
     member_responses: [],
     new_products_banners: {
