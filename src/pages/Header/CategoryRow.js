@@ -25,7 +25,11 @@ export default function CategoryRow({ categories }) {
                 {items.map((item, i, { length }) => (
                     <React.Fragment key={item}>
                         <Box width={10} />
-                        <Link onClick={() => navigate('/menu')} component='button' underline="hover" sx={{ fontSize: '1rem', fontWeight: 'bold', color: 'inherit' }}>{item}</Link>
+                        <Link onClick={() => navigate('/menu')}
+                            component='button'
+                            underline="hover"
+                            sx={{ fontSize: '1rem', fontWeight: 'bold', color: 'inherit' }}>
+                            {item}</Link>
                         <Box width={10} />
                         <Divider sx={{ bgcolor: "#dbd9ce" }} orientation="vertical" />
                     </React.Fragment>
