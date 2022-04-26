@@ -22,6 +22,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom
 import { Fragment } from "react";
 import useAuth from "auth/useAuth";
 import axios from "axios";
+//use Ref to set Payment Mode
 function App() {
   const { auth } = useAuth()
   if (auth.token)
@@ -52,7 +53,7 @@ function App() {
           <Route path="menu" element={<MenuPage />} />
           <Route path="menu/:productId" element={<ProductPage />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path="account" element={<AuthenticatedPage page={<AccountPage />} />}>
+          <Route path="account">
             <Route index element={<AuthenticatedPage page={<AccountPage />} />} />
             <Route path="address" element={<AuthenticatedPage page={<AddressPage />} />} />
             <Route path="order/:orderId" element={<AuthenticatedPage page={<AccountOrderPage />} />} />
