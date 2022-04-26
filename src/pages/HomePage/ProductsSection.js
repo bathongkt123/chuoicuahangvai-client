@@ -1,7 +1,8 @@
 import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { Box } from "@mui/material";
+import { Box, ButtonBase } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 function srcset(image, size, rows = 1, cols = 1) {
   return {
     src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
@@ -11,6 +12,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 export default function ProductsSection({ products }) {
+  const navigate = useNavigate()
   return (
     <ImageList sx={{ width: "100%", mt: 1 }} variant="quilted" cols={4}>
       {products.map((item, i) => (
@@ -18,6 +20,8 @@ export default function ProductsSection({ products }) {
           key={item.id}
           cols={layout[i].cols || 1}
           rows={layout[i].rows || 1}
+          component={ButtonBase}
+          onClick={() => navigate(`menu/${item.id}`)}
         >
           <img
             {...srcset(`${process.env.REACT_APP_STRAPI_URL}${item.attributes.images.data[0].attributes.url}`,
@@ -37,6 +41,7 @@ export default function ProductsSection({ products }) {
           >
             {item.attributes.sku}
           </Box>
+
         </ImageListItem>
       ))}
     </ImageList>

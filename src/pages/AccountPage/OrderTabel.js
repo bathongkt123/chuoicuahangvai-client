@@ -1,4 +1,4 @@
-import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Link } from "@mui/material"
+import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Link, TableFooter } from "@mui/material"
 import CustomTableCell from "components/CustomTableCell"
 import React from "react";
 export default function OrderTable() {
@@ -27,7 +27,6 @@ export default function OrderTable() {
                                     <Link color='inherit' underline="hover" href={'/account/order/' + key}>
                                         {key}
                                     </Link>
-
                                 </CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].state}</CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].dateOrder}</CustomTableCell>
@@ -37,6 +36,9 @@ export default function OrderTable() {
                     }
                     )
                     }
+
+                </TableBody>
+                <TableFooter>
                     <TableRow>
                         <TablePagination
                             rowsPerPage={rowsPerPage}
@@ -47,7 +49,7 @@ export default function OrderTable() {
                             sx={{ backgroundColor: '#EEEDE8' }}
                         />
                     </TableRow>
-                </TableBody>
+                </TableFooter>
             </Table>
         </TableContainer >
     )

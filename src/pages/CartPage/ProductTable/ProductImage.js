@@ -1,7 +1,8 @@
-import { Box, Typography, IconButton } from "@mui/material"
+import { Box, IconButton } from "@mui/material"
 import { Close } from "@mui/icons-material"
-
-export default function ProductImage({ image, name, deleteItem }) {
+// import { memo } from "react"
+function ProductImage({ image, name, deleteItem }) {
+    console.log('renderImg')
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton sx={{ color: '#4e5b73' }} component="span" onClick={deleteItem} >
@@ -17,10 +18,11 @@ export default function ProductImage({ image, name, deleteItem }) {
                 src={`${process.env.REACT_APP_STRAPI_URL}${image}`}
             />
             <Box width={20}></Box>
-            <Typography variant='h6'>
+            <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
                 {name}
-            </Typography>
+            </Box>
             <Box />
         </Box>
     )
 }
+export default ProductImage

@@ -27,7 +27,7 @@ import {
 import { Fragment } from "react";
 import useAuth from "auth/useAuth";
 import axios from "axios";
-//use Ref to set Payment Mode
+
 function App() {
   const { auth } = useAuth();
   if (auth.token)

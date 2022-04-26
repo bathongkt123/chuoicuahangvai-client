@@ -1,34 +1,80 @@
 
 import { Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination } from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
 import ProductRow from "./ProductRow";
 import CustomTableCell from "components/CustomTableCell"
-
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import qs from "qs";
 const TAX_RATE = 0.1;
-
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
 }
 
-export default function ProductTable({ cart, setCart }) {
+export default function ProductTable() {
+    console.log('render')
+    //cart: id and number of products from cookies
+    const [cookie, setCookie] = useCookies(["cart"]);
+    const cart = cookie['cart'] || {}
     const keys = Object.keys(cart)
-
+    const setCart = (cart) => setCookie("cart", cart, { path: "/" })
     const deleteItem = (key) => () => {
         const { [key]: _, ...newCart } = cart
         setCart(newCart)
     }
     const setItemLength = (key) => (length) => {
-        const { ...newCart } = cart
-        newCart[key].length = length
-        setCart(newCart)
+        setCart({ ...cart, [key]: length })
     }
-    const subTotal = key => cart[key].length * cart[key].price
-    const total = keys.reduce((init, current) => init + subTotal(current), 0)
-    const [page, setPage] = React.useState(0);
+
+    //pagination
+    const [page, setPage] = useState(0);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
     const rowsPerPage = 4
+    //set protducts to save cart attribute
+
+    const [products, setProducts] = useState(() => {
+        const initialState = {}
+        keys.forEach((key) => initialState[key] = {
+            name: '',
+            image: '',
+            price: 0
+        })
+        return initialState
+    })
+    //subtotal and total
+
+    const subTotal = key => cart[key] * (products[key] ? products[key].price : 0)
+    const total = keys.reduce((init, current) => init + subTotal(current), 0)
+    useEffect(() => {
+        const query = qs.stringify(
+            {
+                populate: [
+                    "product",
+                    "images",
+                ],
+            },
+            { encodeValuesOnly: true }
+        );
+
+        const fetchEachProduct = async (key) => {
+            const response = await axios.get(`${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${key}?${query}`)
+            return {
+                name: response.data.data.attributes.product.data.attributes.name + '-' + response.data.data.attributes.sku,
+                image: response.data.data.attributes.images.data[0].attributes.url,
+                price: response.data.data.attributes.price,
+            }
+        }
+
+        const fetchData = async () => {
+            const cartProducts = {}
+            for (const key of keys)
+                cartProducts[key] = await fetchEachProduct(key)
+            setProducts(cartProducts)
+        }
+        fetchData()
+    }, []);
 
     return (
         <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
@@ -46,8 +92,13 @@ export default function ProductTable({ cart, setCart }) {
                         return (
                             <ProductRow
                                 key={key}
-                                row={cart[key]}
-                                subTotal={subTotal(key)}
+                                attr={{
+                                    name: products[key].name,
+                                    image: products[key].image,
+                                    price: products[key].price,
+                                    subTotal: subTotal(key)
+                                }}
+                                length={cart[key]}
                                 setItemLength={setItemLength(key)}
                                 deleteItem={deleteItem(key)}
                             />
