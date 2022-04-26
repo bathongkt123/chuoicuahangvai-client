@@ -9,6 +9,7 @@ import axios from "axios";
 import qs from "qs";
 export default function ProductPage() {
   const [productName, setProductName] = useState("");
+  const [productSKU, setProductSKU] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPattern, setProductPattern] = useState("");
@@ -39,7 +40,7 @@ export default function ProductPage() {
     const data = response.data.data;
     data.attributes.product.data &&
       setProductName(data.attributes.product.data.attributes.name);
-
+    setProductSKU(data.attributes.sku);
     setProductPrice(data.attributes.price);
 
     data.attributes.product.data &&
@@ -89,7 +90,7 @@ export default function ProductPage() {
         </Link>
         /
         <p style={{ display: "inline-block", paddingLeft: "5px" }}>
-          {productName}
+          {productName} - {productSKU}
         </p>
         <Grid
           container
@@ -103,6 +104,7 @@ export default function ProductPage() {
             <ProductInfoSection
               productId={productId}
               productName={productName}
+              productSKU={productSKU}
               productImages={productImages}
               productPrice={productPrice}
               productDescription={productDescription}
