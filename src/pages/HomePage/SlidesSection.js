@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+
 import Carousel from "react-material-ui-carousel";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import React from "react";
+import { Box } from "@material-ui/core";
+import { ButtonBase } from "@mui/material";
 
 export default function SlidesSection({ slides }) {
   return (
@@ -33,15 +34,21 @@ export default function SlidesSection({ slides }) {
 
 function Item({ item }) {
   return (
-    <Box>
+    <ButtonBase sx={{
+      width: "100%",
+      height: "75vh",
+    }}
+    >
       <Box
         component="img"
         sx={{
           width: "100%",
           height: "75vh",
+          objectFit: 'fill'
         }}
         alt="Missing image"
         src={`${process.env.REACT_APP_STRAPI_URL}${item.attributes.url}`}
+
       />
       <Box
         sx={{
@@ -56,6 +63,6 @@ function Item({ item }) {
       >
         SẢN PHẨM MỚI
       </Box>
-    </Box>
+    </ButtonBase>
   );
 }

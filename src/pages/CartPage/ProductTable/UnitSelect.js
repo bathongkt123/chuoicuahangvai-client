@@ -10,7 +10,7 @@ export default function UnitSelect({ length, setItemLength }) {
     const step = 1
     return (
         <Stack>
-            <Typography variant="body2" color={length < minLength && 'red'}>Tối thiểu: {minLength}</Typography>
+            {length < minLength && <Typography variant="body2" color='red' >Tối thiểu: {minLength}</Typography>}
             <Box>
                 <IconButton sx={{ color: '#4e5b73' }} component="span"
                     onClick={() => length - step > minLength ? setItemLength(parseFloat(length) - step) : setItemLength(minLength)}>
@@ -21,12 +21,8 @@ export default function UnitSelect({ length, setItemLength }) {
                     value={length}
                     onChange={(e) => {
                         const value = e.target.value
-                        if (!value) {
-                            setItemLength(minLength)
-                            return
-                        }
-                        if (pattern.test(value)) {
 
+                        if (pattern.test(value)) {
                             setItemLength(value)
                         }
                         else {
@@ -41,7 +37,7 @@ export default function UnitSelect({ length, setItemLength }) {
                     < AddBox />
                 </IconButton>
             </Box>
-            <Typography variant="body2" color={length > maxLength && 'red'}>Tối đa: {maxLength}</Typography>
+            {length > maxLength && <Typography variant="body2" color='red'>Tối đa: {maxLength}</Typography>}
         </Stack >
     )
 }

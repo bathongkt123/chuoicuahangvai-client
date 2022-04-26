@@ -4,17 +4,17 @@ import UnitSelect from "./UnitSelect";
 import CustomTableCell from "components/CustomTableCell"
 import { TableRow } from "@mui/material";
 // import { memo } from 'react'
-export default function ProductRow({ row, subTotal, deleteItem, setItemLength }) {
+export default function ProductRow({ attr, length, deleteItem, setItemLength }) {
     return (
         <TableRow>
             <CustomTableCell align="left">
-                <ProductImage name={row.name} image={row.image} deleteItem={deleteItem} />
+                <ProductImage name={attr.name} image={attr.image} deleteItem={deleteItem} />
             </CustomTableCell>
-            <CustomTableCell align="right">{row.price}</CustomTableCell>
+            <CustomTableCell align="right">{attr.price}</CustomTableCell>
             <CustomTableCell align='center' sx={{ whiteSpace: 'nowrap' }}>
-                <UnitSelect length={row.length} setItemLength={setItemLength} />
+                <UnitSelect length={length} setItemLength={setItemLength} />
             </CustomTableCell>
-            <CustomTableCell align="right">{subTotal}</CustomTableCell>
+            <CustomTableCell align="right">{attr.subTotal}</CustomTableCell>
         </TableRow >
     )
 

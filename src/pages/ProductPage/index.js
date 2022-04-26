@@ -18,58 +18,61 @@ export default function ProductPage() {
   const [productStretch, setProductStretch] = useState("");
   const [productImages, setProductImages] = useState("");
   const { productId } = useParams();
-  const fetchData = async () => {
-    if (productId === null) return;
-    const query = qs.stringify(
-      {
-        populate: [
-          "product",
-          "images",
-          "color",
-          "width",
-          "pattern",
-          "origin",
-          "stretch",
-        ],
-      },
-      { encodeValuesOnly: true }
-    );
-    const response = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
-    );
-    const data = response.data.data;
-    data.attributes.product.data &&
-      setProductName(data.attributes.product.data.attributes.name);
-    setProductSKU(data.attributes.sku);
-    setProductPrice(data.attributes.price);
 
-    data.attributes.product.data &&
-      setProductDescription(
-        data.attributes.product.data.attributes.description
-      );
-
-    data.attributes.pattern.data &&
-      setProductPattern(data.attributes.pattern.data.attributes.name);
-
-    data.attributes.origin.data &&
-      setProductOrigin(data.attributes.origin.data.attributes.name);
-
-    data.attributes.width.data &&
-      setProductWidth(data.attributes.width.data.attributes.name);
-
-    data.attributes.stretch.data &&
-      setProductStretch(data.attributes.stretch.data.attributes.name);
-
-    data.attributes.images.data[0] &&
-      setProductImages(data.attributes.images.data[0].attributes.url);
-    console.log(
-      `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
-    );
-    console.log(data);
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      if (productId === null) return;
+      const query = qs.stringify(
+        {
+          populate: [
+            "product",
+            "images",
+            "color",
+            "width",
+            "pattern",
+            "origin",
+            "stretch",
+          ],
+        },
+        { encodeValuesOnly: true }
+      );
+      const response = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
+      );
+      const data = response.data.data;
+      data.attributes.product.data &&
+        setProductName(data.attributes.product.data.attributes.name);
+
+      setProductSKU(data.attributes.sku);
+
+      setProductPrice(data.attributes.price);
+
+      data.attributes.product.data &&
+        setProductDescription(
+          data.attributes.product.data.attributes.description
+        );
+
+      data.attributes.pattern.data &&
+        setProductPattern(data.attributes.pattern.data.attributes.name);
+
+      data.attributes.origin.data &&
+        setProductOrigin(data.attributes.origin.data.attributes.name);
+
+      data.attributes.width.data &&
+        setProductWidth(data.attributes.width.data.attributes.name);
+
+      data.attributes.stretch.data &&
+        setProductStretch(data.attributes.stretch.data.attributes.name);
+
+      data.attributes.images.data[0] &&
+        setProductImages(data.attributes.images.data[0].attributes.url);
+      // console.log(
+      //   `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
+      // );
+      console.log(data);
+    };
     fetchData();
-  }, []);
+  }, [productId]);
 
   return (
     <div

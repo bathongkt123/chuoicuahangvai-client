@@ -14,6 +14,7 @@ export default function ImageSection({ productImages }) {
           width: "30rem",
           objectFit: "fill",
         }}
+
       />
     </Box>
   );
