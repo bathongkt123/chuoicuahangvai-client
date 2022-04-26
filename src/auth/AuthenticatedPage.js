@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 export default function AuthenticatedPage({ page }) {
-  const { auth } = useAuth()
+  const { auth } = useAuth();
 
   // if (isAuthenticated) {
   //   axios.interceptors.request.use((config) => {
@@ -12,10 +12,5 @@ export default function AuthenticatedPage({ page }) {
   //     return config;
   //   });
   // }
-  return auth.isAuthenticated ? (
-    page
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  return auth.isAuthenticated ? page : <Navigate to="/login" replace />;
 }
-
