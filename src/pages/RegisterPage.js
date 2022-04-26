@@ -40,17 +40,17 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       axios.post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/auth/register
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/local/register
       `,
         {
           username: username,
           email: username,
           password: password,
-          phone: phone,
-          name: {
-            firstname: firstname,
-            lastname: lastname,
-          },
+          // phone: phone,
+          // name: {
+          //   firstname: firstname,
+          //   lastname: lastname,
+          // },
         }
       );
       navigate("/login", { replace: true });
