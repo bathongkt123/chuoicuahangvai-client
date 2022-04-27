@@ -33,12 +33,12 @@ export default function LoginPage() {
     e.preventDefault();
     setInvalidLogin(false);
     setIsLoading(true);
-    console.log(username);
-    console.log(password);
+    // console.log(username);
+    // console.log(password);
 
     axios
       .post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/auth/local
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/login
       `,
         {
           identifier: username,
