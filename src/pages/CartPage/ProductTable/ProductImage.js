@@ -1,13 +1,9 @@
-import { Box, IconButton } from "@mui/material"
-import { Close } from "@mui/icons-material"
-// import { memo } from "react"
-function ProductImage({ image, name, deleteItem }) {
+import { Box } from "@mui/material"
+import { Fragment, memo } from "react"
+function ProductImage({ image, name }) {
     console.log('renderImg')
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton sx={{ color: '#4e5b73' }} component="span" onClick={deleteItem} >
-                <Close />
-            </IconButton>
+        <Fragment>
             <Box
                 component='img'
                 sx={{
@@ -21,8 +17,8 @@ function ProductImage({ image, name, deleteItem }) {
             <Box sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
                 {name}
             </Box>
-            <Box />
-        </Box>
+        </Fragment>
     )
+
 }
 export default ProductImage
