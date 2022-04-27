@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import ImageSection from "./ImageSection";
 import ProductInfoSection from "./ProductInfoSection";
-import { useParams } from "react-router-dom";
+import { Breadcrumbs, Typography } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { ButtonBase } from "@mui/material";
 import axios from "axios";
 import qs from "qs";
 export default function ProductPage() {
+  const navigate = useNavigate()
   const [productName, setProductName] = useState("");
   const [productSKU, setProductSKU] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -77,48 +80,62 @@ export default function ProductPage() {
   return (
     <div
       style={{
-        textAlign: "center",
-        justifyContent: "center",
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: "center",
         margin: "50px",
       }}
     >
-      <Box>
-        <Link href="/" color="inherit" style={{ paddingRight: "5px" }}>
+
+      <Breadcrumbs aria-label="breadcrumb" >
+        <Link
+          component={ButtonBase}
+          underline="hover"
+          color="inherit"
+          sx={{ fontSize: '1rem' }}
+          onClick={() => navigate('/')}
+        >
           Trang chủ
         </Link>
-        /
-        <Link href="/menu" color="inherit" style={{ padding: "0px 5px" }}>
-          Sản phẩm
-        </Link>
-        /
-        <p style={{ display: "inline-block", paddingLeft: "5px" }}>
-          {productName} - {productSKU}
-        </p>
-        <Grid
-          container
-          spacing={10}
-          style={{ margin: "10px", textAlign: "left" }}
+        <Link
+          component={ButtonBase}
+          underline="hover"
+          color="inherit"
+          sx={{ fontSize: '1rem' }}
+          onClick={() => navigate('/menu')}
         >
-          <Grid item xs={12} sm={5}>
-            <ImageSection productImages={productImages} />
-          </Grid>
-          <Grid item xs={12} sm={7}>
-            <ProductInfoSection
-              productId={productId}
-              productName={productName}
-              productSKU={productSKU}
-              productImages={productImages}
-              productPrice={productPrice}
-              productDescription={productDescription}
-              productPattern={productPattern}
-              productOrigin={productOrigin}
-              productWidth={productWidth}
-              productStretch={productStretch}
-            />
-          </Grid>
+          Menu
+        </Link>
+
+        <Typography color="#0f0d0c">
+          {productName} - {productSKU}
+        </Typography>
+      </Breadcrumbs>
+
+      <Grid
+        container
+        spacing={10}
+        style={{ margin: "10px", textAlign: "left" }}
+      >
+        <Grid item xs={12} sm={5}>
+          <ImageSection productImages={productImages} />
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={7}>
+          <ProductInfoSection
+            productId={productId}
+            productName={productName}
+            productSKU={productSKU}
+            productImages={productImages}
+            productPrice={productPrice}
+            productDescription={productDescription}
+            productPattern={productPattern}
+            productOrigin={productOrigin}
+            productWidth={productWidth}
+            productStretch={productStretch}
+          />
+        </Grid>
+      </Grid>
+
     </div>
   );
 }
