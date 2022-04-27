@@ -7,24 +7,47 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 export default function FormInfo({ addContact, edit, contacts }) {
   const [contact, setContact] = useState({
-    Lname: "",
-    Fname: "",
+    lastname: "",
+    firstname: "",
     address: "",
+    address_three_levels: "",
     district: "",
     ward: "",
     city: "",
-    phoneNum: "",
-    defaultAdd: false,
+    phone: "",
+    is_default: false,
   });
-
-  useEffect(() => {
-    if (edit) {
-      setContact(contacts[edit]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      axios.post(
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/receive-address
+      `,
+        {
+          lastname: contact.lastname,
+          firstname: contact.firstname,
+          address: contact.address,
+          address_three_levels: "1",
+          phone: contact.phone,
+          is_default: contact.is_default,
+        }
+      );
+      // console.log("ok");
+    } catch (response) {
+      console.log(response.response.data);
     }
-  }, [edit, contacts]);
+  };
+
+  // console.log(contact.is_default);
+  // useEffect(() => {
+  //   if (edit) {
+  //     setContact(contacts[edit]);
+  //   }
+  // }, [edit, contacts]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -34,8 +57,8 @@ export default function FormInfo({ addContact, edit, contacts }) {
           size="large"
           fullWidth
           sx={{ display: "inline-block" }}
-          value={contact.Lname}
-          onChange={(e) => setContact({ ...contact, Lname: e.target.value })}
+          value={contact.lastname}
+          onChange={(e) => setContact({ ...contact, lastname: e.target.value })}
         ></TextField>
         <Box width={20}></Box>
         <TextField
@@ -43,8 +66,10 @@ export default function FormInfo({ addContact, edit, contacts }) {
           size="large"
           fullWidth
           sx={{ display: "inline-block" }}
-          value={contact.Fname}
-          onChange={(e) => setContact({ ...contact, Fname: e.target.value })}
+          value={contact.firstname}
+          onChange={(e) =>
+            setContact({ ...contact, firstname: e.target.value })
+          }
         ></TextField>
       </Box>
 
@@ -114,18 +139,25 @@ export default function FormInfo({ addContact, edit, contacts }) {
         size="large"
         fullWidth
         sx={{ display: "inline-block", mt: 5 }}
-        value={contact.phoneNum}
-        onChange={(e) => setContact({ ...contact, phoneNum: e.target.value })}
+        value={contact.phone}
+        onChange={(e) => setContact({ ...contact, phone: e.target.value })}
       ></TextField>
       <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Địa chỉ mặc định" />
+        <FormControlLabel
+          control={<Checkbox checked={contact.is_default} />}
+          onChange={(e) =>
+            setContact({ ...contact, is_default: e.target.checked })
+          }
+          label="Địa chỉ mặc định"
+        />
       </FormGroup>
       <Box textAlign="center">
         <Button
           variant="contained"
           size="large"
           sx={{ backgroundColor: "#384257", my: 4 }}
-          onClick={addContact(contact)}
+          // onClick={addContact(contact)}
+          onClick={handleSubmit}
         >
           {edit ? "Lưu lại" : "Thêm vào"}
         </Button>
