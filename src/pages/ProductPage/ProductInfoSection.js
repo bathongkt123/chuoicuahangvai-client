@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase, Button } from "@mui/material";
-const MAX_LENGTH = 500
+const MAX_LENGTH = 500;
 function UnitSelect({ length, setLength }) {
   return (
     <Fragment>
@@ -39,6 +39,7 @@ function UnitSelect({ length, setLength }) {
 export default function ProductInfoSection({
   productId,
   productName,
+  productSKU,
   productPrice,
   productDescription,
   productPattern,
@@ -47,7 +48,6 @@ export default function ProductInfoSection({
   productStretch,
   productImages,
 }) {
-
   const [length, setLength] = useState(0.25);
   const total = length * productPrice;
 
@@ -55,13 +55,11 @@ export default function ProductInfoSection({
 
   const addToCart = () => {
     toast.success("Đã thêm vào giỏ hàng");
-    const { ...currentCart } = cookies['cart'] || {};
+    const { ...currentCart } = cookies["cart"] || {};
     if (currentCart[productId]) {
-      currentCart[productId] = parseFloat(currentCart[productId]) + length
-
-    }
-    else {
-      currentCart[productId] = length
+      currentCart[productId] = parseFloat(currentCart[productId]) + length;
+    } else {
+      currentCart[productId] = length;
     }
     setCookie("cart", currentCart, { path: "/" });
   };
@@ -78,12 +76,15 @@ export default function ProductInfoSection({
         draggable
         pauseOnHover={false}
       />
-      <h1> {productName}</h1>
+
+      <h1>
+        {productName} - {productSKU}
+      </h1>
       <h2> {productPrice}đ trên mét</h2>
       <p> {productDescription}</p>
       <h4>Kiểu mẫu: {productPattern}</h4>
       <h4>Xuất xứ: {productOrigin}</h4>
-      <h4>Chiều rộng: {productWidth}cm</h4>
+      <h4>Chiều rộng: {productWidth}</h4>
       <h4>Co giãn: {productStretch}</h4>
       <UnitSelect length={length} setLength={setLength} />
       <h2 style={{ display: "inline" }}>{length} mét</h2>

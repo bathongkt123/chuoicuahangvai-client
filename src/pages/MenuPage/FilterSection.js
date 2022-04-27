@@ -68,6 +68,8 @@ export default function FilterSection() {
         <Box
           sx={{
             display: "flex",
+            ml: 2,
+            mt: 1,
           }}
           key={item.id}
         >
@@ -78,7 +80,7 @@ export default function FilterSection() {
               width: "1.5rem",
               height: "1.5rem",
               borderRadius: "50%",
-              m: 1,
+              ml: 1,
             }}
           />
         </Box>

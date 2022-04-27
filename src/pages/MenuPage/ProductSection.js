@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import qs from "qs";
-import { Box, Typography, Link, Stack } from "@mui/material";
+import { Box, Link, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductSection() {
@@ -39,9 +39,16 @@ export default function ProductSection() {
                 />
               </Link>
               <Stack>
-                <Typography variant="h6">
-                  {item.attributes.product.data.attributes.name}
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.attributes.product.data.attributes.name} -{" "}
+                  {item.attributes.sku}
+                </Box>
                 <Box
                   sx={{
                     display: "flex",

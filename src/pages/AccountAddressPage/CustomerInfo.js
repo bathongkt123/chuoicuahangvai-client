@@ -7,6 +7,7 @@ export default function CustomerInfo({
   deleteContact,
   setEdit,
   edit,
+  addresses,
 }) {
   const keys = Object.keys(contacts);
   const rowsPerPage = 2;
@@ -17,18 +18,20 @@ export default function CustomerInfo({
   return (
     <Box sx={{ my: 2 }}>
       <Stack divider={<Divider />} spacing={2}>
-        {keys.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((key) => {
+        {addresses.map(function (item) {
           return (
             <SingleContact
-              contact={contacts[key]}
-              deleteContact={deleteContact(key)}
-              setEdit={() => setEdit(key)}
-              id={key}
-              edit={edit}
+              // contact={contacts[key]}
+              // deleteContact={deleteContact(key)}
+              // setEdit={() => setEdit(key)}
+              // id={key}
+              // edit={edit}
+              id={item.id}
+              item={item}
             />
           );
         })}
-        <Pagination
+        {/* <Pagination
           count={Math.ceil(keys.length / rowsPerPage)}
           page={page}
           variant="outlined"
@@ -36,7 +39,7 @@ export default function CustomerInfo({
           size="large"
           onChange={handleChange}
           sx={{ mx: "auto", mt: 2 }}
-        />
+        /> */}
       </Stack>
     </Box>
   );

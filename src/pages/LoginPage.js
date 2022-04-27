@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [invalidLogin, setInvalidLogin] = useState(false);
   const [loginMessage, setLoginMessage] = useState("Đăng nhập thất bại");
   const [isLoading, setIsLoading] = useState(false);
-  const { setUserSession } = useAuth()
+  const { setUserSession } = useAuth();
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -33,14 +33,21 @@ export default function LoginPage() {
     e.preventDefault();
     setInvalidLogin(false);
     setIsLoading(true);
+    console.log(username);
+    console.log(password);
+
     axios
-      .post(`${process.env.REACT_APP_STRAPI_URL}/api/auth/local`, {
-        identifier: username,
-        password: password,
-      })
+      .post(
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/local
+      `,
+        {
+          identifier: username,
+          password: password,
+        }
+      )
       .then((response) => {
         setIsLoading(false);
-        setUserSession(response.data.jwt)
+        setUserSession(response.data.jwt);
         navigate("/", { replace: true });
       })
       .catch((error) => {
