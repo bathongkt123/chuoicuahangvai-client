@@ -40,21 +40,19 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       axios.post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/auth/local/register
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/register
       `,
         {
           username: username,
           email: username,
           password: password,
-          // phone: phone,
-          // name: {
-          //   firstname: firstname,
-          //   lastname: lastname,
-          // },
+          phone: phone,
+          firstname: firstname,
+          lastname: lastname,
         }
       );
       navigate("/login", { replace: true });
-      console.log("ok");
+      // console.log("ok");
     } catch (response) {
       console.log(response.response.data);
     }
