@@ -12,7 +12,6 @@ function ccyFormat(num) {
 }
 
 export default function ProductTable() {
-    console.log('render')
     //cart: id and number of products from cookies
     const [cookie, setCookie] = useCookies(["cart"]);
     const cart = cookie['cart'] || {}
@@ -45,7 +44,7 @@ export default function ProductTable() {
     })
     //subtotal and total
 
-    const subTotal = key => cart[key] * (products[key] ? products[key].price : 0)
+    const subTotal = key => cart[key] * products[key].price
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
     useEffect(() => {
         const query = qs.stringify(
@@ -81,6 +80,7 @@ export default function ProductTable() {
             <Table>
                 <TableHead >
                     <TableRow >
+
                         <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
                         <CustomTableCell align="right">ĐƠN GIÁ(/MÉT)</CustomTableCell>
                         <CustomTableCell align="center">ĐỘ DÀI</CustomTableCell>
