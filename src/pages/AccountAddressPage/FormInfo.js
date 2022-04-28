@@ -6,8 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@mui/material";
-import Address from "./Address";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 
@@ -124,13 +123,6 @@ export default function FormInfo({ addContact, edit, contacts }) {
       console.log(response.response.data);
     }
   };
-
-  // console.log(contact.is_default);
-  // useEffect(() => {
-  //   if (edit) {
-  //     setContact(contacts[edit]);
-  //   }
-  // }, [edit, contacts]);
 
   return (
     <Box sx={{ width: "100%" }}>
