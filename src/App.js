@@ -26,15 +26,11 @@ import {
 } from "react-router-dom";
 import { Fragment } from "react";
 import useAuth from "auth/useAuth";
-import axios from "axios";
+
 
 function App() {
-  const { auth } = useAuth();
-  if (auth.token)
-    axios.interceptors.request.use((config) => {
-      config.headers.Authorization = `Bearer ${auth.token}`;
-      return config;
-    });
+  const { initializeSession } = useAuth();
+  initializeSession()
   return (
     <Router>
       <Routes>

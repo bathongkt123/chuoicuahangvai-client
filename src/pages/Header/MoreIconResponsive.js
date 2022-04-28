@@ -20,7 +20,7 @@ const ITEM_HEIGHT = 48;
 export default function MoreIconResponsive({ cartNumber }) {
   const navigate = useNavigate();
   const { removeUserSession } = useAuth();
-  const { auth } = useAuth();
+  const { token } = useAuth();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const handleMobileMenuClose = () => {
@@ -52,7 +52,7 @@ export default function MoreIconResponsive({ cartNumber }) {
         },
       }}
     >
-      {auth.isAuthenticated ? (
+      {token ? (
         <MenuItem>
           <Link
             component="button"
@@ -120,7 +120,7 @@ export default function MoreIconResponsive({ cartNumber }) {
           </Badge>
         </Link>
       </MenuItem>
-      {auth.isAuthenticated ? (
+      {token ? (
         <MenuItem>
           <Link
             component="button"

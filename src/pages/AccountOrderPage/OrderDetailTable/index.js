@@ -1,13 +1,15 @@
-import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Typography, InputBase, Box } from "@mui/material"
-import { useState } from "react";
+import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Typography, Box } from "@mui/material"
+import { useEffect, useState } from "react";
 import CustomTableCell from "components/CustomTableCell"
 import ProductRow from "./ProductRow";
+import qs from 'qs'
+import axios from 'axios'
 const TAX_RATE = 0.1;
 
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
 }
-export default function OrderDetailTable() {
+export default function OrderDetailTable({ orderId }) {
     const keys = Object.keys(products)
     const subTotal = key => products[key].defaultNumber * products[key].unit
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
@@ -17,6 +19,37 @@ export default function OrderDetailTable() {
     };
     const rowsPerPage = 4
     const shipFee = 100000
+    const [order, setOrder] = useState({})
+    useEffect(() => {
+        const fetchData = async () => {
+            const query = qs.stringify(
+                {
+                    populate: [],
+                },
+                { encodeValuesOnly: true }
+            );
+            const result = await axios.get(
+                `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders/${orderId}?${query}`
+            )
+            console.log(result)
+
+            // result.data.forEach(
+            //     (order) => {
+            //         const createdAt = new Date(order.createdAt)
+            //         newOrders[order.id] = {
+            //             code: order.code,
+            //             status: order.order_statuses[0].status,
+            //             createdAt: createdAt.toLocaleDateString(),
+            //             total: 10000,
+            //         }
+            //     }
+            // )
+
+
+        };
+        fetchData();
+    }
+        , [orderId])
     return (
         <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
             <Table>

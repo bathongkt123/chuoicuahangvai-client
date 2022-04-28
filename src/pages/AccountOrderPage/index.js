@@ -9,7 +9,7 @@ export default function AccountOrderPage() {
     return (
         <Container maxWidth='lg' >
             <Heading orderId={orderId} />
-            <OrderDetailTable />
+            <OrderDetailTable orderId={orderId} />
 
         </Container>
     )

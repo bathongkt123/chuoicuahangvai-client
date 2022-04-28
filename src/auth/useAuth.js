@@ -1,12 +1,8 @@
 import { useCookies } from "react-cookie";
-
+import axios from "axios";
 const useAuth = () => {
   const [cookies, setCookie, removeCookie] = useCookies([process.env.REACT_APP_COOKIE_NAME]);
-  const isAuthenticated = Boolean(cookies[process.env.REACT_APP_COOKIE_NAME])
-  const auth = {
-    isAuthenticated: isAuthenticated,
-    token: cookies[process.env.REACT_APP_COOKIE_NAME]
-  }
+  const token = cookies[process.env.REACT_APP_COOKIE_NAME]
   const setUserSession = (token) => {
     setCookie(process.env.REACT_APP_COOKIE_NAME, token, {
       path: "/",
@@ -19,7 +15,17 @@ const useAuth = () => {
   const removeUserSession = () => {
     removeCookie(process.env.REACT_APP_COOKIE_NAME)
   }
-  return { auth, setUserSession, removeUserSession };
+
+  const initializeSession = () => {
+    console.log('initialize')
+    delete axios.defaults.headers.common['Authorization'];
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+    console.log('end initialize')
+
+  }
+  return { token, setUserSession, removeUserSession, initializeSession };
 };
 
 export default useAuth;

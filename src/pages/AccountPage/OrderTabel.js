@@ -1,13 +1,49 @@
 import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Link, TableFooter } from "@mui/material"
 import CustomTableCell from "components/CustomTableCell"
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
 export default function OrderTable() {
-    const [page, setPage] = React.useState(0);
+    const navigate = useNavigate()
+    const [page, setPage] = useState(0);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
     const rowsPerPage = 5
+
+    const [orders, setOrders] = useState({})
     const keys = Object.keys(orders)
+    useEffect(() => {
+        const fetchData = async () => {
+            const query = qs.stringify(
+                {
+                    populate: [],
+                },
+                { encodeValuesOnly: true }
+            );
+            const result = await axios.get(
+                `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders?${query}`
+            )
+            console.log(result)
+            const newOrders = {}
+            result.data.forEach(
+                (order) => {
+                    const createdAt = new Date(order.createdAt)
+                    newOrders[order.id] = {
+                        code: order.code,
+                        status: order.order_statuses[0].status,
+                        createdAt: createdAt.toLocaleDateString(),
+                        total: 10000,
+                    }
+                }
+            )
+            console.log()
+
+            setOrders(newOrders)
+        };
+        fetchData();
+    }, []);
     return (
         <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
             <Table>
@@ -24,19 +60,18 @@ export default function OrderTable() {
                         return (
                             <TableRow key={key}>
                                 <CustomTableCell align="left" >
-                                    <Link color='inherit' underline="hover" href={'/account/order/' + key}>
-                                        {key}
+                                    <Link color='inherit' underline="hover"
+                                        sx={{ cursor: 'pointer' }}
+                                        onClick={() => navigate('/account/order/' + key)}>
+                                        {orders[key].code}
                                     </Link>
                                 </CustomTableCell>
-                                <CustomTableCell align="right">{orders[key].state}</CustomTableCell>
-                                <CustomTableCell align="right">{orders[key].dateOrder}</CustomTableCell>
+                                <CustomTableCell align="right">{orders[key].status}</CustomTableCell>
+                                <CustomTableCell align="right">{orders[key].createdAt}</CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].total}</CustomTableCell>
                             </TableRow>
                         )
-                    }
-                    )
-                    }
-
+                    })}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
@@ -53,51 +88,4 @@ export default function OrderTable() {
             </Table>
         </TableContainer >
     )
-}
-const orders = {
-    ORDER210910001: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    },
-    ORDER210910002: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    },
-    ORDER210910003: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    },
-    ORDER210910004: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    },
-    ORDER210910005: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    },
-    ORDER210910006: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    }
-    , ORDER210910007: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    }
-    , ORDER210910008: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    }
-    , ORDER210910009: {
-        state: "Đã hoàn tất",
-        dateOrder: "01/01/2022",
-        total: 1000000
-    }
 }

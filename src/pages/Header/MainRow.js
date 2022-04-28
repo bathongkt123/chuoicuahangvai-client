@@ -52,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 export default function MainRow({ cartNumber }) {
     const navigate = useNavigate()
-    const { auth } = useAuth()
+    const { token } = useAuth()
     return (
         <Box
             sx={{
@@ -113,7 +113,7 @@ export default function MainRow({ cartNumber }) {
                     </Badge>
                 </Link>
                 <Box width={32} />
-                {auth.isAuthenticated ?
+                {token ?
                     <AccountDropdown /> :
                     <Link
                         component="button"

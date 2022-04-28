@@ -18,7 +18,6 @@ export default function HomePage() {
       data: [],
     },
   });
-  console.log(homepage)
   useEffect(() => {
     const fetchData = async () => {
       const query = qs.stringify(
