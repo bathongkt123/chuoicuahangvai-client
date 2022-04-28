@@ -4,7 +4,7 @@ import { IconButton, InputBase, Stack, Box, Typography } from "@mui/material";
 //set số thập phân 2 chữ số
 
 export default function UnitSelect({ length, setItemLength }) {
-    const pattern = /^(0|[1-9]{1,3})(?:[.]([0-9]{0,2}))?$/
+    const pattern = /^(0|([1-9][0-9]{0,2}))(?:[.]([0-9]{0,2}))?$/
     const minLength = 0.5
     const maxLength = 900
     const step = 1
@@ -21,7 +21,10 @@ export default function UnitSelect({ length, setItemLength }) {
                     value={length}
                     onChange={(e) => {
                         const value = e.target.value
-
+                        if (!value) {
+                            setItemLength(minLength)
+                            return
+                        }
                         if (pattern.test(value)) {
                             setItemLength(value)
                         }
