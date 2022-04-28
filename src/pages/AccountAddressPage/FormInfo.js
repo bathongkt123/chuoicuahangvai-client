@@ -6,8 +6,10 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@mui/material";
+import Address from "./Address";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import qs from "qs";
 
 export default function FormInfo({ addContact, edit, contacts }) {
   const [contact, setContact] = useState({
@@ -15,12 +17,93 @@ export default function FormInfo({ addContact, edit, contacts }) {
     firstname: "",
     address: "",
     address_three_levels: "",
-    district: "",
-    ward: "",
-    city: "",
     phone: "",
     is_default: false,
   });
+  const [city, setCity] = useState("");
+  const [cities, setCities] = useState([]);
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const fetchCitiesData = async () => {
+    const response = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/cities`
+    );
+    let data = [];
+    response.data.data.forEach((item) => {
+      data.push({ label: item, value: item });
+    });
+    setCities(data);
+    setDistricts([]);
+    setWards([]);
+  };
+  const fetchDistrictsData = async (city) => {
+    if (city === "") return;
+    let data = [];
+    const query = qs.stringify({ city: city }, { encodeValuesOnly: true });
+    const response = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/districts?${query}`
+    );
+    response.data.data.forEach((item) => {
+      data.push({ label: item, value: item });
+    });
+    setDistricts(data);
+    setWards([]);
+  };
+  const fetchWardsData = async (district, city) => {
+    if (district === "" || city === "") return;
+    let data = [];
+    const query = qs.stringify(
+      { city: city, district: district },
+      { encodeValuesOnly: true }
+    );
+    const response = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/wards?${query}`
+    );
+    response.data.data.forEach((item) => {
+      data.push({ label: item.label, value: item.value });
+    });
+    setWards(data);
+  };
+
+  const handleChangeCity = (e) => {
+    e.preventDefault();
+    // let city = document.getElementsByName("city")[0];
+
+    // city = city.options[city.selectedIndex].value;
+    // setCity(city);
+    // fetchDistrictsData(city);
+    setCity(e.target.value);
+    fetchDistrictsData(e.target.value);
+  };
+
+  const handleChangeDistrict = (e) => {
+    e.preventDefault();
+    // let city = document.getElementsByName("city")[0];
+    // city = city.options[city.selectedIndex].value;
+    // let district = document.getElementsByName("district")[0];
+    // district = district.options[district.selectedIndex].value;
+    setDistrict(e.target.value);
+    fetchWardsData(e.target.value, city);
+  };
+
+  const handleChangeWard = (e) => {
+    e.preventDefault();
+    // let ward = document.getElementsByName("ward")[0];
+    // ward = ward.options[ward.selectedIndex].value;
+    setWard(e.target.value);
+    setContact({ ...contact, address_three_levels: e.target.value });
+  };
+  useEffect(() => {
+    async function fetchData() {
+      await fetchCitiesData();
+      await fetchDistrictsData(city);
+      await fetchWardsData(district, city);
+    }
+    fetchData();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -84,20 +167,21 @@ export default function FormInfo({ addContact, edit, contacts }) {
 
       <FormControl fullWidth sx={{ mt: 5 }}>
         <InputLabel id="demo-simple-select-label">Chọn tỉnh/thành</InputLabel>
+
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Chọn tỉnh/thành"
-          value={contact.city}
-          onChange={(e) => setContact({ ...contact, city: e.target.value })}
+          name="city"
+          value={city}
+          label="Chọn tỉnh thành"
           size="large"
+          onChange={handleChangeCity}
         >
-          <MenuItem value={"TP.HCM"}>TP.HCM</MenuItem>
-          <MenuItem value={"Đà Nẵng"}>Đà Nẵng</MenuItem>
-          <MenuItem value={"Huế"}>Huế</MenuItem>
+          {cities.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
-
       <Box sx={{ display: "flex" }}>
         <FormControl fullWidth sx={{ mt: 5 }}>
           <InputLabel id="demo-simple-select-label">Chọn quận/huyện</InputLabel>
@@ -106,34 +190,39 @@ export default function FormInfo({ addContact, edit, contacts }) {
             id="demo-simple-select"
             label="Chọn quận/huyện"
             size="large"
-            value={contact.district}
-            onChange={(e) =>
-              setContact({ ...contact, district: e.target.value })
-            }
+            name="district"
+            onChange={handleChangeDistrict}
+            required
+            value={district}
           >
-            <MenuItem value={"Quận 1"}>Quận 1</MenuItem>
-            <MenuItem value={"Quận 2"}>Quận 2</MenuItem>
-            <MenuItem value={"Quận 10"}>Quận 10</MenuItem>
+            {districts.map((item) => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
+
         <Box width={20}></Box>
+
         <FormControl fullWidth sx={{ mt: 5 }}>
           <InputLabel id="demo-simple-select-label">Chọn phường/xã</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            name="ward"
+            required
+            onChange={handleChangeWard}
+            value={ward}
             label="Chọn phường/xã"
             size="large"
-            value={contact.ward}
-            onChange={(e) => setContact({ ...contact, ward: e.target.value })}
           >
-            <MenuItem value={"phường 1"}>phường 1</MenuItem>
-            <MenuItem value={"phường 2"}>phường 2</MenuItem>
-            <MenuItem value={"phường 14"}>phường 14</MenuItem>
+            {wards.map((item) => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
-
       <TextField
         label="Số điện thoại"
         size="large"
