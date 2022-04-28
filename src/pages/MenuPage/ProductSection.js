@@ -8,6 +8,24 @@ import { useNavigate } from "react-router-dom";
 export default function ProductSection() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  // const fetchData = async () => {
+  //   const query = qs.stringify(
+  //     {
+  //       populate: ["product", "images", "color"],
+
+  //       filters: {
+  //         color: {
+  //           name: {
+  //             $eq: "Đen",
+  //           },
+  //         },
+  //       },
+  //     },
+  //     { encodeValuesOnly: true }
+  //   );
+  //   const resultAddress = await axios.get(
+  //     `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
+  //   );
   const fetchData = async () => {
     const query = qs.stringify(
       {
