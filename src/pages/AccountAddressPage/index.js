@@ -9,23 +9,13 @@ import qs from "qs";
 
 export default function AccountAddressPage() {
   const [contacts, setContacts] = useState(addressList);
-  const [edit, setEdit] = useState(null);
+  const [edit, setEdit] = useState(0);
   const deleteContact = (key) => () => {
     console.log("Delete");
     const { [key]: _, ...newContacts } = contacts;
     setContacts(newContacts);
   };
-  const addContact = (contact) => () => {
-    console.log("AddAddress");
-    const keys = Object.keys(contacts).length;
-    const key = keys + 1;
 
-    if (edit === null) setContacts({ ...contacts, [key]: contact });
-    else {
-      setContacts({ ...contacts, [edit]: contact });
-      setEdit(null);
-    }
-  };
   const [addresses, setAddresses] = useState([]);
 
   const fetchData = async () => {
@@ -50,13 +40,17 @@ export default function AccountAddressPage() {
         <CustomerInfo
           contacts={contacts}
           deleteContact={deleteContact}
-          addContact={addContact}
           setEdit={setEdit}
           edit={edit}
           addresses={addresses}
         />
         <Box width={120} />
-        <FormInfo addContact={addContact} contacts={contacts} edit={edit} />
+        <FormInfo
+          addresses={addresses}
+          edit={edit}
+          setAddresses={setAddresses}
+          setEdit={setEdit}
+        />
       </Box>
     </Container>
   );
