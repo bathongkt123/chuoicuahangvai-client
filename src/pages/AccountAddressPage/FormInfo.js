@@ -10,15 +10,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 
-export default function FormInfo({ edit, addresses, setAddresses }) {
-  const [contact, setContact] = useState({
-    lastname: "",
-    firstname: "",
-    address: "",
-    ward: "",
-    phone: "",
-    is_default: false,
-  });
+export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [address, setAddress] = useState("");
@@ -30,6 +22,16 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
   const [ward, setWard] = useState("");
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  const resetForm = async () => {
+    setLastname("");
+    setFirstname("");
+    setAddress("");
+    setPhone("");
+    setIs_default(false);
+    setCity("");
+    setDistrict("");
+    setWard("");
+  };
   const fetchCitiesData = async () => {
     const response = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/cities`
@@ -86,31 +88,51 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
   const handleChangeWard = (e) => {
     e.preventDefault();
     setWard(e.target.value);
-    setContact({ ...contact, ward: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    axios
-      .post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/receive-address
+    if (edit === null)
+      axios
+        .post(
+          `${process.env.REACT_APP_STRAPI_URL}/api/receive-address
       `,
-        {
-          data: {
-            lastname: lastname,
-            firstname: firstname,
-            address: address,
-            ward_id: ward,
-            phone: phone,
-            is_default: is_default,
-          },
-        }
-      )
-      .then((response) => {
-        fetchAddresses();
-      });
+          {
+            data: {
+              lastname: lastname,
+              firstname: firstname,
+              address: address,
+              ward_id: ward,
+              phone: phone,
+              is_default: is_default,
+            },
+          }
+        )
+        .then((response) => {
+          fetchAddresses();
+        });
+    else {
+      axios
+        .put(
+          `${process.env.REACT_APP_STRAPI_URL}/api/receive-address/${edit}
+        `,
+          {
+            data: {
+              lastname: lastname,
+              firstname: firstname,
+              address: address,
+              ward_id: ward,
+              phone: phone,
+              is_default: is_default,
+            },
+          }
+        )
+        .then((response) => {
+          fetchAddresses();
+        });
+    }
   };
+
   const fetchEditAddress = async () => {
     if (edit === null) return;
     const query = qs.stringify({}, { encodeValuesOnly: true });
@@ -127,14 +149,6 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
     setWard(resultAddresses.data[0].address.address_three_levels.id);
     setPhone(resultAddresses.data[0].phone);
     setIs_default(resultAddresses.data[0].is_default);
-    // setContact({
-    //   ...contact,
-    //   ward: resultAddresses.data[0].address.address_three_levels.id,
-    // });
-    // setContact({ ...contact, phone: resultAddresses.data[0].phone });
-    // setCity(resultAddresses.data[0].address.address_three_levels.city);
-    // setDistrict(resultAddresses.data[0].address.address_three_levels.district);
-    // setWard(resultAddresses.data[0].address.address_three_levels.id);
   };
   const fetchAddresses = async () => {
     const query = qs.stringify({}, { encodeValuesOnly: true });
@@ -143,6 +157,10 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
       `${process.env.REACT_APP_STRAPI_URL}/api/receive-address?${query}`
     );
     setAddresses(resultAddresses.data);
+    if (edit) {
+      setEdit(null);
+      resetForm();
+    }
   };
 
   useEffect(() => {
@@ -150,10 +168,10 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
       await fetchCitiesData();
       await fetchDistrictsData(city);
       await fetchWardsData(district, city);
-      await fetchEditAddress();
+      fetchEditAddress();
     }
     fetchData();
-  }, [edit, city, district]);
+  }, [edit]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -165,7 +183,7 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
           fullWidth
           sx={{ display: "inline-block" }}
           value={lastname}
-          onChange={(e) => setContact(e.target.value)}
+          onChange={(e) => setLastname(e.target.value)}
         ></TextField>
         <Box width={20}></Box>
         <TextField
@@ -175,7 +193,7 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
           fullWidth
           sx={{ display: "inline-block" }}
           value={firstname}
-          onChange={(e) => setContact(e.target.value)}
+          onChange={(e) => setFirstname(e.target.value)}
         ></TextField>
       </Box>
 
@@ -186,7 +204,7 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
         fullWidth
         sx={{ display: "inline-block" }}
         value={address}
-        onChange={(e) => setContact(e.target.value)}
+        onChange={(e) => setAddress(e.target.value)}
       ></TextField>
 
       <FormControl fullWidth sx={{ mt: 5 }}>
@@ -255,12 +273,12 @@ export default function FormInfo({ edit, addresses, setAddresses }) {
         fullWidth
         sx={{ display: "inline-block", mt: 5 }}
         value={phone}
-        onChange={(e) => setContact(e.target.value)}
+        onChange={(e) => setPhone(e.target.value)}
       ></TextField>
       <FormGroup>
         <FormControlLabel
           control={<Checkbox checked={is_default} />}
-          onChange={(e) => setContact(e.target.checked)}
+          onChange={(e) => setIs_default(e.target.checked)}
           label="Địa chỉ mặc định"
         />
       </FormGroup>
