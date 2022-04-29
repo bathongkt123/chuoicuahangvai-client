@@ -1,4 +1,4 @@
-import { Typography, Box, Button, ButtonGroup, Divider } from "@mui/material";
+import { Typography, Box, Button, ButtonGroup } from "@mui/material";
 import React from "react";
 
 export default function SingleContact({

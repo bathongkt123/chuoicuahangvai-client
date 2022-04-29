@@ -168,11 +168,13 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
       await fetchCitiesData();
       await fetchDistrictsData(city);
       await fetchWardsData(district, city);
-      fetchEditAddress();
     }
     fetchData();
-  }, [edit]);
+  }, [district]);
 
+  useEffect(() => {
+    fetchEditAddress();
+  }, [edit]);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ display: "flex", my: 5 }}>
