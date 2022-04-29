@@ -1,7 +1,6 @@
 import { Box } from "@mui/material"
 import { Fragment, memo } from "react"
 function ProductImage({ image, name }) {
-    console.log('renderImg')
     return (
         <Fragment>
             <Box

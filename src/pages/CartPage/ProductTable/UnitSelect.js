@@ -1,46 +1,53 @@
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
-import React from "react";
-import { IconButton, InputBase, Stack, Box, Typography } from "@mui/material";
+import { Fragment } from "react";
+import { IconButton, InputBase, Tooltip } from "@mui/material";
 //set số thập phân 2 chữ số
-
-export default function UnitSelect({ length, setItemLength }) {
-    const pattern = /^(0|([1-9][0-9]{0,2}))(?:[.]([0-9]{0,2}))?$/
-    const minLength = 0.5
-    const maxLength = 900
-    const step = 1
+const PATTERN = /^(0|([1-9][0-9]*))(?:[.]([0-9]{0,2}))?$/
+const STEP = 1
+export default function UnitSelect({ length, setItemLength, maxLength, minLength }) {
+    const title = length < minLength ?
+        `Đặt tối thiểu từ ${minLength} mét` :
+        (
+            length > maxLength ?
+                `Hàng còn tối đa ${maxLength} mét` :
+                ``
+        )
     return (
-        <Stack>
-            {length < minLength && <Typography variant="body2" color='red' >Tối thiểu: {minLength}</Typography>}
-            <Box>
-                <IconButton sx={{ color: '#4e5b73' }} component="span"
-                    onClick={() => length - step > minLength ? setItemLength(parseFloat(length) - step) : setItemLength(minLength)}>
-                    <IndeterminateCheckBox />
-                </IconButton>
-                <InputBase sx={{ border: 1, borderColor: '#4e5b73', width: '8ch', px: 1 }}
+
+        <Fragment>
+            <IconButton sx={{ color: '#4e5b73' }} component="span"
+                onClick={() => length - STEP > minLength ? setItemLength((length - STEP).toFixed(2) * 1) : setItemLength(minLength)}>
+                <IndeterminateCheckBox />
+            </IconButton>
+            <Tooltip title={title}>
+                <InputBase error sx={{
+                    border: 1, width: '8ch', px: 1,
+                    borderColor: (length > maxLength || length < minLength) ? '#f20515' : '#4e5b73'
+                }}
                     inputProps={{ style: { textAlign: 'center' } }}
                     value={length}
                     onChange={(e) => {
                         const value = e.target.value
                         if (!value) {
-                            setItemLength(minLength)
+                            setItemLength(0)
                             return
                         }
-                        if (pattern.test(value)) {
+                        if (PATTERN.test(value)) {
                             setItemLength(value)
+                            return
                         }
-                        else {
-                            e.preventDefault()
-                        }
+                        e.preventDefault()
                     }
                     }
 
                 />
-                <IconButton sx={{ color: '#4e5b73' }} component="span"
-                    onClick={() => length + step < maxLength ? setItemLength(step + parseFloat(length)) : setItemLength(maxLength)}>
-                    < AddBox />
-                </IconButton>
-            </Box>
-            {length > maxLength && <Typography variant="body2" color='red'>Tối đa: {maxLength}</Typography>}
-        </Stack >
+            </Tooltip>
+            <IconButton sx={{ color: '#4e5b73' }} component="span"
+                onClick={() => setItemLength((parseFloat(length) + STEP).toFixed(2) * 1)}>
+                < AddBox />
+            </IconButton>
+        </Fragment>
+
+
     )
 }
