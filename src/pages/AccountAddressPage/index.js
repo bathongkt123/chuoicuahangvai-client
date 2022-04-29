@@ -43,6 +43,7 @@ export default function AccountAddressPage() {
           setEdit={setEdit}
           edit={edit}
           addresses={addresses}
+          setAddresses={setAddresses}
         />
         <Box width={120} />
         <FormInfo

@@ -8,6 +8,7 @@ export default function CustomerInfo({
   setEdit,
   edit,
   addresses,
+  setAddresses,
 }) {
   const rowsPerPage = 2;
   const [page, setPage] = useState(1);
@@ -28,6 +29,7 @@ export default function CustomerInfo({
                 item={item}
                 setEdit={() => setEdit(item.id)}
                 edit={edit}
+                setAddresses={setAddresses}
               />
             );
           })}
