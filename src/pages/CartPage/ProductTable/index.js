@@ -1,12 +1,13 @@
 
 import { Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ProductRow from "./ProductRow";
 import CustomTableCell from "components/CustomTableCell"
 import { useCookies } from "react-cookie";
+import Paying from './Paying'
 import axios from "axios";
-import qs from "qs";
-const TAX_RATE = 0.1;
+
+const MIN_LENGTH = 0.5;
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
 }
@@ -38,7 +39,9 @@ export default function ProductTable() {
         keys.forEach((key) => initialState[key] = {
             name: '',
             image: '',
-            price: 0
+            price: 0,
+            maxLength: 0,
+            minLength: 0,
         })
         return initialState
     })
@@ -46,106 +49,97 @@ export default function ProductTable() {
 
     const subTotal = key => cart[key] * products[key].price
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
+    //validate 
+    const validateItems = keys.every(key =>
+        products[key].maxLength >= cart[key] && products[key].minLength <= cart[key])
+
+
     useEffect(() => {
-        const query = qs.stringify(
-            {
-                populate: [
-                    "product",
-                    "images",
-                ],
-            },
-            { encodeValuesOnly: true }
-        );
-
-        const fetchEachProduct = async (key) => {
-            const response = await axios.get(`${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${key}?${query}`)
-            return {
-                name: response.data.data.attributes.product.data.attributes.name + '-' + response.data.data.attributes.sku,
-                image: response.data.data.attributes.images.data[0].attributes.url,
-                price: response.data.data.attributes.price,
-            }
-        }
-
+        //format cart to post to server
+        const postCartData = [...keys.map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
         const fetchData = async () => {
+            const cartDetail = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart`, { skus: postCartData })
+            console.log(cartDetail)
             const cartProducts = {}
-            for (const key of keys)
-                cartProducts[key] = await fetchEachProduct(key)
+            cartDetail.data.skus.map(item =>
+                cartProducts[item.id] = {
+                    name: item.product.name + ' - ' + item.sku,
+                    image: item.images[0].url,
+                    price: item.price,
+                    maxLength: item.inventoryLength / 100,
+                    minLength: MIN_LENGTH
+                }
+            )
+            //pretend that all products have some in inventory
             setProducts(cartProducts)
+
         }
         fetchData()
     }, []);
 
     return (
-        <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
-            <Table>
-                <TableHead >
-                    <TableRow >
+        <Fragment>
+            <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
+                <Table>
+                    <TableHead >
+                        <TableRow >
 
-                        <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
-                        <CustomTableCell align="right">ĐƠN GIÁ(/MÉT)</CustomTableCell>
-                        <CustomTableCell align="center">ĐỘ DÀI</CustomTableCell>
-                        <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody >
-                    {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
-                        return (
-                            <ProductRow
-                                key={key}
-                                attr={{
-                                    name: products[key].name,
-                                    image: products[key].image,
-                                    price: products[key].price,
-                                    subTotal: subTotal(key)
-                                }}
-                                length={cart[key]}
-                                setItemLength={setItemLength(key)}
-                                deleteItem={deleteItem(key)}
-                            />
+                            <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
+                            <CustomTableCell align="right">ĐƠN GIÁ(VNĐ/M)</CustomTableCell>
+                            <CustomTableCell align="center">ĐỘ DÀI(M)</CustomTableCell>
+                            <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody >
+                        {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
+                            return (
+                                <ProductRow
+                                    key={key}
+                                    attr={{
+                                        ...products[key],
+                                        subTotal: subTotal(key)
+                                    }}
+                                    length={cart[key]}
+                                    setItemLength={setItemLength(key)}
+                                    deleteItem={deleteItem(key)}
+                                />
+                            )
+                        }
                         )
-                    }
-                    )
-                    }
-                    <TableRow>
-                        <TablePagination
-                            size="medium"
-                            rowsPerPage={rowsPerPage}
-                            count={keys.length}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            rowsPerPageOptions={[]}
-                            sx={{ backgroundColor: '#EEEDE8' }}
-                        />
-                    </TableRow>
+                        }
+                        <TableRow>
+                            <TablePagination
+                                size="medium"
+                                rowsPerPage={rowsPerPage}
+                                count={keys.length}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                rowsPerPageOptions={[]}
+                                sx={{ backgroundColor: '#EEEDE8' }}
+                            />
+                        </TableRow>
 
-                    <TableRow >
-                        <CustomTableCell rowSpan={3} ></CustomTableCell>
-                        <CustomTableCell colSpan={2} >TỔNG TRƯỚC THUẾ</CustomTableCell>
-                        <CustomTableCell align="right" >
-                            {ccyFormat(total)}
-                        </CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell>VAT</CustomTableCell>
-                        <CustomTableCell align="center">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
-                        <CustomTableCell align="right">{ccyFormat(total * TAX_RATE)}</CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell colSpan={2}>TỔNG SAU THUẾ</CustomTableCell>
-                        <CustomTableCell align="right">
-                            <Typography variant="h5" color='red'>
-                                {ccyFormat(total * (1 + TAX_RATE))}
-                            </Typography>
-                            <Typography variant='body1'>
-                                (Chưa bao gồm chi phí vận chuyển)
-                            </Typography>
+                        <TableRow >
 
-                        </CustomTableCell>
-                    </TableRow>
-                </TableBody>
+                            <CustomTableCell colSpan={2} align="right">TỔNG GIÁ TRỊ</CustomTableCell>
+                            <CustomTableCell colSpan={2} align="right" >
+                                <Typography variant="h5" color='red'>
+                                    {ccyFormat(total)}
+                                </Typography>
+                                <Typography variant="body2">
+                                    Chưa tính phí vận chuyển
+                                </Typography>
 
-            </Table>
-        </TableContainer >
+                            </CustomTableCell>
+                        </TableRow>
+
+                    </TableBody>
+
+                </Table>
+            </TableContainer >
+            {/* Paying section */}
+            <Paying cart={cart} validateItems={validateItems} />
+        </Fragment>
     )
 }
 

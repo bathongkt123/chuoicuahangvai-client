@@ -18,7 +18,7 @@ export default function ProductRow({ attr, length, deleteItem, setItemLength }) 
             </CustomTableCell>
             <CustomTableCell align="right">{attr.price}</CustomTableCell>
             <CustomTableCell align='center' sx={{ whiteSpace: 'nowrap' }}>
-                <UnitSelect length={length} setItemLength={setItemLength} />
+                <UnitSelect length={length} setItemLength={setItemLength} maxLength={attr.maxLength} minLength={attr.minLength} />
             </CustomTableCell>
             <CustomTableCell align="right">{attr.subTotal}</CustomTableCell>
         </TableRow >

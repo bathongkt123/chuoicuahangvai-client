@@ -10,19 +10,39 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import axios from 'axios'
 import "react-toastify/dist/ReactToastify.css";
-export default function Paying() {
+export default function Paying({ cart, validateItems }) {
     const navigate = useNavigate();
     const [checkTerm, setCheckTerm] = useState(false);
     const handleCheckTerm = (e) => {
         setCheckTerm(e.target.checked);
     };
-    const handlePaying = () => {
-        if (checkTerm) {
-            navigate("/payment/delivery");
-        } else {
-            toast.error("Vui lòng chấp nhận Điều khoản để tiếp tục");
+    const [checkDebt, setCheckDebt] = useState(false);
+    const handleCheckDebt = (e) => {
+        setCheckDebt(e.target.checked);
+    };
+    const [note, setNote] = useState('');
+    const handleNote = (e) => {
+        setNote(e.target.value);
+    };
+    const handlePaying = async () => {
+        if (!validateItems) {
+            toast.error("Vui lòng nhập độ dài sản phẩm phù hợp");
+            return
         }
+        if (!checkTerm) {
+            toast.error("Vui lòng chấp nhận Điều khoản sử dụng và Điều khoản bảo mật");
+            return
+        }
+        //post data
+        const postCartData = [...Object.keys(cart).map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
+        const cartInfoData = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/information`, {
+            skus: postCartData,
+            note: note,
+            isDebt: checkDebt,
+        })
+        console.log(cartInfoData)
     };
 
     return (
@@ -52,17 +72,19 @@ export default function Paying() {
                     flexBasis: { md: 0 },
                 }}
             >
-                <Typography variant="h5">Yêu cầu đặc biệt</Typography>
+                <Typography variant="h5">Ghi chú thêm</Typography>
                 <Box height={8}></Box>
                 <InputBase
                     sx={{
                         border: 1,
                         p: 1,
                     }}
-                    placeholder="Nhập yêu cầu về vận chuyển tại đây"
+                    placeholder="Yêu cầu về vận chuyển hàng hóa,..."
                     fullWidth
                     multiline
                     rows={6}
+                    value={note}
+                    onChange={handleNote}
                 />
             </Box>
             {/* <Box width={32}></Box> */}
@@ -78,7 +100,7 @@ export default function Paying() {
                     sx={{ display: "flex", alignItems: "self-end" }}
                 >
                     <FormControlLabel
-                        control={<Checkbox />}
+                        control={<Checkbox checked={checkDebt} onChange={handleCheckDebt} />}
                         label="Thanh toán đơn hàng này sau (mua nợ)"
                         labelPlacement="end"
                     />

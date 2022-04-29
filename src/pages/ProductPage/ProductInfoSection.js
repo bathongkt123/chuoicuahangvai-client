@@ -55,7 +55,7 @@ export default function ProductInfoSection({
 
   const addToCart = () => {
     toast.success("Đã thêm vào giỏ hàng");
-    const { ...currentCart } = cookies["cart"] || {};
+    const { ...currentCart } = cookies["cart"] || [];
     if (currentCart[productId]) {
       currentCart[productId] = parseFloat(currentCart[productId]) + length;
     } else {

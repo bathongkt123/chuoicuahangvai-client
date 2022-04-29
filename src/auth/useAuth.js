@@ -17,12 +17,11 @@ const useAuth = () => {
   }
 
   const initializeSession = () => {
-    console.log('initialize')
+
     delete axios.defaults.headers.common['Authorization'];
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-    console.log('end initialize')
 
   }
   return { token, setUserSession, removeUserSession, initializeSession };
