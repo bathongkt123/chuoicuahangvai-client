@@ -5,8 +5,8 @@ export default function SingleContact({
   // contact,
   // deleteContact,
   // addContact,
-  // setEdit,
-  // edit,
+  setEdit,
+  edit,
   id,
   item,
 }) {
@@ -34,8 +34,8 @@ export default function SingleContact({
         <Button
           variant="contained"
           sx={{ backgroundColor: "#384257" }}
-          // onClick={setEdit}
-          // disabled={edit === id}
+          onClick={setEdit}
+          disabled={edit === id}
         >
           Chỉnh sửa
         </Button>

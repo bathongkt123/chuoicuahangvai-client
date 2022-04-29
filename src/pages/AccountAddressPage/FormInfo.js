@@ -10,12 +10,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 
-export default function FormInfo({
-  addContact,
-  edit,
-  addresses,
-  setAddresses,
-}) {
+export default function FormInfo({ edit, addresses, setAddresses }) {
   const [contact, setContact] = useState({
     lastname: "",
     firstname: "",
@@ -24,6 +19,11 @@ export default function FormInfo({
     phone: "",
     is_default: false,
   });
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [is_default, setIs_default] = useState(false);
   const [city, setCity] = useState("");
   const [cities, setCities] = useState([]);
   const [district, setDistrict] = useState("");
@@ -73,29 +73,18 @@ export default function FormInfo({
 
   const handleChangeCity = (e) => {
     e.preventDefault();
-    // let city = document.getElementsByName("city")[0];
-
-    // city = city.options[city.selectedIndex].value;
-    // setCity(city);
-    // fetchDistrictsData(city);
     setCity(e.target.value);
     fetchDistrictsData(e.target.value);
   };
 
   const handleChangeDistrict = (e) => {
     e.preventDefault();
-    // let city = document.getElementsByName("city")[0];
-    // city = city.options[city.selectedIndex].value;
-    // let district = document.getElementsByName("district")[0];
-    // district = district.options[district.selectedIndex].value;
     setDistrict(e.target.value);
     fetchWardsData(e.target.value, city);
   };
 
   const handleChangeWard = (e) => {
     e.preventDefault();
-    // let ward = document.getElementsByName("ward")[0];
-    // ward = ward.options[ward.selectedIndex].value;
     setWard(e.target.value);
     setContact({ ...contact, ward: e.target.value });
   };
@@ -109,12 +98,12 @@ export default function FormInfo({
       `,
         {
           data: {
-            lastname: contact.lastname,
-            firstname: contact.firstname,
-            address: contact.address,
-            ward_id: contact.ward,
-            phone: contact.phone,
-            is_default: contact.is_default,
+            lastname: lastname,
+            firstname: firstname,
+            address: address,
+            ward_id: ward,
+            phone: phone,
+            is_default: is_default,
           },
         }
       )
@@ -122,13 +111,38 @@ export default function FormInfo({
         fetchAddresses();
       });
   };
+  const fetchEditAddress = async () => {
+    if (edit === null) return;
+    const query = qs.stringify({}, { encodeValuesOnly: true });
+
+    const resultAddresses = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/receive-address/${edit}?${query}`
+    );
+
+    setLastname(resultAddresses.data[0].name.lastname);
+    setFirstname(resultAddresses.data[0].name.firstname);
+    setAddress(resultAddresses.data[0].address.address);
+    setCity(resultAddresses.data[0].address.address_three_levels.city);
+    setDistrict(resultAddresses.data[0].address.address_three_levels.district);
+    setWard(resultAddresses.data[0].address.address_three_levels.id);
+    setPhone(resultAddresses.data[0].phone);
+    setIs_default(resultAddresses.data[0].is_default);
+    // setContact({
+    //   ...contact,
+    //   ward: resultAddresses.data[0].address.address_three_levels.id,
+    // });
+    // setContact({ ...contact, phone: resultAddresses.data[0].phone });
+    // setCity(resultAddresses.data[0].address.address_three_levels.city);
+    // setDistrict(resultAddresses.data[0].address.address_three_levels.district);
+    // setWard(resultAddresses.data[0].address.address_three_levels.id);
+  };
   const fetchAddresses = async () => {
     const query = qs.stringify({}, { encodeValuesOnly: true });
+
     const resultAddresses = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/receive-address?${query}`
     );
     setAddresses(resultAddresses.data);
-    console.log(resultAddresses);
   };
 
   useEffect(() => {
@@ -136,47 +150,50 @@ export default function FormInfo({
       await fetchCitiesData();
       await fetchDistrictsData(city);
       await fetchWardsData(district, city);
+      await fetchEditAddress();
     }
     fetchData();
-  }, []);
+  }, [edit, city, district]);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ display: "flex", my: 5 }}>
         <TextField
+          required
           label="Họ và tên lót"
           size="large"
           fullWidth
           sx={{ display: "inline-block" }}
-          value={contact.lastname}
-          onChange={(e) => setContact({ ...contact, lastname: e.target.value })}
+          value={lastname}
+          onChange={(e) => setContact(e.target.value)}
         ></TextField>
         <Box width={20}></Box>
         <TextField
+          required
           label="Tên"
           size="large"
           fullWidth
           sx={{ display: "inline-block" }}
-          value={contact.firstname}
-          onChange={(e) =>
-            setContact({ ...contact, firstname: e.target.value })
-          }
+          value={firstname}
+          onChange={(e) => setContact(e.target.value)}
         ></TextField>
       </Box>
 
       <TextField
+        required
         label="Địa chỉ"
         size="large"
         fullWidth
         sx={{ display: "inline-block" }}
-        value={contact.address}
-        onChange={(e) => setContact({ ...contact, address: e.target.value })}
+        value={address}
+        onChange={(e) => setContact(e.target.value)}
       ></TextField>
 
       <FormControl fullWidth sx={{ mt: 5 }}>
         <InputLabel id="demo-simple-select-label">Chọn tỉnh/thành</InputLabel>
 
         <Select
+          required
           name="city"
           value={city}
           label="Chọn tỉnh thành"
@@ -232,19 +249,18 @@ export default function FormInfo({
         </FormControl>
       </Box>
       <TextField
+        required
         label="Số điện thoại"
         size="large"
         fullWidth
         sx={{ display: "inline-block", mt: 5 }}
-        value={contact.phone}
-        onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+        value={phone}
+        onChange={(e) => setContact(e.target.value)}
       ></TextField>
       <FormGroup>
         <FormControlLabel
-          control={<Checkbox checked={contact.is_default} />}
-          onChange={(e) =>
-            setContact({ ...contact, is_default: e.target.checked })
-          }
+          control={<Checkbox checked={is_default} />}
+          onChange={(e) => setContact(e.target.checked)}
           label="Địa chỉ mặc định"
         />
       </FormGroup>
@@ -253,7 +269,6 @@ export default function FormInfo({
           variant="contained"
           size="large"
           sx={{ backgroundColor: "#384257", my: 4 }}
-          // onClick={addContact(contact)}
           onClick={handleSubmit}
         >
           {edit ? "Lưu lại" : "Thêm vào"}

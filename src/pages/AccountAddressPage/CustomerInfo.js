@@ -28,6 +28,8 @@ export default function CustomerInfo({
               // edit={edit}
               id={item.id}
               item={item}
+              setEdit={() => setEdit(item.id)}
+              edit={edit}
             />
           );
         })}
