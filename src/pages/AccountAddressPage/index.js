@@ -9,7 +9,7 @@ import qs from "qs";
 
 export default function AccountAddressPage() {
   const [contacts, setContacts] = useState(addressList);
-  const [edit, setEdit] = useState(0);
+  const [edit, setEdit] = useState(null);
   const deleteContact = (key) => () => {
     console.log("Delete");
     const { [key]: _, ...newContacts } = contacts;
