@@ -10,12 +10,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 
-export default function FormInfo({ addContact, edit, contacts }) {
+export default function FormInfo({
+  addContact,
+  edit,
+  addresses,
+  setAddresses,
+}) {
   const [contact, setContact] = useState({
     lastname: "",
     firstname: "",
     address: "",
-    address_three_levels: "",
+    ward: "",
     phone: "",
     is_default: false,
   });
@@ -92,8 +97,40 @@ export default function FormInfo({ addContact, edit, contacts }) {
     // let ward = document.getElementsByName("ward")[0];
     // ward = ward.options[ward.selectedIndex].value;
     setWard(e.target.value);
-    setContact({ ...contact, address_three_levels: e.target.value });
+    setContact({ ...contact, ward: e.target.value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        `${process.env.REACT_APP_STRAPI_URL}/api/receive-address
+      `,
+        {
+          data: {
+            lastname: contact.lastname,
+            firstname: contact.firstname,
+            address: contact.address,
+            ward_id: contact.ward,
+            phone: contact.phone,
+            is_default: contact.is_default,
+          },
+        }
+      )
+      .then((response) => {
+        fetchAddresses();
+      });
+  };
+  const fetchAddresses = async () => {
+    const query = qs.stringify({}, { encodeValuesOnly: true });
+    const resultAddresses = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/receive-address?${query}`
+    );
+    setAddresses(resultAddresses.data);
+    console.log(resultAddresses);
+  };
+
   useEffect(() => {
     async function fetchData() {
       await fetchCitiesData();
@@ -102,27 +139,6 @@ export default function FormInfo({ addContact, edit, contacts }) {
     }
     fetchData();
   }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      axios.post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/auth/receive-address
-      `,
-        {
-          lastname: contact.lastname,
-          firstname: contact.firstname,
-          address: contact.address,
-          address_three_levels: "1",
-          phone: contact.phone,
-          is_default: contact.is_default,
-        }
-      );
-      // console.log("ok");
-    } catch (response) {
-      console.log(response.response.data);
-    }
-  };
 
   return (
     <Box sx={{ width: "100%" }}>

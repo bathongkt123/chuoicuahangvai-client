@@ -56,7 +56,12 @@ export default function AccountAddressPage() {
           addresses={addresses}
         />
         <Box width={120} />
-        <FormInfo addContact={addContact} contacts={contacts} edit={edit} />
+        <FormInfo
+          addContact={addContact}
+          addresses={addresses}
+          edit={edit}
+          setAddresses={setAddresses}
+        />
       </Box>
     </Container>
   );
