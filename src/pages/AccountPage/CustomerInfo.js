@@ -48,21 +48,22 @@ export default function CustomerInfo() {
                 <Typography variant="body1">Mặc định</Typography>
               </Box>
 
-              <Button
-                sx={{
-                  fontWeight: "bold",
-                  p: 0,
-                  textTransform: "none",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-                color="inherit"
-                onClick={handleChange}
-              >
-                Chỉnh sửa địa chỉ
-              </Button>
+
             </Box>
           )
       )}
+      <Button
+        sx={{
+          fontWeight: "bold",
+          p: 0,
+          textTransform: "none",
+          "&:hover": { textDecoration: "underline" },
+        }}
+        color="inherit"
+        onClick={handleChange}
+      >
+        Chỉnh sửa địa chỉ
+      </Button>
     </Box>
   );
 }
