@@ -23,6 +23,11 @@ export default function ProductSection() {
         ],
 
         filters: {
+          product: {
+            name: {
+              $contains: "vải",
+            },
+          },
           color: {
             name: {
               $in: [],
