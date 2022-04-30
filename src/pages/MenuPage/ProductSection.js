@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProductSection() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+
   const fetchData = async () => {
     const query = qs.stringify(
       {
@@ -28,6 +29,21 @@ export default function ProductSection() {
             },
           },
           origin: {
+            name: {
+              $in: [],
+            },
+          },
+          pattern: {
+            name: {
+              $in: [],
+            },
+          },
+          width: {
+            name: {
+              $in: [],
+            },
+          },
+          stretch: {
             name: {
               $in: [],
             },
