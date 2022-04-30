@@ -22,14 +22,14 @@ export default function ProductSection() {
         ],
 
         filters: {
-          // color: {
-          //   name: {
-          //     $in: [],
-          //   },
-          // },
+          color: {
+            name: {
+              $in: [],
+            },
+          },
           origin: {
             name: {
-              $in: ["HongKong"],
+              $in: [],
             },
           },
         },
