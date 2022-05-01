@@ -47,8 +47,6 @@ export default function CustomerInfo() {
               <Box sx={{ color: "orange" }}>
                 <Typography variant="body1">Mặc định</Typography>
               </Box>
-
-
             </Box>
           )
       )}
@@ -62,7 +60,15 @@ export default function CustomerInfo() {
         color="inherit"
         onClick={handleChange}
       >
-        Chỉnh sửa địa chỉ
+        {addresses.length === 0 ? (
+          <p>
+            Bạn chưa có địa chỉ
+            <br />
+            Thêm địa chỉ mới
+          </p>
+        ) : (
+          "Chỉnh sửa địa chỉ"
+        )}
       </Button>
     </Box>
   );

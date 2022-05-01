@@ -110,6 +110,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
         )
         .then((response) => {
           fetchAddresses();
+          resetForm();
         });
     else {
       axios

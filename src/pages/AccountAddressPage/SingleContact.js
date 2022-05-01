@@ -16,8 +16,8 @@ export default function SingleContact({
     setAddresses(resultAddresses.data);
   };
   const DeleteAddress = async () => {
-    const response = await axios
-      .delete(`${process.env.REACT_APP_STRAPI_URL}/api/cities/${id}`)
+    axios
+      .delete(`${process.env.REACT_APP_STRAPI_URL}/api/receive-address/${id}`)
       .then((response) => {
         fetchAddresses();
       });
@@ -54,7 +54,7 @@ export default function SingleContact({
         <Box width={20}></Box>
         <Button
           variant="contained"
-          // onClick={deleteContact}
+          onClick={DeleteAddress}
           sx={{ backgroundColor: "#384257" }}
         >
           Xóa

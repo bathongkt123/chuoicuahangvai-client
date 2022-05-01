@@ -5,42 +5,89 @@ import qs from "qs";
 import { Box, Link, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductSection() {
+export default function ProductSection({
+  categoriesFilter,
+  colorsFilter,
+  originsFilter,
+  patternsFilter,
+  widthsFilter,
+  stretchesFilter,
+}) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  // const fetchData = async () => {
-  //   const query = qs.stringify(
-  //     {
-  //       populate: ["product", "images", "color"],
 
-  //       filters: {
-  //         color: {
-  //           name: {
-  //             $eq: "Đen",
-  //           },
-  //         },
-  //       },
-  //     },
-  //     { encodeValuesOnly: true }
-  //   );
-  //   const resultAddress = await axios.get(
-  //     `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
-  //   );
   const fetchData = async () => {
     const query = qs.stringify(
       {
-        populate: ["product", "images", "color"],
+        populate: [
+          "product",
+          "images",
+          "color",
+          "origin",
+          "width",
+          "pattern",
+          "stretch",
+          "product.category",
+        ],
+
+        filters: {
+          product: {
+            name: {
+              $containsi: "",
+            },
+            category: {
+              id: {
+                $in: Object.keys(categoriesFilter),
+              },
+            },
+          },
+
+          color: {
+            id: {
+              $in: Object.keys(colorsFilter),
+            },
+          },
+          origin: {
+            id: {
+              $in: Object.keys(originsFilter),
+            },
+          },
+          pattern: {
+            id: {
+              $in: Object.keys(patternsFilter),
+            },
+          },
+          width: {
+            id: {
+              $in: Object.keys(widthsFilter),
+            },
+          },
+          stretch: {
+            id: {
+              $in: Object.keys(stretchesFilter),
+            },
+          },
+        },
       },
       { encodeValuesOnly: true }
     );
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
+    // console.log(resultProducts);
     setProducts(resultProducts.data.data);
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [
+    categoriesFilter,
+    colorsFilter,
+    originsFilter,
+    patternsFilter,
+    widthsFilter,
+    stretchesFilter,
+  ]);
 
   return (
     <Grid container spacing={10}>
