@@ -14,7 +14,7 @@ export default function MenuPage() {
   const [patternsFilter, setPatternsFilter] = useState([]);
   const [widthsFilter, setWidthsFilter] = useState([]);
   const [stretchesFilter, setStretchesFilter] = useState([]);
-  const [sortProduct, setSortProduct] = useState("");
+  const [sortProduct, setSortProduct] = useState("id");
 
   return (
     <Container

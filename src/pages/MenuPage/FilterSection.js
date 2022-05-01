@@ -170,6 +170,7 @@ export default function FilterSection({
         value={sortProduct}
         onChange={(e) => setSortProduct(e.target.value)}
       >
+        <MenuItem value={"id"}></MenuItem>
         <MenuItem value={"createdAt:desc"}>Hàng mới</MenuItem>
         <MenuItem value={"price:desc"}>Giá giảm dần</MenuItem>
         <MenuItem value={"price:asc"}>Giá tăng dần</MenuItem>
