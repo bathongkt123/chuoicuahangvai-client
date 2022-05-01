@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FilterSection from "./FilterSection";
@@ -9,7 +8,11 @@ import { useNavigate } from "react-router-dom";
 export default function MenuPage() {
   const navigate = useNavigate();
   const [categoriesFilter, setCategoriesFilter] = useState([]);
-
+  const [colorsFilter, setColorsFilter] = useState([]);
+  const [originsFilter, setOriginsFilter] = useState([]);
+  const [patternsFilter, setPatternsFilter] = useState([]);
+  const [widthsFilter, setWidthsFilter] = useState([]);
+  const [stretchesFilter, setStretchesFilter] = useState([]);
   return (
     <Container
       sx={{
@@ -37,12 +40,32 @@ export default function MenuPage() {
           <FilterSection
             categoriesFilter={categoriesFilter}
             setCategoriesFilter={setCategoriesFilter}
+            colorsFilter={colorsFilter}
+            setColorsFilter={setColorsFilter}
+            originsFilter={originsFilter}
+            setOriginsFilter={setOriginsFilter}
+            patternsFilter={patternsFilter}
+            setPatternsFilter={setPatternsFilter}
+            widthsFilter={widthsFilter}
+            setWidthsFilter={setWidthsFilter}
+            stretchesFilter={stretchesFilter}
+            setStretchesFilter={setStretchesFilter}
           />
         </Grid>
         <Grid item xs={12} sm={8} style={{ marginTop: "20px" }}>
           <ProductSection
             categoriesFilter={categoriesFilter}
             setCategoriesFilter={setCategoriesFilter}
+            colorsFilter={colorsFilter}
+            setColorsFilter={setColorsFilter}
+            originsFilter={originsFilter}
+            setOriginsFilter={setOriginsFilter}
+            patternsFilter={patternsFilter}
+            setPatternsFilter={setPatternsFilter}
+            widthsFilter={widthsFilter}
+            setWidthsFilter={setWidthsFilter}
+            stretchesFilter={stretchesFilter}
+            setStretchesFilter={setStretchesFilter}
           />
         </Grid>
       </Grid>
