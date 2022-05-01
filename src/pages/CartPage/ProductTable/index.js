@@ -70,9 +70,17 @@ export default function ProductTable() {
                     minLength: MIN_LENGTH
                 }
             )
+            console.log(cartProducts)
             //pretend that all products have some in inventory
+            //remove bad products out of cart
+            const newCart = { ...cart }
+            keys.forEach((key) => {
+                if (!cartProducts[key])
+                    delete newCart[key]
+            }
+            )
+            setCart(newCart)
             setProducts(cartProducts)
-
         }
         fetchData()
     }, []);

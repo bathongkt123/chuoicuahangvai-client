@@ -1,4 +1,4 @@
-import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
+import { Breadcrumbs, Typography, Link, Box, Divider } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 export default function Heading() {
@@ -25,6 +25,7 @@ export default function Heading() {
         <Typography color="#0f0d0c">Vận chuyển</Typography>
         <Typography color="#0f0d0c">Thanh toán</Typography>
       </Breadcrumbs>
+      <Divider />
     </Box>
   );
 }

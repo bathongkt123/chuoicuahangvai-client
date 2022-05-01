@@ -3,7 +3,7 @@ import { Button, Divider, TextField, Box, Typography, Stack, Pagination } from "
 import ProductRow from "./ProductRow";
 import { useState } from "react";
 import { useCookies } from 'react-cookie';
-export default function OrderInfo() {
+export default function OrderInfo({ skus, price, deliveryMethod }) {
     const [cookies] = useCookies(['cart']);
     const products = cookies.cart || {}
     const [page, setPage] = useState(1);
@@ -12,8 +12,7 @@ export default function OrderInfo() {
     };
     const rowsPerPage = 3
     const keys = Object.keys(products)
-    const subTotal = key => products[key].price * products[key].length
-    const total = keys.reduce((init, current) => init + subTotal(current), 0)
+    const subTotal = item => item.price * item.length
     return (
         <Stack
             divider={<Divider />}
@@ -22,9 +21,16 @@ export default function OrderInfo() {
         >
             <Stack
             >
-                {keys.map((key, i) => {
-                    const rendered = i >= (page - 1) * rowsPerPage && i < page * rowsPerPage
-                    return (<ProductRow row={products[key]} subTotal={subTotal(key)} rendered={rendered} key={key} />
+                {skus.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((item, i) => {
+                    return (<ProductRow
+                        attr={{
+                            name: item.product.name + '-' + item.sku,
+                            image: item.images[0].url,
+                            length: item.length,
+                            subTotal: subTotal(item)
+                        }}
+                        key={i}
+                    />
                     )
                 }
                 )}
@@ -55,31 +61,14 @@ export default function OrderInfo() {
             </Box>
 
             <Stack spacing={2}>
-                <Box sx={{ display: 'flex' }}>
-                    <Typography variant='h6'>
-                        Tổng sau thuế
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        {total}
-                    </Box>
-                </Box>
-                <Box sx={{ display: 'flex' }}>
-                    <Typography variant='h6'>
-                        Mã giảm giá
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        -10000
-                    </Box>
-                </Box>
+
                 <Box sx={{ display: 'flex' }}>
                     <Typography variant='h6'>
                         Phí vận chuyển
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        Miễn phí
+                        {-deliveryMethod.cost}
                     </Box>
                 </Box>
             </Stack>
@@ -87,18 +76,14 @@ export default function OrderInfo() {
 
             <Box sx={{ display: 'flex', my: 2 }}>
                 <Typography variant='h6'>
-                    Tổng phải trả
+                    Tổng
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                    {total - 10000}
+                    {price - deliveryMethod.cost}
                 </Box>
             </Box>
         </Stack>
-
-
-
-
     )
 }
 

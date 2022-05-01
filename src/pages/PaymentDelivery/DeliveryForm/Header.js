@@ -1,8 +1,8 @@
-import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
+import { Breadcrumbs, Typography, Link, Box, Divider } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Heading() {
+export default function Header({ paymentInfo }) {
   const navigate = useNavigate()
   return (
     <Box
@@ -21,13 +21,14 @@ export default function Heading() {
           Giỏ hàng
         </Link>
         <Link underline="hover" color="inherit" component="button" variant="body1" onClick={() => {
-          navigate('/payment/delivery');
+          navigate('/payment/info', { state: paymentInfo });
         }}>
           Thông tin
         </Link>
         <Box sx={{ fontWeight: 700, color: "#0f0d0c" }}>Vận chuyển</Box>
         <Typography color="#0f0d0c">Thanh toán</Typography>
       </Breadcrumbs>
+      <Divider />
     </Box>
   );
 }

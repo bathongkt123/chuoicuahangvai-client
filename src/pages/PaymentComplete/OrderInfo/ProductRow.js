@@ -1,11 +1,11 @@
 import { Box, Divider, Typography, Badge } from "@mui/material";
 import { Fragment } from "react";
 
-export default function ProductRow({ row, subTotal, rendered }) {
+export default function ProductRow({ attr }) {
     return (
         <Fragment>
-            <Box sx={{ display: rendered ? 'flex' : 'none', alignItems: 'center', my: 2 }}>
-                <Badge badgeContent={row.length} color="secondary">
+            <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
+                <Badge badgeContent={attr.length / 100} max={attr.length / 100} color="secondary">
                     <Box
                         component='img'
                         sx={{
@@ -13,20 +13,19 @@ export default function ProductRow({ row, subTotal, rendered }) {
                             height: 145,
                             objectFit: 'fill'
                         }}
-                        src={`${process.env.REACT_APP_STRAPI_URL}${row.image}`}
+                        src={`${process.env.REACT_APP_STRAPI_URL}${attr.image}`}
                     />
                 </Badge>
-
                 <Box width={20} />
                 <Typography variant='h6'>
-                    {row.name}
+                    {attr.name}
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Typography variant='h6'>
-                    {subTotal}
+                    {attr.subTotal}
                 </Typography>
             </Box >
-            <Divider sx={{ display: !rendered && 'none' }} />
+            <Divider />
         </Fragment>
 
     )

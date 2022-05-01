@@ -9,23 +9,23 @@ import ProductPage from "./pages/ProductPage";
 import AccountPage from "./pages/AccountPage";
 import AccountOrderPage from "./pages/AccountOrderPage";
 import AddressPage from "./pages/AccountAddressPage";
-import PaymentPage from "./pages/PaymentPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import UnauthenticatedPage from "auth/UnauthenticatedPage";
 import AuthenticatedPage from "auth/AuthenticatedPage";
-import {
-  DeliveryForm,
-  ShipmentForm,
-  PaymentForm,
-} from "./pages/PaymentPage/LeftPanel";
+import PaymentInfo from "pages/PaymentInfo";
+import PaymentComplete from "pages/PaymentComplete";
+import ProtectedPayment from "auth/ProtectedPayment";
+import PaymentDelivery from "pages/PaymentDelivery";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Outlet,
 } from "react-router-dom";
-import { Fragment } from "react";
+
 import useAuth from "auth/useAuth";
+
+import { Fragment } from "react";
 
 
 function App() {
@@ -34,23 +34,20 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="payment" element={<PaymentPage />}>
-          <Route index element={<DeliveryForm />} />
-          <Route path="delivery" element={<DeliveryForm />} />
-          <Route path="shipment" element={<ShipmentForm />} />
-          <Route path="complete" element={<PaymentForm />} />
+        <Route path="payment" element={<ProtectedPayment />}>
+          <Route index element={<PaymentInfo />} />
+          <Route path="info" element={<PaymentInfo />} />
+          <Route path="delivery" element={<PaymentDelivery />} />
+          <Route path="complete" element={<PaymentComplete />} />
         </Route>
 
-        <Route
-          path="/"
-          element={
-            <Fragment>
-              <Header />
-              <Outlet />
-              <Footer />
-            </Fragment>
-          }
-        >
+        <Route path="" element={
+          <Fragment>
+            <Header />
+            <Outlet />
+            <Footer />
+          </Fragment>
+        }>
           <Route index element={<HomePage />} />
           <Route
             path="register"
@@ -78,8 +75,10 @@ function App() {
               path="order/:orderId"
               element={<AuthenticatedPage page={<AccountOrderPage />} />}
             />
+
           </Route>
         </Route>
+
       </Routes>
     </Router>
   );
