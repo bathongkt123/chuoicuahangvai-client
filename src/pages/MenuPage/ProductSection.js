@@ -5,7 +5,10 @@ import qs from "qs";
 import { Box, Link, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductSection() {
+export default function ProductSection({
+  categoriesFilter,
+  setCategoriesFilter,
+}) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
@@ -20,14 +23,21 @@ export default function ProductSection() {
           "width",
           "pattern",
           "stretch",
+          "product.category",
         ],
 
         filters: {
           product: {
             name: {
-              $contains: "vải",
+              $containsi: "",
+            },
+            category: {
+              id: {
+                $in: Object.keys(categoriesFilter),
+              },
             },
           },
+
           color: {
             name: {
               $in: [],
@@ -60,6 +70,7 @@ export default function ProductSection() {
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
+    console.log(resultProducts);
     setProducts(resultProducts.data.data);
   };
 
@@ -78,7 +89,8 @@ export default function ProductSection() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    console.log(Object.keys(categoriesFilter));
+  }, [categoriesFilter]);
 
   return (
     <Grid container spacing={10}>
