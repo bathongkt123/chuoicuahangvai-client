@@ -9,8 +9,8 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid,
-  Stack,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 export default function FilterSection({
   categoriesFilter,
@@ -25,6 +25,8 @@ export default function FilterSection({
   setWidthsFilter,
   stretchesFilter,
   setStretchesFilter,
+  sortProduct,
+  setSortProduct,
 }) {
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
@@ -162,13 +164,16 @@ export default function FilterSection({
       variant="standard"
       sx={{ mt: 5, minWidth: 220, textAlign: "left" }}
     >
-      {/* <InputLabel id="sort">Sắp xếp theo</InputLabel>
-      <Select labelId="sort" id="sort" label="sort">
-        <MenuItem value={"bestsell"}>Bán chạy nhất</MenuItem>
-        <MenuItem value={"newestarrival"}>Hàng mới</MenuItem>
-        <MenuItem value={"hightolow"}>Giá giảm dần</MenuItem>
-        <MenuItem value={"lowtohigh"}>Giá tăng dần</MenuItem>
-  </Select> */}
+      <InputLabel id="sort">Sắp xếp theo</InputLabel>
+      <Select
+        name="sort"
+        value={sortProduct}
+        onChange={(e) => setSortProduct(e.target.value)}
+      >
+        <MenuItem value={"createdAt:desc"}>Hàng mới</MenuItem>
+        <MenuItem value={"price:desc"}>Giá giảm dần</MenuItem>
+        <MenuItem value={"price:asc"}>Giá tăng dần</MenuItem>
+      </Select>
       <h3>DANH MỤC</h3>
 
       {categories.map((item) => (

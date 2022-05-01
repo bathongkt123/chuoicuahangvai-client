@@ -12,6 +12,7 @@ export default function ProductSection({
   patternsFilter,
   widthsFilter,
   stretchesFilter,
+  sortProduct,
 }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -29,7 +30,7 @@ export default function ProductSection({
           "stretch",
           "product.category",
         ],
-
+        sort: [sortProduct],
         filters: {
           product: {
             name: {
@@ -74,7 +75,7 @@ export default function ProductSection({
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
-    // console.log(resultProducts);
+    console.log(resultProducts);
     setProducts(resultProducts.data.data);
   };
 
@@ -87,6 +88,7 @@ export default function ProductSection({
     patternsFilter,
     widthsFilter,
     stretchesFilter,
+    sortProduct,
   ]);
 
   return (
