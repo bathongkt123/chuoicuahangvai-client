@@ -7,7 +7,9 @@ import { Breadcrumbs, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 export default function MenuPage() {
   const navigate = useNavigate();
-  const [categoriesFilter, setCategoriesFilter] = useState([]);
+  const [categoriesFilter, setCategoriesFilter] = useState({
+  });
+
   const [colorsFilter, setColorsFilter] = useState([]);
   const [originsFilter, setOriginsFilter] = useState([]);
   const [patternsFilter, setPatternsFilter] = useState([]);
@@ -35,7 +37,7 @@ export default function MenuPage() {
         </Link>
         <Typography color="#0f0d0c">Sản phẩm</Typography>
       </Breadcrumbs>
-      <Grid container spacing={10}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={3}>
           <FilterSection
             categoriesFilter={categoriesFilter}

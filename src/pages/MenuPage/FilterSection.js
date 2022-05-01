@@ -3,7 +3,15 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
 import qs from "qs";
-import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Stack,
+} from "@mui/material";
 export default function FilterSection({
   categoriesFilter,
   setCategoriesFilter,
@@ -24,8 +32,13 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-
+  const [checkBoxs, setCheckBoxs] = useState([]);
   const handleCategoryChange = (event) => {
+    setCheckBoxs({
+      ...checkBoxs,
+      [event.target.name]: event.target.checked,
+    });
+
     if (event.target.checked)
       setCategoriesFilter({
         ...categoriesFilter,
@@ -142,12 +155,12 @@ export default function FilterSection({
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [checkBoxs]);
 
   return (
     <FormControl
       variant="standard"
-      sx={{ mt: 5, minWidth: 150, textAlign: "left" }}
+      sx={{ mt: 5, minWidth: 220, textAlign: "left" }}
     >
       {/* <InputLabel id="sort">Sắp xếp theo</InputLabel>
       <Select labelId="sort" id="sort" label="sort">
@@ -155,7 +168,7 @@ export default function FilterSection({
         <MenuItem value={"newestarrival"}>Hàng mới</MenuItem>
         <MenuItem value={"hightolow"}>Giá giảm dần</MenuItem>
         <MenuItem value={"lowtohigh"}>Giá tăng dần</MenuItem>
-      </Select> */}
+  </Select> */}
       <h3>DANH MỤC</h3>
 
       {categories.map((item) => (
@@ -166,6 +179,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleCategoryChange}
+                checked={checkBoxs.name}
               />
             }
             label={item.attributes.name}
@@ -174,6 +188,7 @@ export default function FilterSection({
       ))}
 
       <h3>MÀU CHỦ ĐẠO</h3>
+
       {colors.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -201,6 +216,7 @@ export default function FilterSection({
         </FormGroup>
       ))}
       <h3>XUẤT XỨ</h3>
+
       {origins.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -216,6 +232,7 @@ export default function FilterSection({
         </FormGroup>
       ))}
       <h3>KIỂU MẪU</h3>
+
       {patterns.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -231,6 +248,7 @@ export default function FilterSection({
         </FormGroup>
       ))}
       <h3>CHIỀU RỘNG</h3>
+
       {widths.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -246,6 +264,7 @@ export default function FilterSection({
         </FormGroup>
       ))}
       <h3>ĐỘ CO GIÃN</h3>
+
       {stretches.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
