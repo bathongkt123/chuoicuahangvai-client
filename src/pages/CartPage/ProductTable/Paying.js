@@ -10,7 +10,6 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import axios from 'axios'
 import "react-toastify/dist/ReactToastify.css";
 export default function Paying({ cart, validateItems }) {
     const navigate = useNavigate();
@@ -35,14 +34,15 @@ export default function Paying({ cart, validateItems }) {
             toast.error("Vui lòng chấp nhận Điều khoản sử dụng và Điều khoản bảo mật");
             return
         }
-        //post data
         const postCartData = [...Object.keys(cart).map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
-        const cartInfoData = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/information`, {
-            skus: postCartData,
-            note: note,
-            isDebt: checkDebt,
+
+        navigate('/payment', {
+            state: {
+                skus: postCartData,
+                note: note,
+                isDebt: checkDebt,
+            }
         })
-        console.log(cartInfoData)
     };
 
     return (
