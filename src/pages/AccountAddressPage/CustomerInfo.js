@@ -29,6 +29,7 @@ export default function CustomerInfo({
                 item={item}
                 setEdit={() => setEdit(item.id)}
                 edit={edit}
+                key={item.id}
                 setAddresses={setAddresses}
               />
             );
