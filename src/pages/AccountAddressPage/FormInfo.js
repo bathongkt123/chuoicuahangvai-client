@@ -17,11 +17,9 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
   const [phone, setPhone] = useState("");
   const [is_default, setIs_default] = useState(false);
   const [city, setCity] = useState("");
-  const [cities, setCities] = useState([]);
+
   const [district, setDistrict] = useState("");
   const [ward, setWard] = useState("");
-  const [districts, setDistricts] = useState([]);
-  const [wards, setWards] = useState([]);
   const resetForm = async () => {
     setLastname("");
     setFirstname("");
@@ -31,63 +29,6 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
     setCity("");
     setDistrict("");
     setWard("");
-  };
-  const fetchCitiesData = async () => {
-    const response = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/cities`
-    );
-    let data = [];
-    response.data.data.forEach((item) => {
-      data.push({ label: item, value: item });
-    });
-    setCities(data);
-    setDistricts([]);
-    setWards([]);
-  };
-  const fetchDistrictsData = async (city) => {
-    if (city === "") return;
-    let data = [];
-    const query = qs.stringify({ city: city }, { encodeValuesOnly: true });
-    const response = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/districts?${query}`
-    );
-    response.data.data.forEach((item) => {
-      data.push({ label: item, value: item });
-    });
-    setDistricts(data);
-    setWards([]);
-  };
-  const fetchWardsData = async (district, city) => {
-    if (district === "" || city === "") return;
-    let data = [];
-    const query = qs.stringify(
-      { city: city, district: district },
-      { encodeValuesOnly: true }
-    );
-    const response = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/wards?${query}`
-    );
-    response.data.data.forEach((item) => {
-      data.push({ label: item.label, value: item.value });
-    });
-    setWards(data);
-  };
-
-  const handleChangeCity = (e) => {
-    e.preventDefault();
-    setCity(e.target.value);
-    fetchDistrictsData(e.target.value);
-  };
-
-  const handleChangeDistrict = (e) => {
-    e.preventDefault();
-    setDistrict(e.target.value);
-    fetchWardsData(e.target.value, city);
-  };
-
-  const handleChangeWard = (e) => {
-    e.preventDefault();
-    setWard(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -133,7 +74,11 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
         });
     }
   };
-
+  const handleClose = async (e) => {
+    e.preventDefault();
+    setEdit(null);
+    resetForm();
+  };
   const fetchEditAddress = async () => {
     if (edit === null) return;
     const query = qs.stringify({}, { encodeValuesOnly: true });
@@ -164,13 +109,65 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
     }
   };
 
+  const handleChangeCity = (e) => {
+    e.preventDefault();
+    setCity(e.target.value);
+    setDistrict("");
+    setWard("");
+  };
+  const handleChangeDistrict = (e) => {
+    e.preventDefault();
+
+    setDistrict(e.target.value);
+    setWard("");
+  };
+  const handleChangeWard = (e) => {
+    e.preventDefault();
+    setWard(e.target.value);
+  };
+  //get the city, district and ward from api
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+
+  //fetch cities
   useEffect(() => {
-    async function fetchData() {
-      await fetchCitiesData();
-      await fetchDistrictsData(city);
-      await fetchWardsData(district, city);
-    }
-    fetchData();
+    const fetchCities = async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/cities`
+      );
+      setCities(response.data.data);
+    };
+    fetchCities();
+  }, []);
+  //fetch districts
+  useEffect(() => {
+    if (!city) return;
+    const fetchDistricts = async () => {
+      const query = qs.stringify({ city: city }, { encodeValuesOnly: true });
+      const response = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/districts?${query}`
+      );
+      setDistricts(response.data.data);
+      setWards([]);
+    };
+    fetchDistricts();
+  }, [city]);
+  // fetch wards
+  useEffect(() => {
+    if (!district) return;
+    const fetchWards = async () => {
+      const query = qs.stringify(
+        { city: city, district: district },
+        { encodeValuesOnly: true }
+      );
+      const response = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/wards?${query}`
+      );
+
+      setWards(response.data.data);
+    };
+    fetchWards();
   }, [district]);
 
   useEffect(() => {
@@ -211,23 +208,21 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
       ></TextField>
 
       <FormControl fullWidth sx={{ mt: 5 }}>
-        <InputLabel id="demo-simple-select-label">Chọn tỉnh/thành</InputLabel>
-
+        <InputLabel>Chọn tỉnh/thành</InputLabel>
         <Select
-          required
-          name="city"
-          value={city}
-          label="Chọn tỉnh thành"
+          label="Chọn tỉnh/thành"
           size="large"
+          value={city}
           onChange={handleChangeCity}
         >
-          {cities.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
+          {cities.map((city) => (
+            <MenuItem key={city} value={city}>
+              {city}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
+
       <Box sx={{ display: "flex" }}>
         <FormControl fullWidth sx={{ mt: 5 }}>
           <InputLabel id="demo-simple-select-label">Chọn quận/huyện</InputLabel>
@@ -236,34 +231,30 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
             id="demo-simple-select"
             label="Chọn quận/huyện"
             size="large"
-            name="district"
-            onChange={handleChangeDistrict}
-            required
             value={district}
+            onChange={handleChangeDistrict}
           >
-            {districts.map((item) => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.label}
+            {districts.map((district) => (
+              <MenuItem key={district} value={district}>
+                {district}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-
         <Box width={20}></Box>
-
         <FormControl fullWidth sx={{ mt: 5 }}>
           <InputLabel id="demo-simple-select-label">Chọn phường/xã</InputLabel>
           <Select
-            name="ward"
-            required
-            onChange={handleChangeWard}
-            value={ward}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
             label="Chọn phường/xã"
             size="large"
+            value={ward}
+            onChange={handleChangeWard}
           >
-            {wards.map((item) => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.label}
+            {wards.map((ward) => (
+              <MenuItem key={ward.value} value={ward.value}>
+                {ward.label}
               </MenuItem>
             ))}
           </Select>
@@ -285,16 +276,41 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
           label="Địa chỉ mặc định"
         />
       </FormGroup>
-      <Box textAlign="center">
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ backgroundColor: "#384257", my: 4 }}
-          onClick={handleSubmit}
+      {edit ? (
+        <Box
+          textAlign="center"
+          sx={{ justifyContent: "space-around", display: "flex" }}
         >
-          {edit ? "Lưu lại" : "Thêm vào"}
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ backgroundColor: "#384257", my: 4 }}
+            onClick={handleSubmit}
+          >
+            Thêm vào
+          </Button>
+          <Box width={50}></Box>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ backgroundColor: "#384257", my: 4 }}
+            onClick={handleClose}
+          >
+            Hủy bỏ
+          </Button>
+        </Box>
+      ) : (
+        <Box textAlign="center">
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ backgroundColor: "#384257", my: 4 }}
+            onClick={handleSubmit}
+          >
+            Lưu lại
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }

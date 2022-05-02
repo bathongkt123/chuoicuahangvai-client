@@ -9,132 +9,149 @@ import MoreIconResponsive from "./MoreIconResponsive";
 import { Badge, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "auth/useAuth";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    display: "flex",
-    flexGrow: 0.5,
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    border: "1.5px solid",
-    borderColor: "#000000",
-    marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(1),
+  position: "relative",
+  display: "flex",
+  flexGrow: 0.5,
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  border: "1.5px solid",
+  borderColor: "#000000",
+  marginRight: theme.spacing(2),
+  marginLeft: theme.spacing(1),
 
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-    },
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    width: "100%",
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-    },
+  color: "inherit",
+  width: "100%",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+  },
 }));
-export default function MainRow({ cartNumber }) {
-    const navigate = useNavigate()
-    const { token } = useAuth()
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mt: 1,
-            }}
+export default function MainRow({ cartNumber, search, setSearch }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    console.log(search);
+  };
+
+  const { token } = useAuth();
+  useEffect(() => {
+    if (location.pathname !== "/menu") setSearch("");
+  }, [location]);
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        mt: 1,
+      }}
+    >
+      <Link
+        component="button"
+        underline="none"
+        sx={{
+          fontWeight: 700,
+          color: "inherit",
+          fontSize: "1rem",
+        }}
+        onClick={() => navigate("/")}
+      >
+        ROYAL FABRIC
+      </Link>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Tìm kiếm..."
+          value={search}
+          onChange={handleSearchChange}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              if (location.pathname !== "/menu") navigate("/menu");
+            }
+          }}
+        />
+      </Search>
+
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          alignItems: "center",
+        }}
+      >
+        <Link
+          component="button"
+          underline="none"
+          sx={{
+            fontSize: "1rem",
+            fontWeight: "bold",
+            color: "inherit",
+            whiteSpace: "nowrap",
+          }}
+          onClick={() => navigate("/cart")}
         >
-            <Link
-                component="button"
-                underline="none"
-                sx={{
-                    fontWeight: 700,
-                    color: "inherit",
-                    fontSize: "1rem",
-                }}
-                onClick={() => navigate('/')}
+          Giỏ hàng
+          <Badge
+            invisible={!cartNumber}
+            badgeContent={cartNumber}
+            color="secondary"
+            sx={{ p: 0.5 }}
+          >
+            <ShoppingCartIcon fontSize="small" />
+          </Badge>
+        </Link>
+        <Box width={32} />
+        {token ? (
+          <AccountDropdown />
+        ) : (
+          <Link
+            component="button"
+            underline="none"
+            sx={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "inherit",
+              whiteSpace: "nowrap",
+            }}
+            onClick={() => navigate("/login")}
+          >
+            Đăng nhập
+          </Link>
+        )}
+      </Box>
 
-            >
-                ROYAL FABRIC
-            </Link>
-            <Search>
-                <SearchIconWrapper>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Tìm kiếm..."
-                    inputProps={{ "aria-label": "search" }}
-                />
-            </Search>
-
-            <Box
-                sx={{
-                    display: { xs: "none", md: "flex" },
-                    alignItems: "center",
-                }}
-            >
-                <Link
-                    component="button"
-                    underline="none"
-                    sx={{
-                        fontSize: '1rem',
-                        fontWeight: "bold",
-                        color: "inherit",
-                        whiteSpace: "nowrap",
-                    }}
-                    onClick={() => navigate('/cart')}
-                >
-                    Giỏ hàng
-                    <Badge
-                        invisible={!cartNumber}
-                        badgeContent={cartNumber}
-                        color="secondary"
-                        sx={{ p: 0.5 }}
-                    >
-                        <ShoppingCartIcon fontSize="small" />
-                    </Badge>
-                </Link>
-                <Box width={32} />
-                {token ?
-                    <AccountDropdown /> :
-                    <Link
-                        component="button"
-                        underline="none"
-                        sx={{
-                            fontSize: '1rem',
-                            fontWeight: "bold",
-                            color: "inherit",
-                            whiteSpace: "nowrap",
-                        }}
-                        onClick={() => navigate('/login')}
-                    >
-                        Đăng nhập
-
-                    </Link>
-                }
-            </Box>
-
-            <Box sx={{ display: { xs: "block", md: "none" } }}>
-                <MoreIconResponsive cartNumber={cartNumber} navigate={navigate} />
-            </Box>
-        </Box >
-    );
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <MoreIconResponsive cartNumber={cartNumber} navigate={navigate} />
+      </Box>
+    </Box>
+  );
 }

@@ -31,7 +31,9 @@ import PaymentSuccess from "pages/PaymentSuccess";
 
 function App() {
   const { initializeSession } = useAuth();
-  initializeSession()
+  initializeSession();
+  const [search, setSearch] = useState("");
+
   return (
     <Router>
       <Routes>
@@ -43,13 +45,16 @@ function App() {
           <Route path='success' element={<PaymentSuccess />} />
         </Route>
 
-        <Route path="" element={
-          <Fragment>
-            <Header />
-            <Outlet />
-            <Footer />
-          </Fragment>
-        }>
+        <Route
+          path=""
+          element={
+            <Fragment>
+              <Header search={search} setSearch={setSearch} />
+              <Outlet />
+              <Footer />
+            </Fragment>
+          }
+        >
           <Route index element={<HomePage />} />
           <Route
             path="register"
@@ -60,7 +65,10 @@ function App() {
             element={<UnauthenticatedPage page={<LoginPage />} />}
           />
           <Route path="forgotpassword" element={<ForgotPasswordPage />} />
-          <Route path="menu" element={<MenuPage />} />
+          <Route
+            path="menu"
+            element={<MenuPage search={search} setSearch={setSearch} />}
+          />
           <Route path="menu/:productId" element={<ProductPage />} />
           <Route path="cart" element={<CartPage />} />
 
@@ -77,10 +85,8 @@ function App() {
               path="order/:orderId"
               element={<AuthenticatedPage page={<AccountOrderPage />} />}
             />
-
           </Route>
         </Route>
-
       </Routes>
     </Router>
   );

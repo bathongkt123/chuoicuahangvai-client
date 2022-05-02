@@ -5,14 +5,17 @@ import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
 import { Breadcrumbs, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function MenuPage() {
+export default function MenuPage({ search, setSearch }) {
   const navigate = useNavigate();
-  const [categoriesFilter, setCategoriesFilter] = useState([]);
+  const [categoriesFilter, setCategoriesFilter] = useState({});
+
   const [colorsFilter, setColorsFilter] = useState([]);
   const [originsFilter, setOriginsFilter] = useState([]);
   const [patternsFilter, setPatternsFilter] = useState([]);
   const [widthsFilter, setWidthsFilter] = useState([]);
   const [stretchesFilter, setStretchesFilter] = useState([]);
+  const [sortProduct, setSortProduct] = useState("id");
+
   return (
     <Container
       sx={{
@@ -35,7 +38,7 @@ export default function MenuPage() {
         </Link>
         <Typography color="#0f0d0c">Sản phẩm</Typography>
       </Breadcrumbs>
-      <Grid container spacing={10}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={3}>
           <FilterSection
             categoriesFilter={categoriesFilter}
@@ -50,8 +53,11 @@ export default function MenuPage() {
             setWidthsFilter={setWidthsFilter}
             stretchesFilter={stretchesFilter}
             setStretchesFilter={setStretchesFilter}
+            sortProduct={sortProduct}
+            setSortProduct={setSortProduct}
           />
         </Grid>
+
         <Grid item xs={12} sm={8} style={{ marginTop: "20px" }}>
           <ProductSection
             categoriesFilter={categoriesFilter}
@@ -66,6 +72,9 @@ export default function MenuPage() {
             setWidthsFilter={setWidthsFilter}
             stretchesFilter={stretchesFilter}
             setStretchesFilter={setStretchesFilter}
+            sortProduct={sortProduct}
+            search={search}
+            setSearch={setSearch}
           />
         </Grid>
       </Grid>
