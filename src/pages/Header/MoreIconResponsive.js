@@ -170,4 +170,4 @@ export default function MoreIconResponsive({ cartNumber }) {
     </Fragment>
   );
 }
-const items = ["Hàng mới về", "Bán chạy nhất", "Giảm giá"];
+const items = ["Hàng mới về", "Bán chạy nhất"];

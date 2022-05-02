@@ -13,6 +13,8 @@ export default function ProductSection({
   widthsFilter,
   stretchesFilter,
   sortProduct,
+  search,
+  setSearch,
 }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -34,7 +36,7 @@ export default function ProductSection({
         filters: {
           product: {
             name: {
-              $containsi: "",
+              $containsi: search,
             },
             category: {
               id: {
@@ -89,6 +91,7 @@ export default function ProductSection({
     widthsFilter,
     stretchesFilter,
     sortProduct,
+    search,
   ]);
 
   return (

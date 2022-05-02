@@ -5,7 +5,7 @@ import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
 import { Breadcrumbs, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function MenuPage() {
+export default function MenuPage({ search, setSearch }) {
   const navigate = useNavigate();
   const [categoriesFilter, setCategoriesFilter] = useState({});
 
@@ -57,6 +57,7 @@ export default function MenuPage() {
             setSortProduct={setSortProduct}
           />
         </Grid>
+
         <Grid item xs={12} sm={8} style={{ marginTop: "20px" }}>
           <ProductSection
             categoriesFilter={categoriesFilter}
@@ -72,6 +73,8 @@ export default function MenuPage() {
             stretchesFilter={stretchesFilter}
             setStretchesFilter={setStretchesFilter}
             sortProduct={sortProduct}
+            search={search}
+            setSearch={setSearch}
           />
         </Grid>
       </Grid>
