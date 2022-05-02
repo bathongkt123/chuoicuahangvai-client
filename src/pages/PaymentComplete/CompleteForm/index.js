@@ -10,6 +10,7 @@ export default function CompleteForm({ paymentInfo, paymentType, setPaymentType 
       <Form
         deliveryInfo={paymentInfo.deliveryInfo}
         deliveryMethod={paymentInfo.deliveryMethod}
+        paymentMethods={paymentInfo.paymentMethods}
         paymentType={paymentType}
         setPaymentType={setPaymentType}
       />

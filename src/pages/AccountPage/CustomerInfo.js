@@ -30,7 +30,7 @@ export default function CustomerInfo() {
       {addresses.map(
         (item) =>
           item.is_default && (
-            <Box>
+            <Box key={item.id}>
               <h2>{`${item.name.lastname} ${item.name.firstname}`}</h2>
               <Typography variant="body1">{item.address.address}</Typography>
               <Typography variant="body1">

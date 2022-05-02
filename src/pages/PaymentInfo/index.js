@@ -7,22 +7,17 @@ import axios from "axios";
 export default function PaymentDelivery() {
     const { state } = useLocation()
     //fetch data from api and insert to current state
-    const [paymentInfo, setPaymentInfo] = useState({
-        skus: [],
-        receiveAddress: [],
-        price: 0,
-    })
+    const [paymentInfo, setPaymentInfo] = useState(state)
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/information`, state)
-            setPaymentInfo({ ...state, ...response.data })
-
+            const response = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/information`, paymentInfo)
+            setPaymentInfo({ ...paymentInfo, ...response.data })
         }
         fetchData()
-    }, [state])
+    }, [paymentInfo])
     //set state to form contact info
     const [contact, setContact] = useState(
-        state.deliveryInfo ||
+        paymentInfo.deliveryInfo ||
         {
             email: '',
             firstname: '',

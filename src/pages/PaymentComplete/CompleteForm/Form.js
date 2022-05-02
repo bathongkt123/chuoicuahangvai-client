@@ -1,10 +1,9 @@
 import { Fragment } from "react"
-import { Typography, Stack, Box, FormControl, RadioGroup, FormControlLabel, Radio, Link, Divider } from "@mui/material"
-export default function Form({ deliveryInfo, deliveryMethod, paymentType, setPaymentType }) {
+import { Typography, Stack, Box, FormControl, RadioGroup, FormControlLabel, Radio, Divider } from "@mui/material"
+export default function Form({ deliveryInfo, deliveryMethod, paymentType, setPaymentType, paymentMethods }) {
 
     return (
         <Fragment>
-
             <Stack
                 sx={{
                     backgroundColor: "white",
@@ -66,13 +65,22 @@ export default function Form({ deliveryInfo, deliveryMethod, paymentType, setPay
                         {`${deliveryInfo.city}`}
                     </Typography>
                 </Stack>
-
                 <Stack
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Typography variant="body1">Phương thức thanh toán:</Typography>
+                    <Typography variant="body1">Số điện thoại:</Typography>
+                    <Typography variant="body1">
+                        {`${deliveryInfo.phone}`}
+                    </Typography>
+                </Stack>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    <Typography variant="body1">Phương thức vận chuyển:</Typography>
                     <Typography variant="body1">
                         {`${deliveryMethod.name}`}
                     </Typography>
@@ -92,20 +100,19 @@ export default function Form({ deliveryInfo, deliveryMethod, paymentType, setPay
                     }}
                 >
                     <FormControl fullWidth>
-                        <RadioGroup name="shipment" sx={{ mx: 2 }}>
-                            <FormControlLabel value="COD" control={<Radio />} label="COD" />
-                            <Divider />
-                            <FormControlLabel
-                                value="VNPay"
-                                control={<Radio />}
-                                label="Thanh toán trực tuyến - VNPay"
-                            />
-                            <Divider />
-                            <FormControlLabel
-                                value="Momo"
-                                control={<Radio />}
-                                label="Thanh toán trực tuyến - Momo"
-                            />
+                        <RadioGroup sx={{ mx: 2 }}
+                            value={paymentType}
+                            onChange={(e) => setPaymentType(e.target.value)}
+                        >
+                            {
+                                paymentMethods.map((method) =>
+
+                                    <FormControlLabel
+                                        key={method.type}
+                                        value={method.type} control={<Radio />}
+                                        label={`${method.name}(${method.type})`} />
+                                )
+                            }
                         </RadioGroup>
                     </FormControl>
                 </Box>

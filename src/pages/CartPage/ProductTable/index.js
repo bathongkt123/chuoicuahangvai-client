@@ -16,7 +16,7 @@ export default function ProductTable() {
     //cart: id and number of products from cookies
     const [cookie, setCookie] = useCookies(["cart"]);
     const cart = cookie['cart'] || {}
-    const keys = Object.keys(cart)
+
     const setCart = (cart) => setCookie("cart", cart, { path: "/" })
     const deleteItem = (key) => () => {
         const { [key]: _, ...newCart } = cart
@@ -34,47 +34,38 @@ export default function ProductTable() {
     const rowsPerPage = 4
     //set protducts to save cart attribute
 
-    const [products, setProducts] = useState(() => {
-        const initialState = {}
-        keys.forEach((key) => initialState[key] = {
-            name: '',
-            image: '',
-            price: 0,
-            maxLength: 0,
-            minLength: 0,
-        })
-        return initialState
-    })
+    const [products, setProducts] = useState({})
     //subtotal and total
-
+    const keys = Object.keys(products)
     const subTotal = key => cart[key] * products[key].price
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
     //validate 
     const validateItems = keys.every(key =>
-        products[key].maxLength >= cart[key] && products[key].minLength <= cart[key])
+        products[key].inventoryLength / 100 >= cart[key] && MIN_LENGTH <= cart[key])
 
 
     useEffect(() => {
         //format cart to post to server
-        const postCartData = [...keys.map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
+        const postCartData = [...Object.keys(cart).map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
         const fetchData = async () => {
             const cartDetail = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart`, { skus: postCartData })
             console.log(cartDetail)
             const cartProducts = {}
             cartDetail.data.skus.map(item =>
-                cartProducts[item.id] = {
-                    name: item.product.name + ' - ' + item.sku,
-                    image: item.images[0].url,
-                    price: item.price,
-                    maxLength: item.inventoryLength / 100,
-                    minLength: MIN_LENGTH
-                }
+                cartProducts[item.id] = item
+                // {
+                //     name: item.product.name + ' - ' + item.sku,
+                //     image: item.images[0].url,
+                //     price: item.price,
+                //     maxLength: item.inventoryLength / 100,
+                //     minLength: MIN_LENGTH
+                // }
             )
             console.log(cartProducts)
             //pretend that all products have some in inventory
             //remove bad products out of cart
             const newCart = { ...cart }
-            keys.forEach((key) => {
+            Object.keys(cart).forEach((key) => {
                 if (!cartProducts[key])
                     delete newCart[key]
             }
@@ -104,7 +95,11 @@ export default function ProductTable() {
                                 <ProductRow
                                     key={key}
                                     attr={{
-                                        ...products[key],
+                                        name: products[key].product.name + ' - ' + products[key].sku,
+                                        image: products[key].images[0].url,
+                                        price: products[key].price,
+                                        maxLength: products[key].inventoryLength / 100,
+                                        minLength: MIN_LENGTH,
                                         subTotal: subTotal(key)
                                     }}
                                     length={cart[key]}
@@ -146,7 +141,7 @@ export default function ProductTable() {
                 </Table>
             </TableContainer >
             {/* Paying section */}
-            <Paying cart={cart} validateItems={validateItems} />
+            <Paying cart={cart} validateItems={validateItems} products={products} />
         </Fragment>
     )
 }

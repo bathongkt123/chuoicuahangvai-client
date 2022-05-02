@@ -26,6 +26,7 @@ import {
 import useAuth from "auth/useAuth";
 
 import { Fragment } from "react";
+import PaymentSuccess from "pages/PaymentSuccess";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="info" element={<PaymentInfo />} />
           <Route path="delivery" element={<PaymentDelivery />} />
           <Route path="complete" element={<PaymentComplete />} />
+          <Route path='success' element={<PaymentSuccess />} />
         </Route>
 
         <Route path="" element={
