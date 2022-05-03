@@ -19,7 +19,9 @@ export default function ProductTable() {
 
     const setCart = (cart) => setCookie("cart", cart, { path: "/" })
     const deleteItem = (key) => () => {
-        const { [key]: _, ...newCart } = cart
+        const { [key]: _0, ...newCart } = cart
+        const { [key]: _1, ...newProducts } = products
+        setProducts(newProducts)
         setCart(newCart)
     }
     const setItemLength = (key) => (length) => {
