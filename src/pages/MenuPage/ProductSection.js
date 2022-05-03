@@ -38,34 +38,46 @@ export default function ProductSection({
             },
             category: {
               id: {
-                $in: Object.keys(categoriesFilter),
+                $in: Object.keys(categoriesFilter).find(
+                  (key) => categoriesFilter[key] === true
+                ),
               },
             },
           },
 
           color: {
             id: {
-              $in: Object.keys(colorsFilter),
+              $in: Object.keys(colorsFilter).find(
+                (key) => colorsFilter[key] === true
+              ),
             },
           },
           origin: {
             id: {
-              $in: Object.keys(originsFilter),
+              $in: Object.keys(originsFilter).find(
+                (key) => originsFilter[key] === true
+              ),
             },
           },
           pattern: {
             id: {
-              $in: Object.keys(patternsFilter),
+              $in: Object.keys(patternsFilter).find(
+                (key) => patternsFilter[key] === true
+              ),
             },
           },
           width: {
             id: {
-              $in: Object.keys(widthsFilter),
+              $in: Object.keys(widthsFilter).find(
+                (key) => widthsFilter[key] === true
+              ),
             },
           },
           stretch: {
             id: {
-              $in: Object.keys(stretchesFilter),
+              $in: Object.keys(stretchesFilter).find(
+                (key) => stretchesFilter[key] === true
+              ),
             },
           },
         },
@@ -75,7 +87,6 @@ export default function ProductSection({
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
-    console.log(resultProducts);
     setProducts(resultProducts.data.data);
   };
 

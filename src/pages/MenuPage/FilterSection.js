@@ -35,128 +35,94 @@ export default function FilterSection({
   const [stretches, setStretches] = useState([]);
 
   const handleCategoryChange = (event) => {
-    if (event.target.checked)
-      setCategoriesFilter({
-        ...categoriesFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setCategoriesFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setCategoriesFilter({
+      ...categoriesFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
 
   const handleColorChange = (event) => {
-    if (event.target.checked)
-      setColorsFilter({
-        ...colorsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setColorsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setColorsFilter({
+      ...colorsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
 
   const handleOriginChange = (event) => {
-    if (event.target.checked)
-      setOriginsFilter({
-        ...originsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setOriginsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setOriginsFilter({
+      ...originsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
 
   const handlePatternChange = (event) => {
-    if (event.target.checked)
-      setPatternsFilter({
-        ...patternsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setPatternsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setPatternsFilter({
+      ...patternsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const handleWidthChange = (event) => {
-    if (event.target.checked)
-      setWidthsFilter({
-        ...widthsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setWidthsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setWidthsFilter({
+      ...widthsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const handleStretchChange = (event) => {
-    if (event.target.checked)
-      setStretchesFilter({
-        ...stretchesFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setStretchesFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setStretchesFilter({
+      ...stretchesFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const fetchData = async () => {
     const query = qs.stringify({}, { encodeValuesOnly: true });
     const resultCategories = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`
     );
-    const temp = {};
+    let temp = {};
     resultCategories.data.data.map((item) => (temp[item.id] = false));
     setCategoriesFilter(temp);
-    console.log(categoriesFilter);
 
     const resultColors = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
     );
+    temp = {};
+    resultColors.data.data.map((item) => (temp[item.id] = false));
+    setColorsFilter(temp);
+
     const resultOrigins = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-origins?${query}`
     );
+    temp = {};
+    resultOrigins.data.data.map((item) => (temp[item.id] = false));
+    setOriginsFilter(temp);
+
     const resultPatterns = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-patterns?${query}`
     );
+    temp = {};
+    resultPatterns.data.data.map((item) => (temp[item.id] = false));
+    setPatternsFilter(temp);
+
     const resultWidths = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-widths?${query}`
     );
+    temp = {};
+    resultWidths.data.data.map((item) => (temp[item.id] = false));
+    setWidthsFilter(temp);
+
     const resultStretches = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-stretches?${query}`
     );
+    temp = {};
+    resultStretches.data.data.map((item) => (temp[item.id] = false));
+    setStretchesFilter(temp);
+
     setCategories(resultCategories.data.data);
     setColors(resultColors.data.data);
     setOrigins(resultOrigins.data.data);
     setPatterns(resultPatterns.data.data);
     setWidths(resultWidths.data.data);
     setStretches(resultStretches.data.data);
-  };
-
-  const fetchFilter = async () => {
-    // console.log(categoriesFilter);
-    // setCategoriesFilter((prevState) => {...prevState, [item]: false })
   };
 
   useEffect(() => {
@@ -189,6 +155,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleCategoryChange}
+                checked={categoriesFilter.value}
               />
             }
             label={item.attributes.name}
@@ -201,7 +168,13 @@ export default function FilterSection({
       {colors.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
-            control={<Checkbox value={item.id} onChange={handleColorChange} />}
+            control={
+              <Checkbox
+                value={item.id}
+                onChange={handleColorChange}
+                checked={colorsFilter.value}
+              />
+            }
             label={
               <Box
                 sx={{
@@ -234,6 +207,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleOriginChange}
+                checked={originsFilter.value}
               />
             }
             label={item.attributes.name}
@@ -250,6 +224,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handlePatternChange}
+                checked={patternsFilter.value}
               />
             }
             label={item.attributes.name}
@@ -266,6 +241,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleWidthChange}
+                checked={widthsFilter.value}
               />
             }
             label={item.attributes.name}
@@ -282,6 +258,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleStretchChange}
+                checked={stretchesFilter.value}
               />
             }
             label={item.attributes.name}
