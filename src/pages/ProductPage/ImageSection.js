@@ -9,6 +9,7 @@ export default function ImageSection({ productImages }) {
       .slice(1)
       .map((item) => (
         <Box
+          key={item}
           component="img"
           src={`${process.env.REACT_APP_STRAPI_URL}${item}`}
         />

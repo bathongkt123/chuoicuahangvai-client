@@ -116,7 +116,7 @@ export default function ProductPage() {
         style={{ margin: "10px", textAlign: "left" }}
       >
         <Grid item xs={12} sm={5}>
-          <ImageSection productImages={productImages} />
+          <ImageSection key={productId} productImages={productImages} />
         </Grid>
         <Grid item xs={12} sm={7}>
           <ProductInfoSection
