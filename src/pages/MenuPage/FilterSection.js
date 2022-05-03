@@ -34,13 +34,11 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-  const [checkbox, setCheckbox] = useState(false);
   const handleCategoryChange = (event) => {
     setCategoriesFilter({
       ...categoriesFilter,
       [event.target.value]: event.target.checked,
     });
-    console.log(categoriesFilter);
   };
 
   const handleColorChange = (event) => {
