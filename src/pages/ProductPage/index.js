@@ -20,6 +20,8 @@ export default function ProductPage() {
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
   const [productImages, setProductImages] = useState([]);
+  const [largeImage, setLargeImage] = useState("");
+
   const { productId } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +74,7 @@ export default function ProductPage() {
         imagesURL[i] = temp[i].attributes.url;
       }
       setProductImages(imagesURL);
+      setLargeImage(imagesURL[0]);
     };
     fetchData();
   }, [productId]);
@@ -116,7 +119,12 @@ export default function ProductPage() {
         style={{ margin: "10px", textAlign: "left" }}
       >
         <Grid item xs={12} sm={5}>
-          <ImageSection productImages={productImages} />
+          <ImageSection
+            key={productId}
+            productImages={productImages}
+            setLargeImage={setLargeImage}
+            largeImage={largeImage}
+          />
         </Grid>
         <Grid item xs={12} sm={7}>
           <ProductInfoSection
