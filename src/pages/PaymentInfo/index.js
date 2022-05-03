@@ -4,7 +4,7 @@ import InfoForm from "./InfoForm";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-export default function PaymentDelivery() {
+export default function PaymentInfo() {
     const { state } = useLocation()
     //fetch data from api and insert to current state
     const [paymentInfo, setPaymentInfo] = useState(state)
@@ -14,7 +14,7 @@ export default function PaymentDelivery() {
             setPaymentInfo({ ...paymentInfo, ...response.data })
         }
         fetchData()
-    }, [paymentInfo])
+    }, [])
     //set state to form contact info
     const [contact, setContact] = useState(
         paymentInfo.deliveryInfo ||

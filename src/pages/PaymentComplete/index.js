@@ -17,7 +17,7 @@ export default function PaymentComplete() {
             setPaymentInfo({ ...paymentInfo, ...response.data })
         }
         fetchData()
-    }, [paymentInfo])
+    }, [])
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row', height: '100vh' } }}>
             <Container sx={{ flexGrow: 1, flexBasis: 0, bgcolor: '#EEEDE8' }}>

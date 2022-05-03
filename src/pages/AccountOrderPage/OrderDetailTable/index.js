@@ -56,8 +56,8 @@ export default function OrderDetailTable({ orderId }) {
                 <TableHead >
                     <TableRow >
                         <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
-                        <CustomTableCell align="right">ĐƠN GIÁ(/MÉT)</CustomTableCell>
-                        <CustomTableCell align="right">ĐỘ DÀI</CustomTableCell>
+                        <CustomTableCell align="right">ĐƠN GIÁ(VNđ/MÉT)</CustomTableCell>
+                        <CustomTableCell align="center">ĐỘ DÀI(MÉT)</CustomTableCell>
                         <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
                     </TableRow>
                 </TableHead>

@@ -18,7 +18,10 @@ export default function OrderTable() {
         const fetchData = async () => {
             const query = qs.stringify(
                 {
-                    populate: [],
+                    populate: [
+                        'customer',
+                        'order_statuses',
+                        'order_invoice'],
                 },
                 { encodeValuesOnly: true }
             );
@@ -32,9 +35,10 @@ export default function OrderTable() {
                     const createdAt = new Date(order.createdAt)
                     newOrders[order.id] = {
                         code: order.code,
-                        status: order.order_statuses[0].status,
+                        status: order.order_statuses.pop().status,
                         createdAt: createdAt.toLocaleDateString(),
-                        total: 10000,
+                        invoice: order.order_invoice && order.order_invoice.id,
+                        total: order.orderAmount,
                     }
                 }
             )
@@ -51,6 +55,7 @@ export default function OrderTable() {
                     <TableRow >
                         <CustomTableCell align="left" >ĐƠN HÀNG</CustomTableCell>
                         <CustomTableCell align="right">TRẠNG THÁI</CustomTableCell>
+                        <CustomTableCell align="right">HÓA ĐƠN</CustomTableCell>
                         <CustomTableCell align="right">NGÀY ĐẶT</CustomTableCell>
                         <CustomTableCell align="right">TỔNG GIÁ TRỊ</CustomTableCell>
                     </TableRow>
@@ -67,6 +72,15 @@ export default function OrderTable() {
                                     </Link>
                                 </CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].status}</CustomTableCell>
+                                <CustomTableCell align="right">
+                                    {orders[key].invoice ?
+                                        <Link color='inherit' underline="hover"
+                                            sx={{ cursor: 'pointer' }}
+                                            onClick={() => navigate('/account/invoice/' + orders[key].invoice)}>
+                                            Chi tiết
+                                        </Link>
+                                        : 'Chưa có'}
+                                </CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].createdAt}</CustomTableCell>
                                 <CustomTableCell align="right">{orders[key].total}</CustomTableCell>
                             </TableRow>
