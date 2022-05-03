@@ -5,6 +5,7 @@ import axios from "axios";
 import qs from "qs";
 import {
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -145,7 +146,24 @@ export default function FilterSection({
         <MenuItem value={"price:desc"}>Giá giảm dần</MenuItem>
         <MenuItem value={"price:asc"}>Giá tăng dần</MenuItem>
       </Select>
-      <h3>DANH MỤC</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>DANH MỤC</h3>
+        <Button
+          onClick={() => {
+            setCategoriesFilter((prevState) => ({
+              ...prevState,
+              14: false,
+            }));
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {categories.map((item) => (
         <FormGroup key={item.id}>
@@ -163,7 +181,15 @@ export default function FilterSection({
         </FormGroup>
       ))}
 
-      <h3>MÀU CHỦ ĐẠO</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>MÀU CHỦ ĐẠO</h3>
+        <Button>Clear</Button>
+      </Box>
 
       {colors.map((item) => (
         <FormGroup key={item.id}>
@@ -197,7 +223,15 @@ export default function FilterSection({
           ></FormControlLabel>
         </FormGroup>
       ))}
-      <h3>XUẤT XỨ</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>XUẤT XỨ</h3>
+        <Button>Clear</Button>
+      </Box>
 
       {origins.map((item) => (
         <FormGroup key={item.id}>
@@ -214,7 +248,15 @@ export default function FilterSection({
           />
         </FormGroup>
       ))}
-      <h3>KIỂU MẪU</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>KIỂU MẪU</h3>
+        <Button>Clear</Button>
+      </Box>
 
       {patterns.map((item) => (
         <FormGroup key={item.id}>
@@ -231,8 +273,15 @@ export default function FilterSection({
           />
         </FormGroup>
       ))}
-      <h3>CHIỀU RỘNG</h3>
-
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>CHIỀU RỘNG</h3>
+        <Button>Clear</Button>
+      </Box>
       {widths.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -248,7 +297,15 @@ export default function FilterSection({
           />
         </FormGroup>
       ))}
-      <h3>ĐỘ CO GIÃN</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>ĐỘ CO GIÃN</h3>
+        <Button>Clear</Button>
+      </Box>
 
       {stretches.map((item) => (
         <FormGroup key={item.id}>

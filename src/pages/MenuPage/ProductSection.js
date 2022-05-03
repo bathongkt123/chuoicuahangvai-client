@@ -17,6 +17,14 @@ export default function ProductSection({
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const { state } = useLocation();
+  function getKeySort(filter) {
+    Object.keys(filter).forEach(function (k) {
+      if (filter[k] === false) {
+        delete filter[k];
+      }
+    });
+    return Object.keys(filter);
+  }
   const fetchData = async () => {
     const query = qs.stringify(
       {
@@ -38,46 +46,34 @@ export default function ProductSection({
             },
             category: {
               id: {
-                $in: Object.keys(categoriesFilter).find(
-                  (key) => categoriesFilter[key] === true
-                ),
+                $in: getKeySort(categoriesFilter),
               },
             },
           },
 
           color: {
             id: {
-              $in: Object.keys(colorsFilter).find(
-                (key) => colorsFilter[key] === true
-              ),
+              $in: getKeySort(colorsFilter),
             },
           },
           origin: {
             id: {
-              $in: Object.keys(originsFilter).find(
-                (key) => originsFilter[key] === true
-              ),
+              $in: getKeySort(originsFilter),
             },
           },
           pattern: {
             id: {
-              $in: Object.keys(patternsFilter).find(
-                (key) => patternsFilter[key] === true
-              ),
+              $in: getKeySort(patternsFilter),
             },
           },
           width: {
             id: {
-              $in: Object.keys(widthsFilter).find(
-                (key) => widthsFilter[key] === true
-              ),
+              $in: getKeySort(widthsFilter),
             },
           },
           stretch: {
             id: {
-              $in: Object.keys(stretchesFilter).find(
-                (key) => stretchesFilter[key] === true
-              ),
+              $in: getKeySort(stretchesFilter),
             },
           },
         },
