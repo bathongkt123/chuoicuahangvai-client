@@ -34,12 +34,13 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-
+  const [checkbox, setCheckbox] = useState(false);
   const handleCategoryChange = (event) => {
     setCategoriesFilter({
       ...categoriesFilter,
       [event.target.value]: event.target.checked,
     });
+    console.log(categoriesFilter);
   };
 
   const handleColorChange = (event) => {
@@ -155,10 +156,11 @@ export default function FilterSection({
         <h3>DANH MỤC</h3>
         <Button
           onClick={() => {
-            setCategoriesFilter((prevState) => ({
-              ...prevState,
-              14: false,
-            }));
+            const temp = Object.assign({}, categoriesFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setCategoriesFilter(temp);
           }}
         >
           Clear
@@ -173,7 +175,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleCategoryChange}
-                checked={categoriesFilter.value}
+                checked={categoriesFilter[item.id]}
               />
             }
             label={item.attributes.name}
@@ -188,7 +190,17 @@ export default function FilterSection({
         }}
       >
         <h3>MÀU CHỦ ĐẠO</h3>
-        <Button>Clear</Button>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, colorsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setColorsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
       </Box>
 
       {colors.map((item) => (
@@ -198,7 +210,7 @@ export default function FilterSection({
               <Checkbox
                 value={item.id}
                 onChange={handleColorChange}
-                checked={colorsFilter.value}
+                checked={colorsFilter[item.id]}
               />
             }
             label={
@@ -230,7 +242,17 @@ export default function FilterSection({
         }}
       >
         <h3>XUẤT XỨ</h3>
-        <Button>Clear</Button>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, originsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setOriginsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
       </Box>
 
       {origins.map((item) => (
@@ -241,7 +263,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleOriginChange}
-                checked={originsFilter.value}
+                checked={originsFilter[item.id]}
               />
             }
             label={item.attributes.name}
@@ -255,7 +277,17 @@ export default function FilterSection({
         }}
       >
         <h3>KIỂU MẪU</h3>
-        <Button>Clear</Button>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, patternsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setPatternsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
       </Box>
 
       {patterns.map((item) => (
@@ -266,7 +298,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handlePatternChange}
-                checked={patternsFilter.value}
+                checked={patternsFilter[item.id]}
               />
             }
             label={item.attributes.name}
@@ -280,7 +312,17 @@ export default function FilterSection({
         }}
       >
         <h3>CHIỀU RỘNG</h3>
-        <Button>Clear</Button>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, widthsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setWidthsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
       </Box>
       {widths.map((item) => (
         <FormGroup key={item.id}>
@@ -290,7 +332,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleWidthChange}
-                checked={widthsFilter.value}
+                checked={widthsFilter[item.id]}
               />
             }
             label={item.attributes.name}
@@ -304,7 +346,17 @@ export default function FilterSection({
         }}
       >
         <h3>ĐỘ CO GIÃN</h3>
-        <Button>Clear</Button>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, stretchesFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setStretchesFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
       </Box>
 
       {stretches.map((item) => (
@@ -315,7 +367,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleStretchChange}
-                checked={stretchesFilter.value}
+                checked={stretchesFilter[item.id]}
               />
             }
             label={item.attributes.name}

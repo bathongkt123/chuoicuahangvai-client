@@ -18,12 +18,13 @@ export default function ProductSection({
   const [products, setProducts] = useState([]);
   const { state } = useLocation();
   function getKeySort(filter) {
-    Object.keys(filter).forEach(function (k) {
-      if (filter[k] === false) {
-        delete filter[k];
+    const temp = Object.assign({}, filter);
+    Object.keys(temp).forEach(function (k) {
+      if (temp[k] === false) {
+        delete temp[k];
       }
     });
-    return Object.keys(filter);
+    return Object.keys(temp);
   }
   const fetchData = async () => {
     const query = qs.stringify(
