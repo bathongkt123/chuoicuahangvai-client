@@ -96,7 +96,7 @@ export default function MainRow({ cartNumber, search, setSearch }) {
           onChange={handleSearchChange}
           onKeyPress={(event) => {
             if (event.key === "Enter") {
-              if (location.pathname !== "/menu") navigate("/menu");
+              navigate("/menu", { state: search });
             }
           }}
         />

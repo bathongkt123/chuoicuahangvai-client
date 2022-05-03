@@ -33,13 +33,8 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-  const [checkBoxs, setCheckBoxs] = useState([]);
-  const handleCategoryChange = (event) => {
-    setCheckBoxs({
-      ...checkBoxs,
-      [event.target.name]: event.target.checked,
-    });
 
+  const handleCategoryChange = (event) => {
     if (event.target.checked)
       setCategoriesFilter({
         ...categoriesFilter,
@@ -131,6 +126,11 @@ export default function FilterSection({
     const resultCategories = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`
     );
+    const temp = {};
+    resultCategories.data.data.map((item) => (temp[item.id] = false));
+    setCategoriesFilter(temp);
+    console.log(categoriesFilter);
+
     const resultColors = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
     );
@@ -154,9 +154,14 @@ export default function FilterSection({
     setStretches(resultStretches.data.data);
   };
 
+  const fetchFilter = async () => {
+    // console.log(categoriesFilter);
+    // setCategoriesFilter((prevState) => {...prevState, [item]: false })
+  };
+
   useEffect(() => {
     fetchData();
-  }, [checkBoxs]);
+  }, []);
 
   return (
     <FormControl
@@ -184,7 +189,6 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleCategoryChange}
-                checked={checkBoxs.name}
               />
             }
             label={item.attributes.name}

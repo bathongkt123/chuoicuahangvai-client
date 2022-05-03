@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import qs from "qs";
 import { Box, Link, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductSection({
   categoriesFilter,
@@ -13,12 +13,10 @@ export default function ProductSection({
   widthsFilter,
   stretchesFilter,
   sortProduct,
-  search,
-  setSearch,
 }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-
+  const { state } = useLocation();
   const fetchData = async () => {
     const query = qs.stringify(
       {
@@ -36,7 +34,7 @@ export default function ProductSection({
         filters: {
           product: {
             name: {
-              $containsi: search,
+              $containsi: state,
             },
             category: {
               id: {
@@ -91,7 +89,7 @@ export default function ProductSection({
     widthsFilter,
     stretchesFilter,
     sortProduct,
-    search,
+    state,
   ]);
 
   return (
