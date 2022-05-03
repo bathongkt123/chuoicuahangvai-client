@@ -1,12 +1,12 @@
 
-import { Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination } from "@mui/material";
+import { Box, Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination, Tooltip, IconButton } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import ProductRow from "./ProductRow";
 import CustomTableCell from "components/CustomTableCell"
 import { useCookies } from "react-cookie";
 import Paying from './Paying'
 import axios from "axios";
-
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 const MIN_LENGTH = 0.5;
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -42,8 +42,8 @@ export default function ProductTable() {
     //validate 
     const validateItems = keys.every(key =>
         products[key].inventoryLength / 100 >= cart[key] && MIN_LENGTH <= cart[key])
-
-
+    //message of lost items
+    const [message, setMessage] = useState([])
     useEffect(() => {
         //format cart to post to server
         const postCartData = [...Object.keys(cart).map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
@@ -52,15 +52,7 @@ export default function ProductTable() {
             console.log(cartDetail)
             const cartProducts = {}
             cartDetail.data.skus.map(item =>
-                cartProducts[item.id] = item
-                // {
-                //     name: item.product.name + ' - ' + item.sku,
-                //     image: item.images[0].url,
-                //     price: item.price,
-                //     maxLength: item.inventoryLength / 100,
-                //     minLength: MIN_LENGTH
-                // }
-            )
+                cartProducts[item.id] = item)
             console.log(cartProducts)
             //pretend that all products have some in inventory
             //remove bad products out of cart
@@ -70,6 +62,7 @@ export default function ProductTable() {
                     delete newCart[key]
             }
             )
+            setMessage(cartDetail.data.message)
             setCart(newCart)
             setProducts(cartProducts)
         }
@@ -83,7 +76,27 @@ export default function ProductTable() {
                     <TableHead >
                         <TableRow >
 
-                            <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
+                            <CustomTableCell align="left" >
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    SẢN PHẨM
+                                    {message.length !== 0 &&
+                                        <Tooltip
+                                            placement="right-start"
+                                            title={
+                                                message.map(
+                                                    (item) =>
+                                                        <Typography variant="body2" fontWeight={450}>
+                                                            {item}
+                                                        </Typography>
+                                                )
+                                            }>
+                                            <PriorityHighIcon sx={{ color: 'red' }} />
+                                        </Tooltip>
+                                    }
+                                </Box>
+
+
+                            </CustomTableCell>
                             <CustomTableCell align="right">ĐƠN GIÁ(VNĐ/M)</CustomTableCell>
                             <CustomTableCell align="center">ĐỘ DÀI(M)</CustomTableCell>
                             <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>

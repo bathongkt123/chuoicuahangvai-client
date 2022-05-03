@@ -4,7 +4,7 @@ import DeliveryForm from "./DeliveryForm";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios'
-export default function PaymentShipment() {
+export default function PaymentDelivery() {
     const { state } = useLocation()
     const [paymentInfo, setPaymentInfo] = useState({
         deliveryMethods: [],
@@ -18,7 +18,7 @@ export default function PaymentShipment() {
             setPaymentInfo({ ...paymentInfo, ...response.data })
         }
         fetchData()
-    }, [paymentInfo])
+    }, [])
     return (
         <Box sx={{ display: 'flex', height: '100vh', flexDirection: { xs: 'column', md: 'row' } }}>
             <Container sx={{ flexGrow: 1, flexBasis: 0, bgcolor: '#EEEDE8' }}>
