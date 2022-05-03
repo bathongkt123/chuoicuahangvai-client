@@ -25,7 +25,9 @@ import {
 
 import useAuth from "auth/useAuth";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import PaymentSuccess from "pages/PaymentSuccess";
+
 
 function App() {
   const { initializeSession } = useAuth();
@@ -39,6 +41,7 @@ function App() {
           <Route path="info" element={<PaymentInfo />} />
           <Route path="delivery" element={<PaymentDelivery />} />
           <Route path="complete" element={<PaymentComplete />} />
+          <Route path='success' element={<PaymentSuccess />} />
         </Route>
 
         <Route

@@ -12,7 +12,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
     };
     const rowsPerPage = 3
     const keys = Object.keys(products)
-    const subTotal = item => item.price * item.length
+    const subTotal = item => item.price / 100 * item.length
     return (
         <Stack
             divider={<Divider />}
@@ -67,7 +67,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        {deliveryMethod ? -deliveryMethod.cost : `Tính ở bước tiếp theo`}
+                        {deliveryMethod && deliveryMethod.id ? deliveryMethod.cost : `Tính ở bước tiếp theo`}
                     </Box>
                 </Box>
             </Stack>
@@ -79,7 +79,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                    {deliveryMethod ? price - deliveryMethod.cost : price}
+                    {deliveryMethod && deliveryMethod.id ? price + deliveryMethod.cost : price}
                 </Box>
             </Box>
         </Stack>

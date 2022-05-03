@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function Paying({ cart, validateItems }) {
+export default function Paying({ cart, validateItems, products }) {
     const navigate = useNavigate();
     const [checkTerm, setCheckTerm] = useState(false);
     const handleCheckTerm = (e) => {
@@ -34,7 +34,7 @@ export default function Paying({ cart, validateItems }) {
             toast.error("Vui lòng chấp nhận Điều khoản sử dụng và Điều khoản bảo mật");
             return
         }
-        const postCartData = [...Object.keys(cart).map((key) => ({ id: Number(key), length: cart[key] * 100 }))]
+        const postCartData = [...Object.keys(cart).map((key) => ({ ...products[key], length: cart[key] * 100 }))]
 
         navigate('/payment', {
             state: {

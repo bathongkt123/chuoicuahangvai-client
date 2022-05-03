@@ -1,11 +1,9 @@
 import { Fragment } from "react"
-import { Typography, Stack, Box, FormControl, RadioGroup, FormControlLabel, Radio } from "@mui/material"
+import { Typography, Stack, Box, FormControl, RadioGroup, FormControlLabel, Radio, Divider } from "@mui/material"
 export default function Form({ deliveryInfo, deliveryMethods, method, setMethod }) {
-
     return (
         <Fragment>
-
-            <Box
+            <Stack
                 sx={{
                     backgroundColor: "white",
                     my: 2,
@@ -14,6 +12,8 @@ export default function Form({ deliveryInfo, deliveryMethods, method, setMethod 
                     py: 1,
                     px: 2,
                 }}
+                divider={<Divider />}
+                spacing={0.5}
             >
                 <Stack
                     direction="row"
@@ -64,7 +64,17 @@ export default function Form({ deliveryInfo, deliveryMethods, method, setMethod 
                         {`${deliveryInfo.city}`}
                     </Typography>
                 </Stack>
-            </Box>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    <Typography variant="body1">Số điện thoại:</Typography>
+                    <Typography variant="body1">
+                        {`${deliveryInfo.phone}`}
+                    </Typography>
+                </Stack>
+            </Stack>
 
             <Box sx={{ width: "100%", mt: 4 }}>
                 <Typography variant="h5">Phương thức giao hàng</Typography>

@@ -1,7 +1,7 @@
 import { Breadcrumbs, Typography, Link, Box, Divider } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-export default function Heading() {
+export default function Heading({ paymentInfo }) {
   const navigate = useNavigate()
   return (
     <Box
@@ -12,7 +12,8 @@ export default function Heading() {
         my: 2,
       }}
     >
-      <h2>Royal Fabric</h2>
+
+      <Typography variant='h5' my={4} fontWeight='bold'>Thanh toán {paymentInfo.isDebt ? 'ghi nợ' : 'một lần'}</Typography>
       <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" component="button" variant="body1" onClick={() => {
           navigate('/cart');

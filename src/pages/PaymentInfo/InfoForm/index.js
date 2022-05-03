@@ -7,8 +7,8 @@ export default function InfoForm({ paymentInfo, contact, setContact }) {
 
   return (
     <Fragment>
-      <Header />
-      <Form contact={contact} setContact={setContact} />
+      <Header paymentInfo={{ ...paymentInfo, deliveryInfo: contact }} />
+      <Form contact={contact} setContact={setContact} receiveAddress={paymentInfo.receiveAddress} />
       <Footer paymentInfo={{ ...paymentInfo, deliveryInfo: contact }} />
     </Fragment>
   );

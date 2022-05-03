@@ -7,31 +7,17 @@ import { useState, useEffect } from "react";
 export default function PaymentComplete() {
     const { state } = useLocation()
     const [paymentInfo, setPaymentInfo] = useState({
-        skus: [],
-        price: 0,
-        deliveryInfo:
-        {
-            email: '',
-            firstname: '',
-            lastname: '',
-            address: '',
-            city: '',
-            district: '',
-            ward: '',
-            wardId: '',
-            phone: '',
-        },
-        deliveryMethod: { name: '', cost: 0 }
+        paymentMethods: [],
+        ...state,
     })
-    const [paymentType, setPaymentType] = useState(state.paymentType || '')
+    const [paymentType, setPaymentType] = useState(paymentInfo.paymentType || '')
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/complete`, state)
-            setPaymentInfo({ ...state, ...response.data })
-            console.log({ ...state, ...response.data })
+            const response = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/complete`, paymentInfo)
+            setPaymentInfo({ ...paymentInfo, ...response.data })
         }
         fetchData()
-    }, [state])
+    }, [paymentInfo])
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row', height: '100vh' } }}>
             <Container sx={{ flexGrow: 1, flexBasis: 0, bgcolor: '#EEEDE8' }}>

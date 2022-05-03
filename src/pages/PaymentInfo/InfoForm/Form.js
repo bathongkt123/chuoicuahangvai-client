@@ -1,8 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
-import { MenuItem, TextField, Box, Select, FormControl, InputLabel, Typography } from "@mui/material";
+import { MenuItem, TextField, Box, Select, FormControl, InputLabel, Typography, Link } from "@mui/material";
+import AdressesDiaglog from './AdressesDiaglog'
 import axios from 'axios'
 import qs from 'qs'
-export default function Form({ contact, setContact }) {
+export default function Form({ contact, setContact, receiveAddress }) {
     const handleEmail = (e) => {
         setContact({ ...contact, email: e.target.value })
     }
@@ -80,9 +81,21 @@ export default function Form({ contact, setContact }) {
         fetchWards()
     }, [contact.district]
     )
+    //Addresses Dialog
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleOpenDialog = () => {
+        setOpenDialog(true)
+    }
+    const handleCloseDialog = () => {
+        setOpenDialog(false)
+    }
+    const handleClickAddress = (address) => () => {
+        setContact({ ...contact, ...address })
+        setOpenDialog(false)
+    }
     return (
         <Fragment>
-            <Typography variant="h5" my={4}>Thông tin liên hệ</Typography>
+            <Typography variant="h5" my={3}>Thông tin liên hệ</Typography>
             <TextField
                 label="Email"
                 size="large"
@@ -91,105 +104,130 @@ export default function Form({ contact, setContact }) {
                 value={contact.email}
                 onChange={handleEmail}
             ></TextField>
-            <Box sx={{ width: "100%", mt: 4 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', my: 3 }}>
                 <Typography variant="h5">Địa chỉ liên lạc</Typography>
-                <Box sx={{ display: "flex", my: 5 }}>
-                    <TextField
-                        label="Họ và tên lót"
-                        size="large"
-                        fullWidth
-                        sx={{ display: "inline-block" }}
-                        value={contact.lastname}
-                        onChange={handlLastname}
-                    ></TextField>
-                    <Box width={20}></Box>
-                    <TextField
-                        label="Tên"
-                        size="large"
-                        fullWidth
-                        sx={{ display: "inline-block" }}
-                        value={contact.firstname}
-                        onChange={handleFirstname}
-                    ></TextField>
-                </Box>
-
+                <Box sx={{ flexGrow: 1 }} />
+                {Boolean(receiveAddress) &&
+                    <Fragment>
+                        <Link color='inherit'
+                            fontWeight='bold'
+                            variant='body1'
+                            underline='hover'
+                            component='button'
+                            onClick={handleOpenDialog}
+                        >
+                            Chọn từ danh sách địa chỉ
+                        </Link>
+                        <AdressesDiaglog
+                            open={openDialog}
+                            onClickAddress={handleClickAddress}
+                            onClose={handleCloseDialog}
+                            receiveAddress={receiveAddress} />
+                    </Fragment>
+                }
+            </Box>
+            <Box sx={{ display: "flex", mb: 5 }}>
                 <TextField
-                    label="Địa chỉ"
+                    label="Họ và tên lót"
                     size="large"
                     fullWidth
                     sx={{ display: "inline-block" }}
-                    value={contact.address}
-                    onChange={handleAddress}
+                    value={contact.lastname}
+                    onChange={handlLastname}
                 ></TextField>
+                <Box width={20}></Box>
+                <TextField
+                    label="Tên"
+                    size="large"
+                    fullWidth
+                    sx={{ display: "inline-block" }}
+                    value={contact.firstname}
+                    onChange={handleFirstname}
+                ></TextField>
+            </Box>
 
+            <TextField
+                label="Địa chỉ"
+                size="large"
+                fullWidth
+                sx={{ display: "inline-block" }}
+                value={contact.address}
+                onChange={handleAddress}
+            ></TextField>
+
+            <FormControl fullWidth sx={{ mt: 5 }}>
+                <InputLabel id="demo-simple-select-label0">Chọn tỉnh/thành</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label0"
+                    label="Chọn tỉnh/thành"
+                    size="large"
+                    value={cities.length ? contact.city : ''}
+                    onChange={handleCity}
+                >
+                    {
+                        cities.map((city) =>
+                            <MenuItem key={city} value={city}>{city}</MenuItem>
+                        )
+                    }
+                </Select>
+            </FormControl>
+
+            <Box sx={{ display: "flex" }}>
                 <FormControl fullWidth sx={{ mt: 5 }}>
-                    <InputLabel>Chọn tỉnh/thành</InputLabel>
+                    <InputLabel id="demo-simple-select-label2">
+                        Chọn quận/huyện
+                    </InputLabel>
                     <Select
-                        label="Chọn tỉnh/thành"
+
+                        labelId="demo-simple-select-label2"
+                        id="demo-simple-select"
+                        label="Chọn quận/huyện"
                         size="large"
-                        value={contact.city}
-                        onChange={handleCity}
+                        value={districts.length ? contact.district : ''}
+                        onChange={handleDistrict}
                     >
                         {
-                            cities.map((city) =>
-                                <MenuItem key={city} value={city}>{city}</MenuItem>
+                            districts.map((district) =>
+                                <MenuItem key={district} value={district}>{district}</MenuItem>
                             )
                         }
                     </Select>
                 </FormControl>
+                <Box width={20}></Box>
+                <FormControl fullWidth sx={{ mt: 5 }}>
+                    <InputLabel id="demo-simple-select-label3">
+                        Chọn phường/xã
+                    </InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label3"
+                        id="demo-simple-select"
+                        label="Chọn phường/xã"
+                        size="large"
 
-                <Box sx={{ display: "flex" }}>
-                    <FormControl fullWidth sx={{ mt: 5 }}>
-                        <InputLabel id="demo-simple-select-label">
-                            Chọn quận/huyện
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Chọn quận/huyện"
-                            size="large"
-                            value={contact.district}
-                            onChange={handleDistrict}
-                        >
-                            {
-                                districts.map((district) =>
-                                    <MenuItem key={district} value={district}>{district}</MenuItem>
-                                )
-                            }
-                        </Select>
-                    </FormControl>
-                    <Box width={20}></Box>
-                    <FormControl fullWidth sx={{ mt: 5 }}>
-                        <InputLabel id="demo-simple-select-label">
-                            Chọn phường/xã
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Chọn phường/xã"
-                            size="large"
-                            value={contact.wardId}
-                            onChange={handleWard}
-                        >
-                            {
-                                wards.map((ward) =>
-                                    <MenuItem key={ward.value} value={ward.value}>{ward.label}</MenuItem>
-                                )
-                            }
-                        </Select>
-                    </FormControl>
-                </Box>
+                        value={wards.length ? contact.wardId : ''}
+                        onChange={handleWard}
+                    >
 
-                <TextField
-                    label="Số điện thoại"
-                    size="large"
-                    fullWidth
-                    sx={{ display: "inline-block", mt: 5 }}
-                    value={contact.phone}
-                    onChange={handlePhone}
-                />
+                        {
+
+                            wards.map((ward) =>
+                                <MenuItem key={ward.value} value={ward.value}>{ward.label}</MenuItem>
+                            )
+
+                        }
+                    </Select>
+                </FormControl>
             </Box>
-            <Box></Box>
+
+            <TextField
+                label="Số điện thoại"
+                size="large"
+                fullWidth
+                sx={{ display: "inline-block", mt: 5 }}
+                value={contact.phone}
+                onChange={handlePhone}
+            />
+
         </Fragment>
     )
 }
