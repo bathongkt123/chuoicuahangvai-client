@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import qs from "qs";
 import { Box, Link, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductSection({
   categoriesFilter,
@@ -13,12 +13,19 @@ export default function ProductSection({
   widthsFilter,
   stretchesFilter,
   sortProduct,
-  search,
-  setSearch,
 }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-
+  const { state } = useLocation();
+  function getKeySort(filter) {
+    const temp = Object.assign({}, filter);
+    Object.keys(temp).forEach(function (k) {
+      if (temp[k] === false) {
+        delete temp[k];
+      }
+    });
+    return Object.keys(temp);
+  }
   const fetchData = async () => {
     const query = qs.stringify(
       {
@@ -36,38 +43,38 @@ export default function ProductSection({
         filters: {
           product: {
             name: {
-              $containsi: search,
+              $containsi: state,
             },
             category: {
               id: {
-                $in: Object.keys(categoriesFilter),
+                $in: getKeySort(categoriesFilter),
               },
             },
           },
 
           color: {
             id: {
-              $in: Object.keys(colorsFilter),
+              $in: getKeySort(colorsFilter),
             },
           },
           origin: {
             id: {
-              $in: Object.keys(originsFilter),
+              $in: getKeySort(originsFilter),
             },
           },
           pattern: {
             id: {
-              $in: Object.keys(patternsFilter),
+              $in: getKeySort(patternsFilter),
             },
           },
           width: {
             id: {
-              $in: Object.keys(widthsFilter),
+              $in: getKeySort(widthsFilter),
             },
           },
           stretch: {
             id: {
-              $in: Object.keys(stretchesFilter),
+              $in: getKeySort(stretchesFilter),
             },
           },
         },
@@ -77,7 +84,6 @@ export default function ProductSection({
     const resultProducts = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
     );
-    console.log(resultProducts);
     setProducts(resultProducts.data.data);
   };
 
@@ -91,7 +97,7 @@ export default function ProductSection({
     widthsFilter,
     stretchesFilter,
     sortProduct,
-    search,
+    state,
   ]);
 
   return (

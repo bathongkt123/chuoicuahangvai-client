@@ -5,6 +5,7 @@ import axios from "axios";
 import qs from "qs";
 import {
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -33,119 +34,89 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-  const [checkBoxs, setCheckBoxs] = useState([]);
   const handleCategoryChange = (event) => {
-    setCheckBoxs({
-      ...checkBoxs,
-      [event.target.name]: event.target.checked,
+    setCategoriesFilter({
+      ...categoriesFilter,
+      [event.target.value]: event.target.checked,
     });
-
-    if (event.target.checked)
-      setCategoriesFilter({
-        ...categoriesFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setCategoriesFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
   };
 
   const handleColorChange = (event) => {
-    if (event.target.checked)
-      setColorsFilter({
-        ...colorsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setColorsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setColorsFilter({
+      ...colorsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
 
   const handleOriginChange = (event) => {
-    if (event.target.checked)
-      setOriginsFilter({
-        ...originsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setOriginsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setOriginsFilter({
+      ...originsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
 
   const handlePatternChange = (event) => {
-    if (event.target.checked)
-      setPatternsFilter({
-        ...patternsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setPatternsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setPatternsFilter({
+      ...patternsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const handleWidthChange = (event) => {
-    if (event.target.checked)
-      setWidthsFilter({
-        ...widthsFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setWidthsFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setWidthsFilter({
+      ...widthsFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const handleStretchChange = (event) => {
-    if (event.target.checked)
-      setStretchesFilter({
-        ...stretchesFilter,
-        [event.target.value]: event.target.checked,
-      });
-    else {
-      setStretchesFilter((prevData) => {
-        const newData = { ...prevData };
-        delete newData[event.target.value];
-        return newData;
-      });
-    }
+    setStretchesFilter({
+      ...stretchesFilter,
+      [event.target.value]: event.target.checked,
+    });
   };
   const fetchData = async () => {
     const query = qs.stringify({}, { encodeValuesOnly: true });
     const resultCategories = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`
     );
+    let temp = {};
+    resultCategories.data.data.map((item) => (temp[item.id] = false));
+    setCategoriesFilter(temp);
+
     const resultColors = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
     );
+    temp = {};
+    resultColors.data.data.map((item) => (temp[item.id] = false));
+    setColorsFilter(temp);
+
     const resultOrigins = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-origins?${query}`
     );
+    temp = {};
+    resultOrigins.data.data.map((item) => (temp[item.id] = false));
+    setOriginsFilter(temp);
+
     const resultPatterns = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-patterns?${query}`
     );
+    temp = {};
+    resultPatterns.data.data.map((item) => (temp[item.id] = false));
+    setPatternsFilter(temp);
+
     const resultWidths = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-widths?${query}`
     );
+    temp = {};
+    resultWidths.data.data.map((item) => (temp[item.id] = false));
+    setWidthsFilter(temp);
+
     const resultStretches = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-stretches?${query}`
     );
+    temp = {};
+    resultStretches.data.data.map((item) => (temp[item.id] = false));
+    setStretchesFilter(temp);
+
     setCategories(resultCategories.data.data);
     setColors(resultColors.data.data);
     setOrigins(resultOrigins.data.data);
@@ -156,7 +127,7 @@ export default function FilterSection({
 
   useEffect(() => {
     fetchData();
-  }, [checkBoxs]);
+  }, []);
 
   return (
     <FormControl
@@ -174,7 +145,25 @@ export default function FilterSection({
         <MenuItem value={"price:desc"}>Giá giảm dần</MenuItem>
         <MenuItem value={"price:asc"}>Giá tăng dần</MenuItem>
       </Select>
-      <h3>DANH MỤC</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>DANH MỤC</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, categoriesFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setCategoriesFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {categories.map((item) => (
         <FormGroup key={item.id}>
@@ -184,7 +173,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleCategoryChange}
-                checked={checkBoxs.name}
+                checked={categoriesFilter[item.id]}
               />
             }
             label={item.attributes.name}
@@ -192,12 +181,36 @@ export default function FilterSection({
         </FormGroup>
       ))}
 
-      <h3>MÀU CHỦ ĐẠO</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>MÀU CHỦ ĐẠO</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, colorsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setColorsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {colors.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
-            control={<Checkbox value={item.id} onChange={handleColorChange} />}
+            control={
+              <Checkbox
+                value={item.id}
+                onChange={handleColorChange}
+                checked={colorsFilter[item.id]}
+              />
+            }
             label={
               <Box
                 sx={{
@@ -220,7 +233,25 @@ export default function FilterSection({
           ></FormControlLabel>
         </FormGroup>
       ))}
-      <h3>XUẤT XỨ</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>XUẤT XỨ</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, originsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setOriginsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {origins.map((item) => (
         <FormGroup key={item.id}>
@@ -230,13 +261,32 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleOriginChange}
+                checked={originsFilter[item.id]}
               />
             }
             label={item.attributes.name}
           />
         </FormGroup>
       ))}
-      <h3>KIỂU MẪU</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>KIỂU MẪU</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, patternsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setPatternsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {patterns.map((item) => (
         <FormGroup key={item.id}>
@@ -246,14 +296,32 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handlePatternChange}
+                checked={patternsFilter[item.id]}
               />
             }
             label={item.attributes.name}
           />
         </FormGroup>
       ))}
-      <h3>CHIỀU RỘNG</h3>
-
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>CHIỀU RỘNG</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, widthsFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setWidthsFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
       {widths.map((item) => (
         <FormGroup key={item.id}>
           <FormControlLabel
@@ -262,13 +330,32 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleWidthChange}
+                checked={widthsFilter[item.id]}
               />
             }
             label={item.attributes.name}
           />
         </FormGroup>
       ))}
-      <h3>ĐỘ CO GIÃN</h3>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3>ĐỘ CO GIÃN</h3>
+        <Button
+          onClick={() => {
+            const temp = Object.assign({}, stretchesFilter);
+            Object.keys(temp).forEach(function (k) {
+              temp[k] = false;
+            });
+            setStretchesFilter(temp);
+          }}
+        >
+          Clear
+        </Button>
+      </Box>
 
       {stretches.map((item) => (
         <FormGroup key={item.id}>
@@ -278,6 +365,7 @@ export default function FilterSection({
                 value={item.id}
                 name={item.attributes.name}
                 onChange={handleStretchChange}
+                checked={stretchesFilter[item.id]}
               />
             }
             label={item.attributes.name}

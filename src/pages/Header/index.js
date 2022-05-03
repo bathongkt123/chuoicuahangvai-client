@@ -25,11 +25,13 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default function Header({ search, setSearch }) {
+export default function Header() {
   const [cookies] = useCookies(["cart"]);
   const products = cookies.cart;
   const cartNumber = products ? Object.keys(products).length : 0;
   const [ads, setAds] = useState("");
+  const [search, setSearch] = useState("");
+
   const [categories, setCategories] = useState([]);
   const fetchData = async () => {
     let result = await axios.get(

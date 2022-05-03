@@ -68,6 +68,12 @@ code {
   box-sizing: border-box;
   display: inline;
 }
+.slick-prev:before {
+  background-color: gray;
+}
+.slick-next:before {
+  background-color: gray;
+}
 .address button {
   background-color: #384257;
   color: white;

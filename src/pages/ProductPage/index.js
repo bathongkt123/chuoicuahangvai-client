@@ -10,7 +10,7 @@ import { ButtonBase } from "@mui/material";
 import axios from "axios";
 import qs from "qs";
 export default function ProductPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [productName, setProductName] = useState("");
   const [productSKU, setProductSKU] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -19,9 +19,8 @@ export default function ProductPage() {
   const [productOrigin, setProductOrigin] = useState("");
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
-  const [productImages, setProductImages] = useState("");
+  const [productImages, setProductImages] = useState([]);
   const { productId } = useParams();
-
   useEffect(() => {
     const fetchData = async () => {
       if (productId === null) return;
@@ -67,12 +66,12 @@ export default function ProductPage() {
       data.attributes.stretch.data &&
         setProductStretch(data.attributes.stretch.data.attributes.name);
 
-      data.attributes.images.data[0] &&
-        setProductImages(data.attributes.images.data[0].attributes.url);
-      // console.log(
-      //   `${process.env.REACT_APP_STRAPI_URL}${data.attributes.images.data[0].attributes.url}`
-      // );
-      console.log(data);
+      let imagesURL = [];
+      const temp = data.attributes.images.data;
+      for (var i = 0; i < temp.length; i++) {
+        imagesURL[i] = temp[i].attributes.url;
+      }
+      setProductImages(imagesURL);
     };
     fetchData();
   }, [productId]);
@@ -80,20 +79,19 @@ export default function ProductPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         margin: "50px",
       }}
     >
-
-      <Breadcrumbs aria-label="breadcrumb" >
+      <Breadcrumbs aria-label="breadcrumb">
         <Link
           component={ButtonBase}
           underline="hover"
           color="inherit"
-          sx={{ fontSize: '1rem' }}
-          onClick={() => navigate('/')}
+          sx={{ fontSize: "1rem" }}
+          onClick={() => navigate("/")}
         >
           Trang chủ
         </Link>
@@ -101,8 +99,8 @@ export default function ProductPage() {
           component={ButtonBase}
           underline="hover"
           color="inherit"
-          sx={{ fontSize: '1rem' }}
-          onClick={() => navigate('/menu')}
+          sx={{ fontSize: "1rem" }}
+          onClick={() => navigate("/menu")}
         >
           Menu
         </Link>
@@ -135,7 +133,6 @@ export default function ProductPage() {
           />
         </Grid>
       </Grid>
-
     </div>
   );
 }

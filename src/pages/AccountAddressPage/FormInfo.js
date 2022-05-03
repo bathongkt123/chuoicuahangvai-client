@@ -287,7 +287,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
             sx={{ backgroundColor: "#384257", my: 4 }}
             onClick={handleSubmit}
           >
-            Thêm vào
+            Lưu lại
           </Button>
           <Box width={50}></Box>
           <Button
@@ -307,7 +307,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
             sx={{ backgroundColor: "#384257", my: 4 }}
             onClick={handleSubmit}
           >
-            Lưu lại
+            Thêm vào
           </Button>
         </Box>
       )}
