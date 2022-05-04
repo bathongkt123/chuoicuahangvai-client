@@ -15,6 +15,7 @@ export default function ImageSection({
         key={item}
         component="img"
         src={`${process.env.REACT_APP_STRAPI_URL}${item}`}
+        sx={{ height: "30vh" }}
       />
     ));
   return (
@@ -26,8 +27,9 @@ export default function ImageSection({
         sx={{
           display: "flex",
           justifyContent: "center",
-          width: "30rem",
           objectFit: "fill",
+          height: "40vh",
+          width: "100%",
         }}
       />
       <Box sx={{ mt: 4 }}>
