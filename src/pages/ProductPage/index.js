@@ -24,8 +24,9 @@ export default function ProductPage() {
 
   const { productId } = useParams();
   useEffect(() => {
-    let abortController = new AbortController();  
+    let abortController = new AbortController();
     const fetchData = async () => {
+      let signal = abortController.signal;
       if (productId === null) return;
       const query = qs.stringify(
         {
@@ -42,7 +43,8 @@ export default function ProductPage() {
         { encodeValuesOnly: true }
       );
       const response = await axios.get(
-        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`,
+        { signal: signal }
       );
       const data = response.data.data;
       data.attributes.product.data &&
@@ -78,9 +80,11 @@ export default function ProductPage() {
       setLargeImage(imagesURL[0]);
     };
     fetchData();
-    return () => {  
-      abortController.abort();  
-      }  
+    return () => {
+      setTimeout(() => {
+        abortController.abort();
+      }, 1000);
+    };
   }, [productId]);
 
   return (
