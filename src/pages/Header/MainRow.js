@@ -6,7 +6,7 @@ import { styled, alpha } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountDropdown from "./AccountDropdown";
 import MoreIconResponsive from "./MoreIconResponsive";
-import { Badge, Link, Divider } from "@mui/material";
+import { Badge, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "auth/useAuth";
 import { useLocation } from "react-router-dom";
@@ -96,7 +96,7 @@ export default function MainRow({ cartNumber, search, setSearch }) {
           onChange={handleSearchChange}
           onKeyPress={(event) => {
             if (event.key === "Enter") {
-              navigate("/menu", { state: search });
+              navigate("/menu", { state: { search } });
             }
           }}
         />

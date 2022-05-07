@@ -1,12 +1,16 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
-export default function CategoryDropdown({ categories }) {
+export default function CategoryDropdown({
+  categories,
+  setMainFilter,
+  mainFilter,
+}) {
   const [dropdownAnchor, setDropdownAnchor] = useState(null);
   const isDropdown = Boolean(dropdownAnchor);
 
@@ -18,6 +22,14 @@ export default function CategoryDropdown({ categories }) {
   };
   const categoryMenuId = "category-menu";
   const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    const filter = e.target.value;
+    navigate("/menu", { state: { filter } });
+  };
+  // useEffect(() => {
+  //   if (location.pathname !== "/menu") setMainFilter("");
+  // }, [location]);
 
   const renderCategoryMenu = (
     <Menu
@@ -42,7 +54,12 @@ export default function CategoryDropdown({ categories }) {
       }}
     >
       {categories.map((item) => (
-        <MenuItem sx={{ fontWeight: "bold" }} key={item.id}>
+        <MenuItem
+          sx={{ fontWeight: "bold" }}
+          key={item.id}
+          value={item.id}
+          onClick={handleClick}
+        >
           {item.attributes.name}
         </MenuItem>
       ))}
@@ -58,15 +75,14 @@ export default function CategoryDropdown({ categories }) {
           border: "none",
           p: 0,
         }}
-        // aria-controls={categoryMenuId}
-        // aria-haspopup="true"
-        // onClick={handleMenuOpen}
-        // endIcon={<KeyboardArrowDownIcon />}
-        onClick={() => navigate("/menu")}
+        aria-controls={categoryMenuId}
+        aria-haspopup="true"
+        onClick={handleMenuOpen}
+        endIcon={<KeyboardArrowDownIcon />}
       >
-        Danh sách sản phẩm
+        Danh mục sản phẩm
       </Button>
-      {/* {renderCategoryMenu} */}
+      {renderCategoryMenu}
     </Fragment>
   );
 }

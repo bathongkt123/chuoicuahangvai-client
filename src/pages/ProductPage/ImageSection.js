@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from "@material-ui/core/Box";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -32,11 +32,13 @@ export default function ImageSection({
           width: "100%",
         }}
       />
-      <Box sx={{ mt: 4 }}>
-        <Slider dots={false} slidesToShow={2} slidesToScroll={2}>
-          {renderSlides()}
-        </Slider>
-      </Box>
+      {productImages.length > 1 && (
+        <Box sx={{ mt: 4 }}>
+          <Slider dots={false} slidesToShow={2} slidesToScroll={2}>
+            {renderSlides()}
+          </Slider>
+        </Box>
+      )}
     </Box>
   );
 }

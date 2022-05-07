@@ -43,7 +43,7 @@ export default function ProductSection({
         filters: {
           product: {
             name: {
-              $containsi: state,
+              $containsi: state ? state.search : "",
             },
             category: {
               id: {

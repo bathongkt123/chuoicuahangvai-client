@@ -5,30 +5,45 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase, Button } from "@mui/material";
-const MAX_LENGTH = 500;
+const PATTERN = /^(0|([1-9][0-9]*))(?:[.]([0-9]{0,2}))?$/;
+const STEP = 1;
 function UnitSelect({ length, setLength }) {
   return (
     <Fragment>
       <IconButton
         sx={{ color: "#4e5b73" }}
         component="span"
-        onClick={() => length > 0.25 && setLength(length - 0.25)}
+        onClick={() => setLength((length - STEP).toFixed(2) * 1)}
       >
         <IndeterminateCheckBox />
       </IconButton>
       <InputBase
-        sx={{ border: 1, borderColor: "#4e5b73", width: "6ch", px: 1 }}
+        error
+        sx={{
+          border: 1,
+          width: "8ch",
+          px: 1,
+          borderColor: "#4e5b73",
+        }}
         inputProps={{ style: { textAlign: "center" } }}
         value={length}
         onChange={(e) => {
-          const tmp = parseInt(e.target.value);
-          setLength(tmp ? (tmp < MAX_LENGTH ? tmp : MAX_LENGTH) : 0.25);
+          const value = e.target.value;
+          if (!value) {
+            setLength(0);
+            return;
+          }
+          if (PATTERN.test(value)) {
+            setLength(value);
+            return;
+          }
+          e.preventDefault();
         }}
-      ></InputBase>
+      />
       <IconButton
         sx={{ color: "#4e5b73" }}
         component="span"
-        onClick={() => length < MAX_LENGTH && setLength(length + 0.25)}
+        onClick={() => setLength((parseFloat(length) + STEP).toFixed(2) * 1)}
       >
         <AddBox />
       </IconButton>
