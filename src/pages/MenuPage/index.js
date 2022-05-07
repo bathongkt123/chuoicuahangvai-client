@@ -7,7 +7,7 @@ import { Breadcrumbs, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 export default function MenuPage({ search, setSearch }) {
   const navigate = useNavigate();
-  const [categoriesFilter, setCategoriesFilter] = useState({});
+  const [categoriesFilter, setCategoriesFilter] = useState([]);
 
   const [colorsFilter, setColorsFilter] = useState([]);
   const [originsFilter, setOriginsFilter] = useState([]);

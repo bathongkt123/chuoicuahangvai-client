@@ -31,13 +31,16 @@ export default function Header() {
   const cartNumber = products ? Object.keys(products).length : 0;
   const [ads, setAds] = useState("");
   const [search, setSearch] = useState("");
+  const [mainFilter, setMainFilter] = useState("");
 
   const [categories, setCategories] = useState([]);
+
   const fetchData = async () => {
     let result = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/product-categories`
     );
     setCategories(result.data.data);
+
     result = await axios.get(
       `${process.env.REACT_APP_STRAPI_URL}/api/homepage`
     );
@@ -68,7 +71,11 @@ export default function Header() {
                 search={search}
                 setSearch={setSearch}
               />
-              <CategoryRow categories={categories} />
+              <CategoryRow
+                categories={categories}
+                mainFilter={mainFilter}
+                setMainFilter={setMainFilter}
+              />
             </Box>
           </Toolbar>
           <AdsRow ads={ads} />

@@ -12,6 +12,7 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
+import { useLocation } from "react-router-dom";
 export default function FilterSection({
   categoriesFilter,
   setCategoriesFilter,
@@ -34,6 +35,9 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
+
+  const { state } = useLocation();
+
   const handleCategoryChange = (event) => {
     setCategoriesFilter({
       ...categoriesFilter,
@@ -79,7 +83,13 @@ export default function FilterSection({
       `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`
     );
     let temp = {};
-    resultCategories.data.data.map((item) => (temp[item.id] = false));
+    if (state !== null)
+      resultCategories.data.data.map((item) =>
+        state.filter === item.id
+          ? (temp[item.id] = true)
+          : (temp[item.id] = false)
+      );
+    else resultCategories.data.data.map((item) => (temp[item.id] = false));
     setCategoriesFilter(temp);
 
     const resultColors = await axios.get(
@@ -127,7 +137,7 @@ export default function FilterSection({
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [state]);
 
   return (
     <FormControl
