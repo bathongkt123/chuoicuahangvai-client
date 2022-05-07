@@ -19,6 +19,8 @@ import PaymentDelivery from "pages/PaymentDelivery";
 import AccountInfoPage from "pages/AccountInfoPage";
 import EmailConfirmPage from "pages/EmailConfirmPage";
 import ChangePasswordPage from "pages/ChangePasswordPage";
+import ResetPasswordPage from "pages/ResetPasswordPage";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -68,6 +70,10 @@ function App() {
           <Route
             path="register-confirmation"
             element={<UnauthenticatedPage page={<EmailConfirmPage />} />}
+          />
+          <Route
+            path="reset-password"
+            element={<UnauthenticatedPage page={<ResetPasswordPage />} />}
           />
           <Route path="forgotpassword" element={<ForgotPasswordPage />} />
           <Route path="menu" element={<MenuPage />} />

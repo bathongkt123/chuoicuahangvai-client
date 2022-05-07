@@ -5,33 +5,44 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FormInfo() {
-  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [message, setMessage] = useState("Đổi mật khẩu thất bại");
+  const navigate = useNavigate();
+  let [searchParam, setSearchParam] = useSearchParams();
+  const code = searchParam.get("code");
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     axios
       .post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/customer-reset-password
+        `${process.env.REACT_APP_STRAPI_URL}/api/auth/resetpassword
         `,
         {
-          currentPassword: currentPassword,
-          newPassword: newPassword,
-          rePassword: rePassword,
+          password: newPassword,
+          passwordConfirmation: rePassword,
+          code: code,
         }
       )
       .then((response) => {
         setIsLoading(false);
-        if (response.status === 200) toast.success("Đổi mật khẩu thành công");
+        if (response.status === 200) {
+          toast.success(
+            "Đổi mật khẩu thành công, đang chuyển đến trang đăng nhập"
+          );
+          setTimeout(() => {
+            navigate("/login");
+          }, 1500);
+        }
       })
       .catch((error) => {
         try {
@@ -70,17 +81,6 @@ export default function FormInfo() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <TextField
-        required
-        autoComplete="new-password"
-        label="Mật khẩu hiện tại"
-        size="large"
-        type="password"
-        fullWidth
-        sx={{ display: "inline-block", my: 2 }}
-        value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.target.value)}
-      ></TextField>
 
       <TextField
         required
