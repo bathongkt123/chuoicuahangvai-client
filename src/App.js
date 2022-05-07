@@ -16,6 +16,9 @@ import PaymentInfo from "pages/PaymentInfo";
 import PaymentComplete from "pages/PaymentComplete";
 import ProtectedPayment from "auth/ProtectedPayment";
 import PaymentDelivery from "pages/PaymentDelivery";
+import AccountInfoPage from "pages/AccountInfoPage";
+import EmailConfirmPage from "pages/EmailConfirmPage";
+import ChangePasswordPage from "pages/ChangePasswordPage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,7 +30,6 @@ import useAuth from "auth/useAuth";
 
 import { Fragment, useState } from "react";
 import PaymentSuccess from "pages/PaymentSuccess";
-
 
 function App() {
   const { initializeSession } = useAuth();
@@ -41,7 +43,7 @@ function App() {
           <Route path="info" element={<PaymentInfo />} />
           <Route path="delivery" element={<PaymentDelivery />} />
           <Route path="complete" element={<PaymentComplete />} />
-          <Route path='success' element={<PaymentSuccess />} />
+          <Route path="success" element={<PaymentSuccess />} />
         </Route>
 
         <Route
@@ -63,11 +65,22 @@ function App() {
             path="login"
             element={<UnauthenticatedPage page={<LoginPage />} />}
           />
+          <Route
+            path="register-confirmation"
+            element={<UnauthenticatedPage page={<EmailConfirmPage />} />}
+          />
           <Route path="forgotpassword" element={<ForgotPasswordPage />} />
           <Route path="menu" element={<MenuPage />} />
           <Route path="menu/:productId" element={<ProductPage />} />
           <Route path="cart" element={<CartPage />} />
-
+          <Route
+            path="accountinfo"
+            element={<AuthenticatedPage page={<AccountInfoPage />} />}
+          />
+          <Route
+            path="passwordchange"
+            element={<AuthenticatedPage page={<ChangePasswordPage />} />}
+          />
           <Route path="account">
             <Route
               index

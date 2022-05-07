@@ -1,13 +1,12 @@
 import { Box, Container } from "@mui/material";
 import React, { useEffect } from "react";
 import Heading from "./Heading";
-import CustomerInfo from "./CustomerInfo";
 import FormInfo from "./FormInfo";
 import { useState } from "react";
 import axios from "axios";
 import qs from "qs";
 
-export default function AccountAddressPage() {
+export default function AccountInfoPage() {
   const [edit, setEdit] = useState(null);
 
   const [addresses, setAddresses] = useState([]);
@@ -31,12 +30,6 @@ export default function AccountAddressPage() {
     <Container maxWidth="lg">
       <Heading />
       <Box sx={{ display: "flex" }}>
-        <CustomerInfo
-          setEdit={setEdit}
-          edit={edit}
-          addresses={addresses}
-          setAddresses={setAddresses}
-        />
         <Box width={120} />
         <FormInfo
           addresses={addresses}

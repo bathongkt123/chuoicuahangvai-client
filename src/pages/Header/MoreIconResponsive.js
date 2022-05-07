@@ -2,7 +2,8 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState, Fragment } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { GiRolledCloth } from "react-icons/gi";
+import { MdVpnKey, MdAccountCircle } from "react-icons/md";
 import {
   Badge,
   Link,
@@ -48,10 +49,61 @@ export default function MoreIconResponsive({ cartNumber }) {
       PaperProps={{
         style: {
           maxHeight: ITEM_HEIGHT * 6,
-          width: "20ch",
+          width: "25ch",
         },
       }}
     >
+      {token ? (
+        <MenuItem>
+          <Link
+            component="button"
+            underline="none"
+            sx={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "inherit",
+              whiteSpace: "nowrap",
+              display: "flex",
+            }}
+            onClick={() => {
+              navigate("/accountinfo");
+              handleMobileMenuClose();
+            }}
+          >
+            <MdAccountCircle />
+            <Box sx={{ width: 4 }} />
+            Thông tin cá nhân
+          </Link>
+        </MenuItem>
+      ) : (
+        <Box />
+      )}
+      {token ? (
+        <MenuItem>
+          <Link
+            component="button"
+            underline="none"
+            sx={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "inherit",
+              whiteSpace: "nowrap",
+              display: "flex",
+            }}
+            onClick={() => {
+              navigate("/passwordchange");
+              handleMobileMenuClose();
+            }}
+          >
+            <MdVpnKey />
+            <Box sx={{ width: 4 }} />
+            Đổi mật khẩu
+          </Link>
+        </MenuItem>
+      ) : (
+        <Box />
+      )}
+
       {token ? (
         <MenuItem>
           <Link
@@ -69,8 +121,9 @@ export default function MoreIconResponsive({ cartNumber }) {
               handleMobileMenuClose();
             }}
           >
-            Tài khoản
-            <AccountCircleIcon sx={{ pl: 0.5 }} />
+            <GiRolledCloth />
+            <Box sx={{ width: 4 }} />
+            Đơn hàng
           </Link>
         </MenuItem>
       ) : (
@@ -109,17 +162,17 @@ export default function MoreIconResponsive({ cartNumber }) {
             navigate("/cart");
           }}
         >
-          Giỏ hàng
           <Badge
             invisible={!cartNumber}
             badgeContent={cartNumber}
             color="secondary"
-            sx={{ p: 0.8 }}
           >
             <ShoppingCartIcon fontSize="small" />
           </Badge>
+          Giỏ hàng
         </Link>
       </MenuItem>
+      <Divider flexItem />
       {token ? (
         <MenuItem>
           <Link
@@ -137,20 +190,20 @@ export default function MoreIconResponsive({ cartNumber }) {
               handleMobileMenuClose();
             }}
           >
-            Đăng xuất
             <Box sx={{ width: 4 }} />
             <LogoutIcon />
+            Đăng xuất
           </Link>
         </MenuItem>
       ) : (
         <Box />
       )}
       <Divider flexItem />
-      {items.map((item) => (
+      {/* {items.map((item) => (
         <MenuItem sx={{ fontWeight: "bold" }} key={item}>
           {item}
         </MenuItem>
-      ))}
+      ))} */}
     </Menu>
   );
   return (

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 export default function ForgotPasswordPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Box>
       <Box
@@ -23,7 +23,13 @@ export default function ForgotPasswordPage() {
       >
         <h2>QUÊN MẬT KHẨU</h2>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" component="button" variant='body1' color="inherit" onClick={() => navigate('/')} >
+          <Link
+            underline="hover"
+            component="button"
+            variant="body1"
+            color="inherit"
+            onClick={() => navigate("/")}
+          >
             Trang chủ
           </Link>
           <Typography color="#0f0d0c"> Quên mật khẩu</Typography>
@@ -34,12 +40,7 @@ export default function ForgotPasswordPage() {
           Nhập email đã đăng ký của bạn vào đây, chúng tôi sẽ gửi lại mật khẩu
           qua email này.
         </Typography>
-        <TextField
-          label="Email"
-          size="small"
-          my={2}
-          fullWidth
-        />
+        <TextField label="Email" size="small" my={2} fullWidth />
         <Box sx={{ mt: 2 }}>
           <ButtonGroup sx={{ whiteSpace: "nowrap", my: 2 }}>
             <Button
@@ -51,7 +52,7 @@ export default function ForgotPasswordPage() {
             </Button>
             <Box width={20}></Box>
             <Button
-              href="/login"
+              onClick={() => navigate("/login")}
               variant="contained"
               sx={{ backgroundColor: "#C8C8C8" }}
             >
@@ -61,7 +62,7 @@ export default function ForgotPasswordPage() {
         </Box>
         <h1 style={{ textAlign: "left" }}>KHÁCH HÀNG MỚI ?</h1>
         <Button
-          onClick={() => navigate('/register')}
+          onClick={() => navigate("/register")}
           variant="contained"
           sx={{ backgroundColor: "#384257" }}
         >
