@@ -1,25 +1,23 @@
 import { Table, TableContainer, TableRow, Paper, TableBody, TableHead, TablePagination, Typography, Box } from "@mui/material"
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import CustomTableCell from "components/CustomTableCell"
 import ProductRow from "./ProductRow";
 import qs from 'qs'
 import axios from 'axios'
-const TAX_RATE = 0.1;
-
-function ccyFormat(num) {
-    return `${num.toFixed(2)}`;
-}
+import formatPrice from "helper/formatPrice";
+import AddressTable from "./AddressTable";
+import HistoryTable from "./HistoryTable";
 export default function OrderDetailTable({ orderId }) {
-    const keys = Object.keys(products)
-    const subTotal = key => products[key].defaultNumber * products[key].unit
-    const total = keys.reduce((init, current) => init + subTotal(current), 0)
+    //set Pagination
     const [page, setPage] = useState(0);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
     const rowsPerPage = 4
     const shipFee = 100000
-    const [order, setOrder] = useState({})
+    //order
+    const [order, setOrder] = useState(null)
+    let total = 0
     useEffect(() => {
         const fetchData = async () => {
             const query = qs.stringify(
@@ -32,162 +30,104 @@ export default function OrderDetailTable({ orderId }) {
                 `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders/${orderId}?${query}`
             )
             console.log(result)
-
-            // result.data.forEach(
-            //     (order) => {
-            //         const createdAt = new Date(order.createdAt)
-            //         newOrders[order.id] = {
-            //             code: order.code,
-            //             status: order.order_statuses[0].status,
-            //             createdAt: createdAt.toLocaleDateString(),
-            //             total: 10000,
-            //         }
-            //     }
-            // )
-
-
+            setOrder(result.data[0])
         };
         fetchData();
     }
         , [orderId])
+    if (!order)
+        return null
     return (
-        <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
-            <Table>
-                <TableHead >
-                    <TableRow >
-                        <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
-                        <CustomTableCell align="right">ĐƠN GIÁ(VNđ/MÉT)</CustomTableCell>
-                        <CustomTableCell align="center">ĐỘ DÀI(MÉT)</CustomTableCell>
-                        <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody >
-                    {keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key) => {
-                        return (
-                            <ProductRow row={products[key]} subTotal={subTotal(key)} key={key} />
+        <Fragment>
+
+            <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
+                <Table>
+                    <TableHead >
+                        <TableRow >
+                            <CustomTableCell align="left" >SẢN PHẨM</CustomTableCell>
+                            <CustomTableCell align="right">ĐƠN GIÁ(VNĐ/M)</CustomTableCell>
+                            <CustomTableCell align="center">ĐỘ DÀI(M)</CustomTableCell>
+                            <CustomTableCell align="right">THÀNH TIỀN</CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody >
+                        {order.products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product) => {
+                            const name = product.inventory_item.sku_quantity.sku.product.name + ' - '
+                                + product.inventory_item.sku_quantity.sku.sku
+                            const price = product.inventory_item.sku_quantity.sku.price
+                            const image = product.inventory_item.sku_quantity.sku.images[0].url
+                            const length = product.length / 100
+                            const subTotal = price * length
+                            total += subTotal
+                            return (
+                                <ProductRow attr={
+                                    {
+                                        name,
+                                        price: formatPrice(Number(price)),
+                                        image,
+                                        subTotal: formatPrice(subTotal),
+                                        length
+                                    }
+                                }
+                                    key={product.inventory_item.sku_quantity.sku.id} />
+                            )
+                        }
                         )
-                    }
-                    )
-                    }
-                    <TableRow>
-                        <CustomTableCell>
-                            Thông tin đơn hàng
-                        </CustomTableCell>
-                        <TablePagination
-                            rowsPerPage={rowsPerPage}
-                            count={keys.length}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            rowsPerPageOptions={[]}
-                            sx={{ backgroundColor: '#EEEDE8' }}
-                        />
-                    </TableRow>
-                    <TableRow >
-                        <CustomTableCell>
-                            Họ và tên: Lê Bá Thông
-                        </CustomTableCell>
-                        <CustomTableCell colSpan={2}>TỔNG TRƯỚC THUẾ</CustomTableCell>
-                        <CustomTableCell align="right" >
-                            {ccyFormat(total)}
-                        </CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell>
-                            <Box sx={{ maxWidth: '45ch' }}>
-                                Địa chỉ: 268 Lý Thường Kiệt Phường 14 Quận 10 TP Hồ Chí Minh
-                            </Box>
+                        }
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPage={rowsPerPage}
+                                count={order.products.length}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                rowsPerPageOptions={[]}
+                                sx={{ backgroundColor: '#EEEDE8' }}
+                            />
+                        </TableRow>
+                        <TableRow >
+                            <CustomTableCell colSpan={2} align="right"> TỔNG CHI PHÍ</CustomTableCell>
+                            <CustomTableCell align="right" colSpan={2}>
+                                {formatPrice(total)}
+                            </CustomTableCell>
+                        </TableRow>
+                        <TableRow>
+                            <CustomTableCell colSpan={2} align="right">PHÍ VẬN CHUYỂN</CustomTableCell>
+                            <CustomTableCell align="right" colSpan={2}>
+                                {formatPrice(shipFee)}
+                            </CustomTableCell>
+                        </TableRow>
+                        <TableRow>
 
-                        </CustomTableCell>
-                        <CustomTableCell>VAT</CustomTableCell>
-                        <CustomTableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</CustomTableCell>
-                        <CustomTableCell align="right">{ccyFormat(total * TAX_RATE)}</CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell>
-                            Số điện thoại: (+84)911357191
-                        </CustomTableCell>
-                        <CustomTableCell colSpan={2}>TỔNG SAU THUẾ</CustomTableCell>
-                        <CustomTableCell align="right">
+                            <CustomTableCell colSpan={2} align="right">TỔNG PHẢI TRẢ</CustomTableCell>
+                            <CustomTableCell align="right" colSpan={2}>
+                                <Typography variant="h5" color='red'>
+                                    {formatPrice(shipFee + total)}
+                                </Typography>
+                            </CustomTableCell>
+                        </TableRow>
 
-                            {ccyFormat(total * (1 + TAX_RATE))}
-                        </CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell>
-                            Phương thức thanh toán: COD
-                        </CustomTableCell>
-                        <CustomTableCell colSpan={2}>PHÍ VẬN CHUYỂN</CustomTableCell>
-                        <CustomTableCell align="right">
-                            {ccyFormat(shipFee)}
-                        </CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                        <CustomTableCell>
+                    </TableBody>
+                </Table>
+            </TableContainer >
 
-                            Phương thức vận chuyển: Giao hàng miễn phí
-                        </CustomTableCell>
-                        <CustomTableCell colSpan={2}>TỔNG PHẢI TRẢ</CustomTableCell>
-                        <CustomTableCell align="right">
-                            <Typography variant="h5" color='red'>
-                                {ccyFormat(shipFee + total * (1 + TAX_RATE))}
-                            </Typography>
-                        </CustomTableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer >
+
+            {/* Receive address and status */}
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: { xs: 'column', md: 'row' }, my: 2 }}>
+                <HistoryTable
+                    statuses={order.order_statuses}
+                />
+                <Box width={16} height={16} />
+                <AddressTable
+                    attr={{
+                        name: order.receive_address.name.lastname + ' ' + order.receive_address.name.firstname,
+                        phone: order.receive_address.phone,
+                        address: order.receive_address.address.address,
+                        city: order.receive_address.address.address_three_levels.city,
+                        district: order.receive_address.address.address_three_levels.district,
+                        ward: order.receive_address.address.address_three_levels.ward,
+                        type: order.type,
+                    }} />
+            </Box>
+        </Fragment>
     )
-}
-const products = {
-    2: {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        name: 'Breakfast',
-        defaultNumber: 2,
-        unit: 40000
-
-    },
-    10: {
-        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-        name: 'Burger',
-        defaultNumber: 3,
-        unit: 20000
-    },
-    20: {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        name: 'Coffee',
-        defaultNumber: 1,
-        unit: 15000
-    },
-    40: {
-        img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-        name: 'Hats',
-        defaultNumber: 2,
-        unit: 15000
-
-    },
-    80: {
-        img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-        name: 'Honey',
-        defaultNumber: 3,
-        unit: 50000
-    },
-    100: {
-        img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-        name: 'Bicycle',
-        defaultNumber: 1,
-        unit: 100000
-    },
-    120: {
-        img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-        name: "Starfish",
-        defaultNumber: 2,
-        unit: 1000000
-    },
-    140: {
-        img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-        name: "Mushroom",
-        defaultNumber: 4,
-        unit: 100000
-    },
-
 }

@@ -3,6 +3,7 @@ import { Button, Divider, TextField, Box, Typography, Stack, Pagination } from "
 import ProductRow from "./ProductRow";
 import { useState } from "react";
 import { useCookies } from 'react-cookie';
+import formatPrice from "helper/formatPrice";
 export default function OrderInfo({ skus, price, deliveryMethod }) {
     const [cookies] = useCookies(['cart']);
     const products = cookies.cart || {}
@@ -27,7 +28,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                             name: item.product.name + '-' + item.sku,
                             image: item.images[0].url,
                             length: item.length,
-                            subTotal: subTotal(item)
+                            subTotal: formatPrice(subTotal(item))
                         }}
                         key={i}
                     />
@@ -67,7 +68,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        {deliveryMethod && deliveryMethod.id ? deliveryMethod.cost : `Tính ở bước tiếp theo`}
+                        {deliveryMethod && deliveryMethod.id ? formatPrice(deliveryMethod.cost) : `Tính ở bước tiếp theo`}
                     </Box>
                 </Box>
             </Stack>
@@ -79,14 +80,10 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                    {deliveryMethod && deliveryMethod.id ? price + deliveryMethod.cost : price}
+                    {formatPrice(Number(deliveryMethod && deliveryMethod.id ? price + deliveryMethod.cost : price))}
                 </Box>
             </Box>
         </Stack>
-
-
-
-
     )
 }
 

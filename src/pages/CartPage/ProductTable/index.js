@@ -1,5 +1,5 @@
 
-import { Box, Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination, Tooltip, IconButton } from "@mui/material";
+import { Box, Paper, Table, TableRow, TableHead, TableBody, TableContainer, Typography, TablePagination, Tooltip } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import ProductRow from "./ProductRow";
 import CustomTableCell from "components/CustomTableCell"
@@ -7,10 +7,8 @@ import { useCookies } from "react-cookie";
 import Paying from './Paying'
 import axios from "axios";
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import formatPrice from "helper/formatPrice";
 const MIN_LENGTH = 0.5;
-function ccyFormat(num) {
-    return `${num.toFixed(2)}`;
-}
 
 export default function ProductTable() {
     //cart: id and number of products from cookies
@@ -28,7 +26,7 @@ export default function ProductTable() {
         setCart({ ...cart, [key]: length })
     }
 
-    //pagination1
+    //pagination
     const [page, setPage] = useState(0);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -115,7 +113,7 @@ export default function ProductTable() {
                                         price: products[key].price,
                                         maxLength: products[key].inventoryLength / 100,
                                         minLength: MIN_LENGTH,
-                                        subTotal: subTotal(key)
+                                        subTotal: formatPrice(subTotal(key))
                                     }}
                                     length={cart[key]}
                                     setItemLength={setItemLength(key)}
@@ -142,12 +140,11 @@ export default function ProductTable() {
                             <CustomTableCell colSpan={2} align="right">TỔNG GIÁ TRỊ</CustomTableCell>
                             <CustomTableCell colSpan={2} align="right" >
                                 <Typography variant="h5" color='red'>
-                                    {ccyFormat(total)}
+                                    {formatPrice(total)}
                                 </Typography>
                                 <Typography variant="body2">
                                     Chưa tính phí vận chuyển
                                 </Typography>
-
                             </CustomTableCell>
                         </TableRow>
 

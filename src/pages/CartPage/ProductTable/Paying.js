@@ -108,7 +108,7 @@ export default function Paying({ cart, validateItems, products }) {
                         control={
                             <Checkbox checked={checkTerm} onChange={handleCheckTerm} />
                         }
-                        label=" Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật"
+                        label=" Chấp nhận Điều khoản sử dụng và bảo mật"
                         labelPlacement="end"
                     />
 
