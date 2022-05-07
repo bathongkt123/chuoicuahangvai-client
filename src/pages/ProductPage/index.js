@@ -24,6 +24,7 @@ export default function ProductPage() {
 
   const { productId } = useParams();
   useEffect(() => {
+    let abortController = new AbortController();  
     const fetchData = async () => {
       if (productId === null) return;
       const query = qs.stringify(
@@ -77,6 +78,9 @@ export default function ProductPage() {
       setLargeImage(imagesURL[0]);
     };
     fetchData();
+    return () => {  
+      abortController.abort();  
+      }  
   }, [productId]);
 
   return (

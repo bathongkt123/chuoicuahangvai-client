@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AddBox, IndeterminateCheckBox } from "@mui/icons-material";
 import { IconButton, InputBase, Button } from "@mui/material";
+import parse from 'html-react-parser';
 const PATTERN = /^(0|([1-9][0-9]*))(?:[.]([0-9]{0,2}))?$/;
 const STEP = 1;
 function UnitSelect({ length, setLength }) {
@@ -65,6 +66,10 @@ export default function ProductInfoSection({
 }) {
   const [length, setLength] = useState(0.25);
   const total = length * productPrice;
+  const parse = require('html-react-parser');
+  const description=productDescription
+  const htmlParse=parse(description);
+
 
   const [cookies, setCookie] = useCookies(["cart"]);
 
@@ -96,7 +101,7 @@ export default function ProductInfoSection({
         {productName} - {productSKU}
       </h1>
       <h2> {productPrice}đ trên mét</h2>
-      <p> {productDescription}</p>
+      {htmlParse}
       <h4>Kiểu mẫu: {productPattern}</h4>
       <h4>Xuất xứ: {productOrigin}</h4>
       <h4>Chiều rộng: {productWidth}</h4>

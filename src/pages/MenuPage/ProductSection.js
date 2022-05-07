@@ -88,7 +88,11 @@ export default function ProductSection({
   };
 
   useEffect(() => {
+    let abortController = new AbortController();  
     fetchData();
+    return () => {  
+      abortController.abort();  
+      }  
   }, [
     categoriesFilter,
     colorsFilter,

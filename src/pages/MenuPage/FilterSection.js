@@ -136,7 +136,11 @@ export default function FilterSection({
   };
 
   useEffect(() => {
+    let abortController = new AbortController();  
     fetchData();
+    return () => {  
+      abortController.abort();  
+      }  
   }, [state]);
 
   return (

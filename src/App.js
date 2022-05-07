@@ -30,7 +30,7 @@ import {
 
 import useAuth from "auth/useAuth";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import PaymentSuccess from "pages/PaymentSuccess";
 
 function App() {
