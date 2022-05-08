@@ -1,69 +1,87 @@
 import Box from "@mui/material/Box";
 
-import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountDropdown from "./AccountDropdown";
 import MoreIconResponsive from "./MoreIconResponsive";
-import { Badge, Link } from "@mui/material";
+import { Autocomplete, Badge, Button, Link, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "auth/useAuth";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import qs from "qs";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  display: "flex",
-  flexGrow: 0.5,
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  border: "1.5px solid",
-  borderColor: "#000000",
-  marginRight: theme.spacing(2),
-  marginLeft: theme.spacing(1),
+// const Search = styled("div")(({ theme }) => ({
+//   position: "relative",
+//   display: "flex",
+//   flexGrow: 0.5,
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//   "&:hover": {
+//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+//   },
+//   border: "1.5px solid",
+//   borderColor: "#000000",
+//   marginRight: theme.spacing(2),
+//   marginLeft: theme.spacing(1),
 
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+//   [theme.breakpoints.up("sm")]: {
+//     marginLeft: theme.spacing(3),
+//     width: "auto",
+//   },
+// }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+// const SearchIconWrapper = styled("div")(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: "100%",
+//   position: "absolute",
+//   pointerEvents: "none",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-  },
-}));
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: "inherit",
+//   width: "100%",
+//   "& .MuiInputBase-input": {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create("width"),
+//   },
+// }));
 export default function MainRow({ cartNumber, search, setSearch }) {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-    console.log(search);
-  };
+  const [value, setValue] = useState("");
+  const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const closePopper = () => setOpen(false);
+  const openPopper = () => setOpen(true);
 
   const { token } = useAuth();
   useEffect(() => {
-    if (location.pathname !== "/menu") setSearch("");
+    const fetchData = async () => {
+      const query = qs.stringify(
+        {
+          populate: ["product"],
+        },
+        { encodeValuesOnly: true }
+      );
+      const resultProducts = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
+      );
+      setProducts(resultProducts.data.data);
+      console.log(resultProducts);
+    };
+    fetchData();
+    if (location.pathname !== "/menu") {
+      setSearch("");
+      setValue("");
+    }
   }, [location]);
   return (
     <Box
@@ -86,11 +104,8 @@ export default function MainRow({ cartNumber, search, setSearch }) {
       >
         ROYAL FABRIC
       </Link>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
+      <Box sx={{ display: "flex" }}>
+        {/* <StyledInputBase
           placeholder="Tìm kiếm..."
           value={search}
           onChange={handleSearchChange}
@@ -99,9 +114,59 @@ export default function MainRow({ cartNumber, search, setSearch }) {
               navigate("/menu", { state: { search } });
             }
           }}
+        /> */}
+        <Autocomplete
+          open={open}
+          onOpen={openPopper}
+          onClose={closePopper}
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          search={search}
+          freeSolo
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          onInputChange={(event, newInputValue) => {
+            setSearch(newInputValue);
+          }}
+          options={products.map(
+            (option) =>
+              option.attributes.product.data.attributes.name +
+              " - " +
+              option.attributes.sku
+          )}
+          sx={{ width: 400 }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="Search"
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <Button sx={{ color: "inherit" }}>
+                        <SearchIcon
+                          onClick={() => {
+                            navigate("/menu", { state: { search } });
+                            setOpen(false);
+                          }}
+                        />
+                      </Button>
+                    </InputAdornment>
+                    {params.InputProps.startAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              navigate("/menu", { state: { search } });
+            }
+          }}
         />
-      </Search>
-
+      </Box>
       <Box
         sx={{
           display: { xs: "none", md: "flex" },
