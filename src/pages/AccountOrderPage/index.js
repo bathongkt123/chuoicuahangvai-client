@@ -1,7 +1,7 @@
 
 import Heading from "./Heading";
 import OrderDetailTable from "./OrderDetailTable";
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material"
 import { useParams } from "react-router-dom";
 
 export default function AccountOrderPage() {
@@ -10,7 +10,6 @@ export default function AccountOrderPage() {
         <Container maxWidth='lg' >
             <Heading orderId={orderId} />
             <OrderDetailTable orderId={orderId} />
-
         </Container>
     )
 }

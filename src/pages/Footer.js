@@ -6,7 +6,6 @@ export default function Footer() {
   return (
     <Fragment>
       <Box
-        maxWidth="xl"
         sx={{ display: "flex", mt: "auto", bgcolor: "#2C3444", color: "white", px: 2 }}
       >
         <Grid container spacing={5}>

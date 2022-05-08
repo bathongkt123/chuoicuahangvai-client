@@ -32,6 +32,7 @@ import useAuth from "auth/useAuth";
 
 import { Fragment } from "react";
 import PaymentSuccess from "pages/PaymentSuccess";
+import AccountInvoicePage from "pages/AccountInvoicePage";
 
 function App() {
   const { initializeSession } = useAuth();
@@ -99,6 +100,10 @@ function App() {
             <Route
               path="order/:orderId"
               element={<AuthenticatedPage page={<AccountOrderPage />} />}
+            />
+            <Route
+              path="invoice/:invoiceId"
+              element={<AuthenticatedPage page={<AccountInvoicePage />} />}
             />
           </Route>
         </Route>

@@ -2,7 +2,7 @@ const statusTranslate = (status) => {
     switch (status) {
         case 'initialize':
             return 'Khởi tạo'
-        case 'confirm':
+        case 'confirmed':
             return 'Xác nhận'
         case 'packaged':
             return 'Đóng gói'
