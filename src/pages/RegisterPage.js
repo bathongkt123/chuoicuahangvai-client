@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [phone, setPhone] = useState("");
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -51,7 +52,6 @@ export default function RegisterPage() {
           lastname: lastname,
         }
       );
-      navigate("/login", { replace: true });
       // console.log("ok");
     } catch (response) {
       console.log(response.response.data);
@@ -90,6 +90,7 @@ export default function RegisterPage() {
         }}
       >
         <TextField
+          required
           label="Họ và tên lót"
           size="small"
           sx={{ minWidth: "55ch" }}
@@ -98,6 +99,7 @@ export default function RegisterPage() {
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
+          required
           label="Tên"
           size="small"
           sx={{ minWidth: "55ch" }}
@@ -106,6 +108,7 @@ export default function RegisterPage() {
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
+          required
           label="Số điện thoại"
           size="small"
           value={phone}
@@ -114,6 +117,7 @@ export default function RegisterPage() {
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
+          required
           label="Email"
           size="small"
           sx={{ minWidth: "55ch" }}
@@ -122,6 +126,7 @@ export default function RegisterPage() {
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
+          required
           label="Mật khẩu"
           type="password"
           size="small"
@@ -131,6 +136,7 @@ export default function RegisterPage() {
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
         <TextField
+          required
           label="Nhập lại mật khẩu"
           type="password"
           size="small"

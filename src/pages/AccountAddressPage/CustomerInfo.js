@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import SingleContact from "./SingleContact";
 
 export default function CustomerInfo({
-  contacts,
-  deleteContact,
   setEdit,
   edit,
   addresses,
@@ -24,7 +22,6 @@ export default function CustomerInfo({
           .map((item) => {
             return (
               <SingleContact
-                // deleteContact={deleteContact(key)}
                 id={item.id}
                 item={item}
                 setEdit={() => setEdit(item.id)}

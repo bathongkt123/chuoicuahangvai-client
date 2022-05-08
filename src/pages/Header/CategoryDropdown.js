@@ -1,9 +1,9 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Button } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 export default function CategoryDropdown({

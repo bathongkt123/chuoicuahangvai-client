@@ -1,4 +1,11 @@
-import { FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import {
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -17,9 +24,10 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
   const [phone, setPhone] = useState("");
   const [is_default, setIs_default] = useState(false);
   const [city, setCity] = useState("");
-
   const [district, setDistrict] = useState("");
   const [ward, setWard] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const resetForm = async () => {
     setLastname("");
     setFirstname("");
@@ -33,6 +41,8 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     if (edit === null)
       axios
         .post(
@@ -50,6 +60,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
           }
         )
         .then((response) => {
+          setIsLoading(false);
           fetchAddresses();
           resetForm();
         });
@@ -70,6 +81,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
           }
         )
         .then((response) => {
+          setIsLoading(false);
           fetchAddresses();
         });
     }
@@ -175,6 +187,12 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
   }, [edit]);
   return (
     <Box sx={{ width: "100%" }}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box sx={{ display: "flex", my: 5 }}>
         <TextField
           required
@@ -287,7 +305,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
             sx={{ backgroundColor: "#384257", my: 4 }}
             onClick={handleSubmit}
           >
-            Lưu lại
+            Cập nhật
           </Button>
           <Box width={50}></Box>
           <Button

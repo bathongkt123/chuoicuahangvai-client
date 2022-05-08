@@ -77,66 +77,75 @@ export default function FilterSection({
       [event.target.value]: event.target.checked,
     });
   };
-  const fetchData = async () => {
-    const query = qs.stringify({}, { encodeValuesOnly: true });
-    const resultCategories = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`
-    );
-    let temp = {};
-    if (state !== null)
-      resultCategories.data.data.map((item) =>
-        state.filter === item.id
-          ? (temp[item.id] = true)
-          : (temp[item.id] = false)
-      );
-    else resultCategories.data.data.map((item) => (temp[item.id] = false));
-    setCategoriesFilter(temp);
-
-    const resultColors = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
-    );
-    temp = {};
-    resultColors.data.data.map((item) => (temp[item.id] = false));
-    setColorsFilter(temp);
-
-    const resultOrigins = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-origins?${query}`
-    );
-    temp = {};
-    resultOrigins.data.data.map((item) => (temp[item.id] = false));
-    setOriginsFilter(temp);
-
-    const resultPatterns = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-patterns?${query}`
-    );
-    temp = {};
-    resultPatterns.data.data.map((item) => (temp[item.id] = false));
-    setPatternsFilter(temp);
-
-    const resultWidths = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-widths?${query}`
-    );
-    temp = {};
-    resultWidths.data.data.map((item) => (temp[item.id] = false));
-    setWidthsFilter(temp);
-
-    const resultStretches = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/product-stretches?${query}`
-    );
-    temp = {};
-    resultStretches.data.data.map((item) => (temp[item.id] = false));
-    setStretchesFilter(temp);
-
-    setCategories(resultCategories.data.data);
-    setColors(resultColors.data.data);
-    setOrigins(resultOrigins.data.data);
-    setPatterns(resultPatterns.data.data);
-    setWidths(resultWidths.data.data);
-    setStretches(resultStretches.data.data);
-  };
 
   useEffect(() => {
+    let abortController = new AbortController();
+    const fetchData = async () => {
+      let signal = abortController.signal;
+      const query = qs.stringify({}, { encodeValuesOnly: true });
+      const resultCategories = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-categories?${query}`,
+        { signal: signal }
+      );
+      let temp = {};
+      if (state !== null)
+        resultCategories.data.data.map((item) =>
+          state.filter === item.id
+            ? (temp[item.id] = true)
+            : (temp[item.id] = false)
+        );
+      else resultCategories.data.data.map((item) => (temp[item.id] = false));
+      setCategoriesFilter(temp);
+
+      const resultColors = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
+      );
+      temp = {};
+      resultColors.data.data.map((item) => (temp[item.id] = false));
+      setColorsFilter(temp);
+
+      const resultOrigins = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-origins?${query}`
+      );
+      temp = {};
+      resultOrigins.data.data.map((item) => (temp[item.id] = false));
+      setOriginsFilter(temp);
+
+      const resultPatterns = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-patterns?${query}`
+      );
+      temp = {};
+      resultPatterns.data.data.map((item) => (temp[item.id] = false));
+      setPatternsFilter(temp);
+
+      const resultWidths = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-widths?${query}`
+      );
+      temp = {};
+      resultWidths.data.data.map((item) => (temp[item.id] = false));
+      setWidthsFilter(temp);
+
+      const resultStretches = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-stretches?${query}`
+      );
+      temp = {};
+      resultStretches.data.data.map((item) => (temp[item.id] = false));
+      setStretchesFilter(temp);
+
+      setCategories(resultCategories.data.data);
+      setColors(resultColors.data.data);
+      setOrigins(resultOrigins.data.data);
+      setPatterns(resultPatterns.data.data);
+      setWidths(resultWidths.data.data);
+      setStretches(resultStretches.data.data);
+    };
+
     fetchData();
+    return () => {
+      setTimeout(() => {
+        abortController.abort();
+      }, 1000);
+    };
   }, [state]);
 
   return (
