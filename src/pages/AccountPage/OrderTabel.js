@@ -4,24 +4,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-const statusTranslate = (status) => {
-    switch (status) {
-        case 'initialize':
-            return 'Khởi tạo'
-        case 'confirm':
-            return 'Xác nhận'
-        case 'packaged':
-            return 'Đóng gói'
-        case 'delivery':
-            return 'Vận chuyển'
-        case 'success':
-            return 'Thành công'
-        case 'canceled':
-            return 'Bị hủy'
-        default:
-            return 'Khởi tạo'
-    }
-}
+import statusTranslate from "helper/statusTranslate";
+import formatPrice from "helper/formatPrice";
 export default function OrderTable() {
     const navigate = useNavigate()
     const [page, setPage] = useState(0);
@@ -56,7 +40,7 @@ export default function OrderTable() {
                         status: statusTranslate(order.order_statuses.pop().status),
                         createdAt: createdAt.toLocaleDateString(),
                         invoice: order.order_invoice && order.order_invoice.id,
-                        total: order.orderAmount,
+                        total: formatPrice(Number(order.orderAmount)),
                     }
                 }
             )

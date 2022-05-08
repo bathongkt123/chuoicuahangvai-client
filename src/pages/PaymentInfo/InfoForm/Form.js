@@ -1,9 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import { MenuItem, TextField, Box, Select, FormControl, InputLabel, Typography, Link } from "@mui/material";
+import { MenuItem, TextField, Box, Select, FormControl, InputLabel, Typography, Link, FormHelperText } from "@mui/material";
 import AdressesDiaglog from './AdressesDiaglog'
 import axios from 'axios'
 import qs from 'qs'
-export default function Form({ contact, setContact, receiveAddress }) {
+
+
+export default function Form({ contact, setContact, receiveAddress, errors }) {
     const handleEmail = (e) => {
         setContact({ ...contact, email: e.target.value })
     }
@@ -59,15 +61,18 @@ export default function Form({ contact, setContact, receiveAddress }) {
                 `${process.env.REACT_APP_STRAPI_URL}/api/districts?${query}`
             );
             setDistricts(response.data.data)
-            setWards([])
         };
         fetchDistricts()
     }, [contact.city]
     )
     // fetch wards
     useEffect(() => {
-        if (!contact.district) return
+
         const fetchWards = async () => {
+            if (!contact.district) {
+                setWards([])
+                return
+            }
             const query = qs.stringify(
                 { city: contact.city, district: contact.district },
                 { encodeValuesOnly: true }
@@ -79,7 +84,7 @@ export default function Form({ contact, setContact, receiveAddress }) {
             setWards(response.data.data)
         };
         fetchWards()
-    }, [contact.district]
+    }, [contact.district, contact.city]
     )
     //Addresses Dialog
     const [openDialog, setOpenDialog] = useState(false);
@@ -93,6 +98,8 @@ export default function Form({ contact, setContact, receiveAddress }) {
         setContact({ ...contact, ...address })
         setOpenDialog(false)
     }
+    //validate form 
+
     return (
         <Fragment>
             <Typography variant="h5" my={3}>Thông tin liên hệ</Typography>
@@ -103,6 +110,10 @@ export default function Form({ contact, setContact, receiveAddress }) {
                 sx={{ display: "inline-block" }}
                 value={contact.email}
                 onChange={handleEmail}
+                placeholder='abc@xyz.com'
+                required
+                error={Boolean(errors.email.message())}
+                helperText={errors.email.message()}
             ></TextField>
             <Box sx={{ display: 'flex', alignItems: 'center', my: 3 }}>
                 <Typography variant="h5">Địa chỉ liên lạc</Typography>
@@ -132,17 +143,23 @@ export default function Form({ contact, setContact, receiveAddress }) {
                     size="large"
                     fullWidth
                     sx={{ display: "inline-block" }}
+                    required
                     value={contact.lastname}
                     onChange={handlLastname}
+                    error={Boolean(errors.lastname.message())}
+                    helperText={errors.lastname.message()}
                 ></TextField>
                 <Box width={20}></Box>
                 <TextField
                     label="Tên"
                     size="large"
                     fullWidth
+                    required
                     sx={{ display: "inline-block" }}
                     value={contact.firstname}
                     onChange={handleFirstname}
+                    error={Boolean(errors.firstname.message())}
+                    helperText={errors.firstname.message()}
                 ></TextField>
             </Box>
 
@@ -150,19 +167,24 @@ export default function Form({ contact, setContact, receiveAddress }) {
                 label="Địa chỉ"
                 size="large"
                 fullWidth
+                required
                 sx={{ display: "inline-block" }}
                 value={contact.address}
                 onChange={handleAddress}
+                error={Boolean(errors.address.message())}
+                helperText={errors.address.message()}
             ></TextField>
 
             <FormControl fullWidth sx={{ mt: 5 }}>
-                <InputLabel id="demo-simple-select-label0">Chọn tỉnh/thành</InputLabel>
+                <InputLabel id="demo-simple-select-label0" required>Chọn tỉnh/thành</InputLabel>
                 <Select
                     labelId="demo-simple-select-label0"
                     label="Chọn tỉnh/thành"
                     size="large"
+                    required
                     value={cities.length ? contact.city : ''}
                     onChange={handleCity}
+                    error={Boolean(errors.city.message())}
                 >
                     {
                         cities.map((city) =>
@@ -170,11 +192,12 @@ export default function Form({ contact, setContact, receiveAddress }) {
                         )
                     }
                 </Select>
+                <FormHelperText sx={{ color: 'red' }}>{errors.city.message()}</FormHelperText>
             </FormControl>
 
             <Box sx={{ display: "flex" }}>
                 <FormControl fullWidth sx={{ mt: 5 }}>
-                    <InputLabel id="demo-simple-select-label2">
+                    <InputLabel id="demo-simple-select-label2" required>
                         Chọn quận/huyện
                     </InputLabel>
                     <Select
@@ -182,9 +205,12 @@ export default function Form({ contact, setContact, receiveAddress }) {
                         labelId="demo-simple-select-label2"
                         id="demo-simple-select"
                         label="Chọn quận/huyện"
+                        required
                         size="large"
                         value={districts.length ? contact.district : ''}
                         onChange={handleDistrict}
+                        error={Boolean(errors.district.message())}
+
                     >
                         {
                             districts.map((district) =>
@@ -192,20 +218,22 @@ export default function Form({ contact, setContact, receiveAddress }) {
                             )
                         }
                     </Select>
+                    <FormHelperText sx={{ color: 'red' }}>{errors.district.message()}</FormHelperText>
                 </FormControl>
                 <Box width={20}></Box>
                 <FormControl fullWidth sx={{ mt: 5 }}>
-                    <InputLabel id="demo-simple-select-label3">
+                    <InputLabel id="demo-simple-select-label3" required>
                         Chọn phường/xã
                     </InputLabel>
                     <Select
                         labelId="demo-simple-select-label3"
                         id="demo-simple-select"
                         label="Chọn phường/xã"
+                        required
                         size="large"
-
                         value={wards.length ? contact.wardId : ''}
                         onChange={handleWard}
+                        error={Boolean(errors.ward.message())}
                     >
 
                         {
@@ -216,18 +244,22 @@ export default function Form({ contact, setContact, receiveAddress }) {
 
                         }
                     </Select>
+                    <FormHelperText sx={{ color: 'red' }}>{errors.ward.message()}</FormHelperText>
                 </FormControl>
             </Box>
 
             <TextField
                 label="Số điện thoại"
                 size="large"
+                placeholder='(+84)91 1357 191'
+                required
                 fullWidth
                 sx={{ display: "inline-block", mt: 5 }}
                 value={contact.phone}
                 onChange={handlePhone}
+                error={Boolean(errors.phone.message())}
+                helperText={errors.phone.message()}
             />
-
         </Fragment>
     )
 }

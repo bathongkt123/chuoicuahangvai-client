@@ -20,7 +20,7 @@ export default function UnitSelect({ length, setItemLength, maxLength, minLength
                 <IndeterminateCheckBox />
             </IconButton>
             <Tooltip title={title}>
-                <InputBase error sx={{
+                <InputBase sx={{
                     border: 1, width: '8ch', px: 1,
                     borderColor: (length > maxLength || length < minLength) ? '#f20515' : '#4e5b73'
                 }}

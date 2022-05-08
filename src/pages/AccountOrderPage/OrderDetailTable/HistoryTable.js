@@ -1,6 +1,12 @@
-import { TableContainer, TableBody, TableRow, TableHead, Paper, Table } from "@mui/material";
+import { TableContainer, TableBody, TableRow, TableHead, Paper, Table, TableFooter } from "@mui/material";
 import CustomTableCell from "components/CustomTableCell";
+import statusTranslate from "helper/statusTranslate";
 export default function HistoryTable({ statuses }) {
+    // const [page, setPage] = useState(0);
+    // const handleChangePage = (event, newPage) => {
+    //     setPage(newPage);
+    // };
+    // const rowsPerPage = 4
     return (
         <TableContainer component={Paper} elevation={12}>
             <Table size='small'>
@@ -14,15 +20,15 @@ export default function HistoryTable({ statuses }) {
                 <TableBody>
                     {
                         statuses.map(status =>
-                            <TableRow >
+                            <TableRow key={status.id}>
                                 <CustomTableCell align="left">
-                                    {status.status}
+                                    {statusTranslate(status.status)}
                                 </CustomTableCell>
                                 <CustomTableCell align="left" >
-                                    {status.createdAt}
+                                    {(new Date(status.createdAt)).toLocaleDateString()}
                                 </CustomTableCell>
                                 <CustomTableCell align="left" >
-                                    {status.createdAt}
+                                    {(new Date(status.createdAt)).toLocaleTimeString()}
                                 </CustomTableCell>
                             </TableRow>
 
@@ -30,6 +36,16 @@ export default function HistoryTable({ statuses }) {
                     }
 
                 </TableBody>
+                {/* <TableFooter>
+                            <TablePagination
+                                rowsPerPage={rowsPerPage}
+                                count={order.products.length}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                rowsPerPageOptions={[]}
+                                sx={{ backgroundColor: '#EEEDE8' }}
+                            />
+                        </TableFooter> */}
             </Table>
         </TableContainer>
     )

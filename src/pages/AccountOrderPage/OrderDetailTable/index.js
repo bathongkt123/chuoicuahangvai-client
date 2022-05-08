@@ -14,7 +14,6 @@ export default function OrderDetailTable({ orderId }) {
         setPage(newPage);
     };
     const rowsPerPage = 4
-    const shipFee = 100000
     //order
     const [order, setOrder] = useState(null)
     let total = 0
@@ -30,7 +29,7 @@ export default function OrderDetailTable({ orderId }) {
                 `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders/${orderId}?${query}`
             )
             console.log(result)
-            setOrder(result.data[0])
+            setOrder(result.data)
         };
         fetchData();
     }
@@ -93,7 +92,7 @@ export default function OrderDetailTable({ orderId }) {
                         <TableRow>
                             <CustomTableCell colSpan={2} align="right">PHÍ VẬN CHUYỂN</CustomTableCell>
                             <CustomTableCell align="right" colSpan={2}>
-                                {formatPrice(shipFee)}
+                                {formatPrice(Number(order.delivery_method.amount))}
                             </CustomTableCell>
                         </TableRow>
                         <TableRow>
@@ -101,7 +100,7 @@ export default function OrderDetailTable({ orderId }) {
                             <CustomTableCell colSpan={2} align="right">TỔNG PHẢI TRẢ</CustomTableCell>
                             <CustomTableCell align="right" colSpan={2}>
                                 <Typography variant="h5" color='red'>
-                                    {formatPrice(shipFee + total)}
+                                    {formatPrice(Number(order.orderAmount))}
                                 </Typography>
                             </CustomTableCell>
                         </TableRow>
@@ -126,6 +125,7 @@ export default function OrderDetailTable({ orderId }) {
                         district: order.receive_address.address.address_three_levels.district,
                         ward: order.receive_address.address.address_three_levels.ward,
                         type: order.type,
+                        deliveryMethod: order.delivery_method.method
                     }} />
             </Box>
         </Fragment>

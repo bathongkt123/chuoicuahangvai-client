@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import { Stack, Button } from '@mui/material'
-export default function Footer({ paymentInfo }) {
+export default function Footer({ paymentInfo, setShowError, validate }) {
     const navigate = useNavigate()
+    const handleToDelivery = () => {
+        if (validate)
+            navigate("/payment/delivery", { state: paymentInfo })
+        setShowError(true)
+    }
     return (
         <Stack
             direction={{ xs: "row" }}
@@ -20,7 +25,7 @@ export default function Footer({ paymentInfo }) {
                 {`< Trở về giỏ hàng`}
             </Button>
             <Button
-                onClick={() => navigate("/payment/delivery", { state: paymentInfo })}
+                onClick={handleToDelivery}
                 variant="contained"
                 sx={{
                     backgroundColor: "#384257",

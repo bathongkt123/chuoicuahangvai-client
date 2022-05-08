@@ -17,11 +17,11 @@ export default function ProductRow({ attr }) {
                     />
                 </Badge>
                 <Box width={20} />
-                <Typography variant='h6'>
+                <Typography variant='body1' fontWeight='bold'>
                     {attr.name}
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <Typography variant='h6'>
+                <Typography variant='body1' fontWeight='bold'>
                     {attr.subTotal}
                 </Typography>
             </Box >

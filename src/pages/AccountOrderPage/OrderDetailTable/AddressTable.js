@@ -60,6 +60,14 @@ export default function AddressTable({ attr }) {
                     </TableRow>
                     <TableRow >
                         <CustomTableCell align="left">
+                            Phương thức vận chuyển
+                        </CustomTableCell>
+                        <CustomTableCell align="right" >
+                            {attr.deliveryMethod}
+                        </CustomTableCell>
+                    </TableRow>
+                    <TableRow >
+                        <CustomTableCell align="left">
                             Phương thức thanh toán
                         </CustomTableCell>
                         <CustomTableCell align="right" >
