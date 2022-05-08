@@ -1,13 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { Fragment } from "react";
-import { Box, Container, Grid, Link } from "@mui/material";
+import { Box, Grid, Link } from "@mui/material";
 export default function Footer() {
   return (
-    <Fragment>
+    <Box>
       <Box
         maxWidth="xl"
-        sx={{ display: "flex", mt: "auto", bgcolor: "#2C3444", color: "white", px: 2 }}
+        sx={{
+          display: "flex",
+          bgcolor: "#2C3444",
+          color: "white",
+          px: 2,
+          mt: "auto",
+        }}
       >
         <Grid container spacing={5}>
           <Grid item xs={12} md={3}>
@@ -106,6 +111,6 @@ export default function Footer() {
       <Box sx={{ bgcolor: "#212631", color: "white", px: 2 }}>
         Copyright © 2021 CỬA HÀNG VẢI
       </Box>
-    </Fragment>
+    </Box>
   );
 }

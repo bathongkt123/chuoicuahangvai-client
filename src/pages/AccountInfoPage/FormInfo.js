@@ -1,60 +1,68 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import qs from "qs";
 
-export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
+export default function FormInfo() {
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const fetchData = async () => {
+    const query = qs.stringify({}, { encodeValuesOnly: true });
+    const result = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/customer-info?${query}`
+    );
+    setLastname(result.data.lastname);
+    setFirstname(result.data.firstname);
+    setEmail(result.data.email);
+    setPhone(result.data.phone);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    //   axios
-    //     .put(
-    //       `${process.env.REACT_APP_STRAPI_URL}/api/receive-address/${edit}
-    //     `,
-    //       {
-    //         data: {
-    //           lastname: lastname,
-    //           firstname: firstname,
-
-    //           phone: phone,
-
-    //         },
-    //       }
-    //     )
-    //     .then((response) => {
-    //       setIsLoading(false);
-    //     });
+    axios
+      .put(`${process.env.REACT_APP_STRAPI_URL}/api/customer-info`, {
+        lastname: lastname,
+        firstname: firstname,
+        phone: phone,
+      })
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === 200)
+          toast.success("Cập nhật thông tin thành công");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
-  const handleClose = async (e) => {
-    e.preventDefault();
-    setEdit(null);
-  };
-  const fetchEditAddress = async () => {
-    if (edit === null) return;
-    const query = qs.stringify({}, { encodeValuesOnly: true });
 
-    const resultAddresses = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/receive-address/${edit}?${query}`
-    );
-
-    setLastname(resultAddresses.data[0].name.lastname);
-    setFirstname(resultAddresses.data[0].name.firstname);
-    setPhone(resultAddresses.data[0].phone);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
@@ -89,6 +97,7 @@ export default function FormInfo({ edit, addresses, setAddresses, setEdit }) {
         fullWidth
         sx={{ display: "inline-block", my: 2 }}
         value={email}
+        disabled={true}
         onChange={(e) => setEmail(e.target.value)}
       ></TextField>
 
