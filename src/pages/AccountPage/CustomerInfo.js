@@ -17,7 +17,6 @@ export default function CustomerInfo() {
     );
 
     setAddresses(resultAddresses.data);
-    console.log(resultAddresses);
     // console.log(addresses);
   };
 
