@@ -11,7 +11,6 @@ export default function Footer() {
           bgcolor: "#2C3444",
           color: "white",
           px: 2,
-          mt: "auto",
         }}
       >
         <Grid container spacing={5}>

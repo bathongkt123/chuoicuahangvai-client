@@ -32,6 +32,7 @@ import useAuth from "auth/useAuth";
 
 import { Fragment } from "react";
 import PaymentSuccess from "pages/PaymentSuccess";
+import { Box } from "@mui/system";
 
 function App() {
   const { initializeSession } = useAuth();
