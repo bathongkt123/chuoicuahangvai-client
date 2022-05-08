@@ -12,10 +12,11 @@ export default function PaymentInfo() {
         const fetchData = async () => {
             const response = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/information`, paymentInfo)
             setPaymentInfo({ ...paymentInfo, ...response.data })
+            console.log({ ...paymentInfo, ...response.data })
         }
         fetchData()
     }, [])
-    //set state to form contact info
+    //set state to form contact info'
     const [contact, setContact] = useState(
         paymentInfo.deliveryInfo ||
         {

@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function Paying({ cart, validateItems, products }) {
+import useAuth from "auth/useAuth";
+export default function Paying({ cart, validate, products }) {
     const navigate = useNavigate();
+    const { token } = useAuth()
     const [checkTerm, setCheckTerm] = useState(false);
     const handleCheckTerm = (e) => {
         setCheckTerm(e.target.checked);
@@ -26,10 +28,15 @@ export default function Paying({ cart, validateItems, products }) {
         setNote(e.target.value);
     };
     const handlePaying = async () => {
-        if (!validateItems) {
+        if (validate.isEmpty) {
+            toast.error("Chưa có sản phẩm nào, vui lòng mua sắm trước");
+            return
+        }
+        if (!validate.isSuitableLength) {
             toast.error("Vui lòng nhập độ dài sản phẩm phù hợp");
             return
         }
+
         if (!checkTerm) {
             toast.error("Vui lòng chấp nhận Điều khoản sử dụng và Điều khoản bảo mật");
             return
@@ -99,11 +106,15 @@ export default function Paying({ cart, validateItems, products }) {
                     component="fieldset"
                     sx={{ display: "flex", alignItems: "self-end" }}
                 >
-                    <FormControlLabel
-                        control={<Checkbox checked={checkDebt} onChange={handleCheckDebt} />}
-                        label="Thanh toán đơn hàng này sau (mua nợ)"
-                        labelPlacement="end"
-                    />
+
+                    {
+                        token &&
+                        <FormControlLabel
+                            control={<Checkbox checked={checkDebt} onChange={handleCheckDebt} />}
+                            label="Thanh toán đơn hàng này sau (mua nợ)"
+                            labelPlacement="end"
+                        />
+                    }
                     <FormControlLabel
                         control={
                             <Checkbox checked={checkTerm} onChange={handleCheckTerm} />

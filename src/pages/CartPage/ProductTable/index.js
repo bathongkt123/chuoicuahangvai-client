@@ -40,8 +40,11 @@ export default function ProductTable() {
     const subTotal = key => cart[key] * products[key].price
     const total = keys.reduce((init, current) => init + subTotal(current), 0)
     //validate 
-    const validateItems = keys.every(key =>
-        products[key].inventoryLength / 100 >= cart[key] && MIN_LENGTH <= cart[key])
+    const validate = {
+        isEmpty: !Boolean(keys.length),
+        isSuitableLength: keys.every(key =>
+            products[key].inventoryLength / 100 >= cart[key] && MIN_LENGTH <= cart[key])
+    }
     //message of lost items
     const [message, setMessage] = useState([])
     useEffect(() => {
@@ -51,7 +54,7 @@ export default function ProductTable() {
             const cartDetail = await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart`, { skus: postCartData })
             console.log(cartDetail)
             const cartProducts = {}
-            cartDetail.data.skus.map(item =>
+            cartDetail.data.skus.forEach(item =>
                 cartProducts[item.id] = item)
             console.log(cartProducts)
             //pretend that all products have some in inventory
@@ -68,7 +71,6 @@ export default function ProductTable() {
         }
         fetchData()
     }, []);
-
     return (
         <Fragment>
             <TableContainer component={Paper} elevation={12} sx={{ my: 2 }} >
@@ -110,7 +112,7 @@ export default function ProductTable() {
                                     attr={{
                                         name: products[key].product.name + ' - ' + products[key].sku,
                                         image: products[key].images[0].url,
-                                        price: products[key].price,
+                                        price: formatPrice(Number(products[key].price)),
                                         maxLength: products[key].inventoryLength / 100,
                                         minLength: MIN_LENGTH,
                                         subTotal: formatPrice(subTotal(key))
@@ -153,7 +155,7 @@ export default function ProductTable() {
                 </Table>
             </TableContainer >
             {/* Paying section */}
-            <Paying cart={cart} validateItems={validateItems} products={products} />
+            <Paying cart={cart} validate={validate} products={products} />
         </Fragment>
     )
 }
