@@ -8,7 +8,6 @@ import axios from "axios";
 import qs from "qs";
 import { useState, useEffect } from "react";
 export default function HomePage() {
-
   const [homepage, setHomePage] = useState({
     member_responses: [],
     new_products_banners: {
@@ -34,7 +33,7 @@ export default function HomePage() {
       );
       const result = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/homepage?${query}`
-      )
+      );
       setHomePage(result.data.data.attributes);
     };
     fetchData();

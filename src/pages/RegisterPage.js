@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Breadcrumbs,
   Button,
@@ -9,6 +9,9 @@ import {
   Typography,
   Box,
   Link,
+  Backdrop,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -19,7 +22,18 @@ export default function RegisterPage() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [rePassword, setRePassword] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [message, setMessage] = useState("Đăng ký thất bại");
+  const [isLoading, setIsLoading] = useState(false);
+  const resetForm = async () => {
+    setUsername("");
+    setPassword("");
+    setFirstname("");
+    setLastname("");
+    setPhone("");
+    setRePassword("");
+  };
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -27,6 +41,10 @@ export default function RegisterPage() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  const handleRepasswordChange = (e) => {
+    setRePassword(e.target.value);
+  };
+
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);
   };
@@ -39,8 +57,16 @@ export default function RegisterPage() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      axios.post(
+    setInvalid(false);
+    setIsLoading(true);
+    if (password !== rePassword) {
+      setMessage("Nhập lại mật khẩu không đúng");
+      setInvalid(true);
+      setIsLoading(false);
+      return;
+    }
+    axios
+      .post(
         `${process.env.REACT_APP_STRAPI_URL}/api/auth/register
       `,
         {
@@ -51,14 +77,43 @@ export default function RegisterPage() {
           firstname: firstname,
           lastname: lastname,
         }
-      );
-      // console.log("ok");
-    } catch (response) {
-      console.log(response.response.data);
-    }
+      )
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === 200)
+          toast.success("Chúng tôi sẽ gửi email đến bạn sau giây lát");
+        resetForm();
+      })
+      .catch((error) => {
+        try {
+          setMessage(error.response.data.error.message);
+        } catch (e) {
+          setMessage("Đăng ký thất bại");
+        } finally {
+          setInvalid(true);
+          setIsLoading(false);
+        }
+      });
   };
   return (
     <Box>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         sx={{
           display: "flex",
@@ -81,6 +136,7 @@ export default function RegisterPage() {
           <Typography color="#0f0d0c">Đăng ký</Typography>
         </Breadcrumbs>
       </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -89,6 +145,13 @@ export default function RegisterPage() {
           my: 2,
         }}
       >
+        <Alert
+          severity="error"
+          sx={{ visibility: invalid ? "visible" : "hidden" }}
+        >
+          {message}
+        </Alert>
+
         <TextField
           required
           label="Họ và tên lót"
@@ -140,15 +203,11 @@ export default function RegisterPage() {
           label="Nhập lại mật khẩu"
           type="password"
           size="small"
+          value={rePassword}
+          onChange={handleRepasswordChange}
           sx={{ minWidth: "55ch" }}
         ></TextField>
         <Box sx={{ my: 1 }}></Box>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox />}
-            label="Chấp nhận Điều khoản sử dụng và Điều khoản bảo mật"
-          />
-        </FormGroup>
 
         <Button
           onClick={handleSubmit}

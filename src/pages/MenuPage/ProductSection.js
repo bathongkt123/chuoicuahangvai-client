@@ -17,6 +17,8 @@ export default function ProductSection({
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const { state } = useLocation();
+  let temp = state ? state.search : "";
+  temp = temp.split(" -")[0];
   function getKeySort(filter) {
     const temp = Object.assign({}, filter);
     Object.keys(temp).forEach(function (k) {
@@ -26,76 +28,72 @@ export default function ProductSection({
     });
     return Object.keys(temp);
   }
-
-  useEffect(() => {
-    let abortController = new AbortController();
-    const fetchData = async () => {
-      let signal = abortController.signal;
-      const query = qs.stringify(
-        {
-          populate: [
-            "product",
-            "images",
-            "color",
-            "origin",
-            "width",
-            "pattern",
-            "stretch",
-            "product.category",
-          ],
-          sort: [sortProduct],
-          filters: {
-            product: {
-              name: {
-                $containsi: state ? state.search : "",
-              },
-              category: {
-                id: {
-                  $in: getKeySort(categoriesFilter),
-                },
-              },
+  const fetchData = async () => {
+    const query = qs.stringify(
+      {
+        populate: [
+          "product",
+          "images",
+          "color",
+          "origin",
+          "width",
+          "pattern",
+          "stretch",
+          "product.category",
+        ],
+        sort: [sortProduct],
+        filters: {
+          product: {
+            name: {
+              $containsi: temp,
             },
-
-            color: {
+            category: {
               id: {
-                $in: getKeySort(colorsFilter),
-              },
-            },
-            origin: {
-              id: {
-                $in: getKeySort(originsFilter),
-              },
-            },
-            pattern: {
-              id: {
-                $in: getKeySort(patternsFilter),
-              },
-            },
-            width: {
-              id: {
-                $in: getKeySort(widthsFilter),
-              },
-            },
-            stretch: {
-              id: {
-                $in: getKeySort(stretchesFilter),
+                $in: getKeySort(categoriesFilter),
               },
             },
           },
+
+          color: {
+            id: {
+              $in: getKeySort(colorsFilter),
+            },
+          },
+          origin: {
+            id: {
+              $in: getKeySort(originsFilter),
+            },
+          },
+          pattern: {
+            id: {
+              $in: getKeySort(patternsFilter),
+            },
+          },
+          width: {
+            id: {
+              $in: getKeySort(widthsFilter),
+            },
+          },
+          stretch: {
+            id: {
+              $in: getKeySort(stretchesFilter),
+            },
+          },
         },
-        { encodeValuesOnly: true }
-      );
-      const resultProducts = await axios.get(
-        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`,
-        { signal: signal }
-      );
-      setProducts(resultProducts.data.data);
-    };
+      },
+      { encodeValuesOnly: true }
+    );
+    const resultProducts = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
+    );
+    setProducts(resultProducts.data.data);
+  };
+
+  useEffect(() => {
+    let abortController = new AbortController();
     fetchData();
     return () => {
-      setTimeout(() => {
-        abortController.abort();
-      }, 1000);
+      abortController.abort();
     };
   }, [
     categoriesFilter,

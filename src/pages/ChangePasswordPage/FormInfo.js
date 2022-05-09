@@ -15,6 +15,11 @@ export default function FormInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [message, setMessage] = useState("Đổi mật khẩu thất bại");
+  const resetForm = async () => {
+    setCurrentPassword("");
+    setNewPassword("");
+    setRePassword("");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -32,6 +37,7 @@ export default function FormInfo() {
       .then((response) => {
         setIsLoading(false);
         if (response.status === 200) toast.success("Đổi mật khẩu thành công");
+        resetForm();
       })
       .catch((error) => {
         try {
