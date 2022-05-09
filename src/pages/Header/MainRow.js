@@ -104,7 +104,7 @@ export default function MainRow({ cartNumber, search, setSearch }) {
       >
         ROYAL FABRIC
       </Link>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexGrow: 0.5 }}>
         {/* <StyledInputBase
           placeholder="Tìm kiếm..."
           value={search}
@@ -116,6 +116,7 @@ export default function MainRow({ cartNumber, search, setSearch }) {
           }}
         /> */}
         <Autocomplete
+          size="small"
           open={open}
           onOpen={openPopper}
           onClose={closePopper}
@@ -135,7 +136,7 @@ export default function MainRow({ cartNumber, search, setSearch }) {
               " - " +
               option.attributes.sku
           )}
-          sx={{ width: 400 }}
+          sx={{ width: '100%' }}
           renderInput={(params) => (
             <TextField
               {...params}

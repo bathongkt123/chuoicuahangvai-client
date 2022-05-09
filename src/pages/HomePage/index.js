@@ -2,7 +2,6 @@ import React from "react";
 import { Box } from "@mui/system";
 import SlidesSection from "./SlidesSection";
 import ProductsSection from "./ProductsSection";
-import RegisterSection from "./RegisterSection";
 import ResponsesSection from "./ResponsesSection";
 import axios from "axios";
 import qs from "qs";
@@ -51,7 +50,7 @@ export default function HomePage() {
       <SlidesSection slides={homepage.new_products_banners.data} />
       <ProductsSection products={homepage.features_sku.data.slice(0, 7)} />
       <ResponsesSection responses={homepage.member_responses.slice(0, 4)} />
-      <RegisterSection signupContent={homepage.signup_section} />
+
     </Box>
   );
 }
