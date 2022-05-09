@@ -20,7 +20,7 @@ import AccountInfoPage from "pages/AccountInfoPage";
 import EmailConfirmPage from "pages/EmailConfirmPage";
 import ChangePasswordPage from "pages/ChangePasswordPage";
 import ResetPasswordPage from "pages/ResetPasswordPage";
-
+import VNPayReturnPage from "pages/VNPayReturnPage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -29,15 +29,14 @@ import {
 } from "react-router-dom";
 
 import useAuth from "auth/useAuth";
-
 import { Fragment } from "react";
-import PaymentSuccess from "pages/PaymentSuccess";
+import OrderSuccess from "pages/OrderSuccess";
+import OrderFailer from "pages/OrderFailer";
 import AccountInvoicePage from "pages/AccountInvoicePage";
 
 function App() {
   const { initializeSession } = useAuth();
   initializeSession();
-
   return (
     <Router>
       <Routes>
@@ -46,9 +45,8 @@ function App() {
           <Route path="info" element={<PaymentInfo />} />
           <Route path="delivery" element={<PaymentDelivery />} />
           <Route path="complete" element={<PaymentComplete />} />
-          <Route path="success" element={<PaymentSuccess />} />
-        </Route>
 
+        </Route>
         <Route
           path=""
           element={
@@ -106,6 +104,9 @@ function App() {
               element={<AuthenticatedPage page={<AccountInvoicePage />} />}
             />
           </Route>
+          <Route path='/vnpay_return_url' element={<VNPayReturnPage />} />
+          <Route path="order-success" element={<OrderSuccess />} />
+          <Route path="order-failure" element={<OrderFailer />} />
         </Route>
       </Routes>
     </Router>

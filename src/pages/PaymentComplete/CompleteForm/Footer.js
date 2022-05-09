@@ -30,8 +30,11 @@ export default function Footer({ paymentInfo }) {
             .then((response) => {
                 setLoading(false)
                 const url = response.data.url
-                url && window.open(url, '_blank')?.focus()
-                navigate('/payment/success', { state: paymentInfo })
+                if (url) {
+                    window.open(url, '_self')?.focus()
+                    return
+                }
+                navigate('/order-success', { replace: true })
             })
             .catch((error) => {
                 setLoading(false)

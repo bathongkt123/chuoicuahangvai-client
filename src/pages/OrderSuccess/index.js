@@ -1,8 +1,7 @@
 import { ButtonGroup, Container, Typography, Button } from "@mui/material"
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useAuth from "auth/useAuth"
-export default function PaymentSuccess() {
-    const { state } = useLocation()
+export default function OrderSuccess() {
     const { token } = useAuth()
     const navigate = useNavigate()
     return (
@@ -15,7 +14,7 @@ export default function PaymentSuccess() {
             </Typography>
             {!token ?
                 <Typography variant='body1' my={2} fontWeight='bold' color='inherit'>
-                    Quý khách sẽ nhận được thông tin chi tiết đơn hàng, và quá trình giao hàng qua email: {state.deliveryInfo.email}
+                    Quý khách sẽ nhận được thông tin chi tiết đơn hàng, và quá trình giao hàng qua email đã điền trong đơn
                 </Typography>
                 :
                 <Typography variant='body1' my={2} fontWeight='bold' color='inherit' >
@@ -23,7 +22,6 @@ export default function PaymentSuccess() {
                 </Typography>
             }
             <ButtonGroup variant="contained" color="secondary" size="large" disableElevation>
-                <Button onClick={() => navigate('/')}>Về trang chủ</Button>
                 <Button onClick={() => navigate('/menu')}>Tiếp tục mua sắm</Button>
             </ButtonGroup>
         </Container>

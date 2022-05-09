@@ -5,7 +5,6 @@ export default function Footer() {
   return (
     <Box>
       <Box
-        maxWidth="xl"
         sx={{
           display: "flex",
           bgcolor: "#2C3444",
