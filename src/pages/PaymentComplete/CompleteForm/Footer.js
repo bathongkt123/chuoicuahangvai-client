@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { useCookies } from "react-cookie";
 export default function Footer({ paymentInfo }) {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const [openFailMessage, setOpenFailMessage] = useState(false)
+    const [cookies, setCookie, removeCookie] = useCookies(['cart']);
     const handleCloseAlert = (event, reason) => {
         // if (reason === 'clickaway') {
         //     return;
@@ -29,6 +31,7 @@ export default function Footer({ paymentInfo }) {
         await axios.post(`${process.env.REACT_APP_STRAPI_URL}/api/cart/save`, paymentInfo)
             .then((response) => {
                 setLoading(false)
+                removeCookie('cart')
                 const url = response.data.url
                 if (url) {
                     window.open(url, '_self')?.focus()

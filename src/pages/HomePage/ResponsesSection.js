@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 export default function ResponsesSection({ responses }) {
   return (
-    <Container maxWidth="xl">
-      <Typography variant="h4" align="center" my={3}>
+    <Container maxWidth="xl" sx={{ my: 2 }}>
+      <Typography variant="h4" align="center" my={2}>
         <Box fontWeight="bold">PHẢN HỒI TỪ KHÁCH HÀNG</Box>
       </Typography>
       <Box
