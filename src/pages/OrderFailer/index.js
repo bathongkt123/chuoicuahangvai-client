@@ -5,7 +5,7 @@ export default function OrderSuccess() {
     const { token } = useAuth()
     const navigate = useNavigate()
     return (
-        <Container sx={{ bgcolor: '#EEEDE8', height: '100vh', display: 'flex', flexDirection: 'column' }} maxWidth={false} >
+        <Container sx={{ bgcolor: '#EEEDE8', minHeight: '100vh', display: 'flex', flexDirection: 'column' }} maxWidth={false} >
             <Typography variant='h4' my={2} fontWeight='bold' color='inherit'>
                 Oop!.Đơn hàng của quý khách đã bị hủy vì giao dịch thanh toán thất bại
             </Typography>
