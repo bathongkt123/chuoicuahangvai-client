@@ -5,7 +5,7 @@ export default function OrderSuccess() {
     const { token } = useAuth()
     const navigate = useNavigate()
     return (
-        <Container sx={{ bgcolor: '#EEEDE8', height: '100vh', display: 'flex', flexDirection: 'column' }} maxWidth={false} >
+        <Container sx={{ bgcolor: '#EEEDE8', display: 'flex', minHeight: '100vh', flexDirection: 'column' }} maxWidth={false} >
             <Typography variant='h4' my={2} fontWeight='bold' color='inherit'>
                 Đơn hàng của quý khách đã được tiếp nhận
             </Typography>
