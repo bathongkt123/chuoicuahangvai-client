@@ -124,7 +124,12 @@ export default function ProductPage() {
       <Grid
         container
         spacing={10}
-        style={{ margin: "10px", textAlign: "left" }}
+        style={{
+          marginLeft: "10px",
+          textAlign: "left",
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
       >
         <Grid item xs={12} md={5}>
           <ImageSection

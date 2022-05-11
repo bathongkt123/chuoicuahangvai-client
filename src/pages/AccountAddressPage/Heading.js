@@ -1,7 +1,9 @@
 import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Heading() {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -13,11 +15,15 @@ export default function Heading() {
     >
       <h2>Địa chỉ</h2>
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
+        <Link underline="hover" color="inherit" onClick={() => navigate("/")}>
           Trang chủ
         </Link>
-        <Link underline="hover" color="inherit" href="/account">
-          Tài khoản
+        <Link
+          underline="hover"
+          color="inherit"
+          onClick={() => navigate("/accountinfo")}
+        >
+          Thông tin cá nhân
         </Link>
         <Typography color="#0f0d0c">Địa chỉ</Typography>
       </Breadcrumbs>

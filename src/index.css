@@ -68,12 +68,28 @@ code {
   box-sizing: border-box;
   display: inline;
 }
-.slick-prev:before {
+/* .slick-prev:before {
   background-color: gray;
+  
 }
 .slick-next:before {
   background-color: gray;
+} */
+
+.slider-arrow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
 }
+.arrow-btn {
+  top: 35%;
+  z-index: 1;
+}
+.next {
+  float: right;
+}
+
 .address button {
   background-color: #384257;
   color: white;

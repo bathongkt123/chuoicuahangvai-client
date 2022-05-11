@@ -4,6 +4,7 @@ import axios from "axios";
 import qs from "qs";
 import { Box, Link, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import formatPrice from "helper/formatPrice";
 
 export default function ProductSection({
   categoriesFilter,
@@ -154,7 +155,7 @@ export default function ProductSection({
                   />
                 </Box>
                 <Box sx={{ fontSize: "1rem", fontWeight: "bold" }}>
-                  Giá(vnđ/mét): {item.attributes.price}
+                  Giá(vnđ/mét): {formatPrice(Number(item.attributes.price))}
                 </Box>
               </Stack>
             </Stack>
