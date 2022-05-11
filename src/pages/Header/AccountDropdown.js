@@ -8,12 +8,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import useAuth from "auth/useAuth";
 import { GiRolledCloth } from "react-icons/gi";
 import { MdVpnKey, MdAccountCircle } from "react-icons/md";
-
-export default function AccountDropdown() {
+export default function AccountDropdown({ headerLastname, headerFirstname }) {
   const navigate = useNavigate();
   const { removeUserSession } = useAuth();
   const [dropdownAnchor, setDropdownAnchor] = useState(null);
   const isDropdown = Boolean(dropdownAnchor);
+
   const handleMenuClose = () => {
     setDropdownAnchor(null);
   };
@@ -142,8 +142,9 @@ export default function AccountDropdown() {
         aria-haspopup="true"
         onClick={handleMenuOpen}
       >
-        Tài khoản
-        <AccountCircleIcon sx={{ pl: 0.5 }} />
+        {" "}
+        <AccountCircleIcon sx={{ pr: 0.5 }} />
+        Xin chào, {headerLastname} {headerFirstname}
       </ButtonBase>
       {renderAccountMenu}
     </Fragment>

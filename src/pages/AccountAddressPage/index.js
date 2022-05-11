@@ -19,7 +19,7 @@ export default function AccountAddressPage() {
     );
 
     setAddresses(resultAddresses.data);
-    console.log(resultAddresses);
+    // console.log(resultAddresses);
     // console.log(addresses);
   };
 

@@ -25,14 +25,18 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default function Header() {
+export default function Header({
+  headerLastname,
+  setHeaderlastname,
+  headerFirstname,
+  setHeaderFirstname,
+}) {
   const [cookies] = useCookies(["cart"]);
   const products = cookies.cart;
   const cartNumber = products ? Object.keys(products).length : 0;
   const [ads, setAds] = useState("");
   const [search, setSearch] = useState("");
   const [mainFilter, setMainFilter] = useState("");
-
   const [categories, setCategories] = useState([]);
 
   const fetchData = async () => {
@@ -45,6 +49,13 @@ export default function Header() {
       `${process.env.REACT_APP_STRAPI_URL}/api/homepage`
     );
     setAds(result.data.data.attributes.header_banner);
+
+    result = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/customer-info`
+    );
+    // console.log(result);
+    setHeaderlastname(result.data.lastname);
+    setHeaderFirstname(result.data.firstname);
   };
   useEffect(() => {
     fetchData();
@@ -70,6 +81,8 @@ export default function Header() {
                 cartNumber={cartNumber}
                 search={search}
                 setSearch={setSearch}
+                headerLastname={headerLastname}
+                headerFirstname={headerFirstname}
               />
               <CategoryRow
                 categories={categories}

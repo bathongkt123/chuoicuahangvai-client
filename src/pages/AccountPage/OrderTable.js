@@ -37,7 +37,7 @@ export default function OrderTable() {
       const result = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders?${query}`
       );
-      console.log(result);
+      // console.log(result);
       const newOrders = {};
       result.data.forEach((order) => {
         const createdAt = new Date(order.createdAt);
@@ -49,7 +49,6 @@ export default function OrderTable() {
           total: formatPrice(Number(order.orderAmount)),
         };
       });
-      console.log();
 
       setOrders(newOrders);
     };

@@ -9,12 +9,17 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import qs from "qs";
 
-export default function FormInfo() {
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
+export default function FormInfo({
+  headerLastname,
+  setHeaderlastname,
+  headerFirstname,
+  setHeaderFirstname,
+}) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
 
   const fetchData = async () => {
     const query = qs.stringify({}, { encodeValuesOnly: true });
@@ -26,6 +31,14 @@ export default function FormInfo() {
     setEmail(result.data.email);
     setPhone(result.data.phone);
   };
+  const fetchDataHeader = async () => {
+    const result = await axios.get(
+      `${process.env.REACT_APP_STRAPI_URL}/api/customer-info`
+    );
+    setHeaderlastname(result.data.lastname);
+    setHeaderFirstname(result.data.firstname);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -38,8 +51,10 @@ export default function FormInfo() {
       })
       .then((response) => {
         setIsLoading(false);
-        if (response.status === 200)
+        if (response.status === 200) {
           toast.success("Cập nhật thông tin thành công");
+          fetchDataHeader();
+        }
       })
       .catch((error) => {
         setIsLoading(false);

@@ -53,7 +53,13 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 //     transition: theme.transitions.create("width"),
 //   },
 // }));
-export default function MainRow({ cartNumber, search, setSearch }) {
+export default function MainRow({
+  cartNumber,
+  search,
+  setSearch,
+  headerLastname,
+  headerFirstname,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [value, setValue] = useState("");
@@ -65,17 +71,12 @@ export default function MainRow({ cartNumber, search, setSearch }) {
   const { token } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
-      const query = qs.stringify(
-        {
-          populate: ["product"],
-        },
-        { encodeValuesOnly: true }
-      );
+      const query = qs.stringify({}, { encodeValuesOnly: true });
       const resultProducts = await axios.get(
-        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus?${query}`
+        `${process.env.REACT_APP_STRAPI_URL}/api/products?${query}`
       );
       setProducts(resultProducts.data.data);
-      console.log(resultProducts);
+      // console.log(resultProducts);
     };
     fetchData();
     if (location.pathname !== "/menu") {
@@ -105,16 +106,6 @@ export default function MainRow({ cartNumber, search, setSearch }) {
         ROYAL FABRIC
       </Link>
       <Box sx={{ display: "flex", flexGrow: 0.5 }}>
-        {/* <StyledInputBase
-          placeholder="Tìm kiếm..."
-          value={search}
-          onChange={handleSearchChange}
-          onKeyPress={(event) => {
-            if (event.key === "Enter") {
-              navigate("/menu", { state: { search } });
-            }
-          }}
-        /> */}
         <Autocomplete
           size="small"
           open={open}
@@ -130,13 +121,8 @@ export default function MainRow({ cartNumber, search, setSearch }) {
           onInputChange={(event, newInputValue) => {
             setSearch(newInputValue);
           }}
-          options={products.map(
-            (option) =>
-              option.attributes.product.data.attributes.name +
-              " - " +
-              option.attributes.sku
-          )}
-          sx={{ width: '100%' }}
+          options={products.map((option) => option.attributes.name)}
+          sx={{ width: "100%" }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -195,9 +181,12 @@ export default function MainRow({ cartNumber, search, setSearch }) {
             <ShoppingCartIcon fontSize="small" />
           </Badge>
         </Link>
-        <Box width={24} />
+        <Box width={30} />
         {token ? (
-          <AccountDropdown />
+          <AccountDropdown
+            headerLastname={headerLastname}
+            headerFirstname={headerFirstname}
+          />
         ) : (
           <Link
             component="button"

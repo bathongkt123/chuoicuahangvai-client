@@ -17,8 +17,6 @@ export default function ProductSection({
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const { state } = useLocation();
-  let temp = state ? state.search : "";
-  temp = temp.split(" -")[0];
   function getKeySort(filter) {
     const temp = Object.assign({}, filter);
     Object.keys(temp).forEach(function (k) {
@@ -45,7 +43,7 @@ export default function ProductSection({
         filters: {
           product: {
             name: {
-              $containsi: temp,
+              $containsi: state ? state.search : "",
             },
             category: {
               id: {

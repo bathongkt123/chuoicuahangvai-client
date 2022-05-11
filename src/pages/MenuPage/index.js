@@ -22,6 +22,7 @@ export default function MenuPage({ search, setSearch }) {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
+        my: 4,
       }}
       maxWidth="xl"
     >

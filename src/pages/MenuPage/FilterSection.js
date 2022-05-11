@@ -179,6 +179,7 @@ export default function FilterSection({
             });
             setCategoriesFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>
@@ -215,6 +216,7 @@ export default function FilterSection({
             });
             setColorsFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>
@@ -267,6 +269,7 @@ export default function FilterSection({
             });
             setOriginsFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>
@@ -302,6 +305,7 @@ export default function FilterSection({
             });
             setPatternsFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>
@@ -337,6 +341,7 @@ export default function FilterSection({
             });
             setWidthsFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>
@@ -371,6 +376,7 @@ export default function FilterSection({
             });
             setStretchesFilter(temp);
           }}
+          color="inherit"
         >
           Clear
         </Button>

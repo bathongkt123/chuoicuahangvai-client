@@ -25,6 +25,7 @@ export default function CategoryDropdown({
 
   const handleClick = (e) => {
     const filter = e.target.value;
+    handleMenuClose();
     navigate("/menu", { state: { filter } });
   };
   // useEffect(() => {

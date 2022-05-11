@@ -2,7 +2,7 @@ import { Breadcrumbs, Typography, Link, Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 export default function Heading() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -22,7 +22,7 @@ export default function Heading() {
         >
           Trang chủ
         </Link>
-        <Typography color="#0f0d0c">Tài khoản</Typography>
+        <Typography color="#0f0d0c">Đơn hàng</Typography>
       </Breadcrumbs>
     </Box>
   );
