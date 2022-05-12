@@ -6,7 +6,6 @@ import Slider from "react-slick";
 import { Button } from "@mui/material";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import Stack from "@mui/material/Stack";
 
 export default function ImageSection({
   productImages,
@@ -44,6 +43,7 @@ export default function ImageSection({
     );
   };
   const settings = {
+    dots: true,
     slidesToShow: 2,
     slidesToScroll: 2,
     arrows: false,

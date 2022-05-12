@@ -75,7 +75,14 @@ export default function MainRow({
       const resultProducts = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/products?${query}`
       );
-      setProducts(resultProducts.data.data);
+      let data = [];
+      let temp = resultProducts.data.data;
+      temp.forEach((item) => {
+        data.push(item.attributes.name);
+      });
+      data = [...new Set(data)];
+      setProducts(data);
+
       // console.log(resultProducts);
     };
     fetchData();
@@ -121,7 +128,7 @@ export default function MainRow({
           onInputChange={(event, newInputValue) => {
             setSearch(newInputValue);
           }}
-          options={products.map((option) => option.attributes.name)}
+          options={products.map((option) => option)}
           sx={{ width: "100%" }}
           renderInput={(params) => (
             <TextField

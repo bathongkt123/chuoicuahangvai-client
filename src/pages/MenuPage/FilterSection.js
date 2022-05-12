@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import axios from "axios";
 import qs from "qs";
@@ -13,6 +17,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function FilterSection({
   categoriesFilter,
   setCategoriesFilter,
@@ -35,9 +41,8 @@ export default function FilterSection({
   const [patterns, setPatterns] = useState([]);
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
-
   const { state } = useLocation();
-
+  console.log(colorsFilter);
   const handleCategoryChange = (event) => {
     setCategoriesFilter({
       ...categoriesFilter,
@@ -45,12 +50,12 @@ export default function FilterSection({
     });
   };
 
-  const handleColorChange = (event) => {
-    setColorsFilter({
-      ...colorsFilter,
-      [event.target.value]: event.target.checked,
-    });
-  };
+  // const handleColorChange = (event) => {
+  //   setColorsFilter({
+  //     ...colorsFilter,
+  //     [event.target.value]: event.target.checked,
+  //   });
+  // };
 
   const handleOriginChange = (event) => {
     setOriginsFilter({
@@ -100,10 +105,10 @@ export default function FilterSection({
       const resultColors = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/product-colors?${query}`
       );
-      temp = {};
-      resultColors.data.data.map((item) => (temp[item.id] = false));
-      setColorsFilter(temp);
-
+      // temp = {};
+      // resultColors.data.data.map((item) => (temp[item.id] = false));
+      // setColorsFilter(temp);
+      // console.log(resultColors.data.data);
       const resultOrigins = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/product-origins?${query}`
       );
@@ -151,7 +156,7 @@ export default function FilterSection({
   return (
     <FormControl
       variant="standard"
-      sx={{ mt: 5, minWidth: 220, textAlign: "left" }}
+      sx={{ mt: 5, maxWidth: 250, textAlign: "left" }}
     >
       <InputLabel id="sort">Sắp xếp theo</InputLabel>
       <Select
@@ -208,52 +213,43 @@ export default function FilterSection({
         }}
       >
         <h3>MÀU CHỦ ĐẠO</h3>
-        <Button
-          onClick={() => {
-            const temp = Object.assign({}, colorsFilter);
-            Object.keys(temp).forEach(function (k) {
-              temp[k] = false;
-            });
-            setColorsFilter(temp);
-          }}
-          color="inherit"
-        >
-          Clear
-        </Button>
       </Box>
+      <Autocomplete
+        multiple
+        id="checkboxes-tags-demo"
+        options={colors}
+        value={colorsFilter}
+        onChange={(event, newValue) => {
+          setColorsFilter(newValue);
+        }}
+        style={{ maxWidth: 250 }}
+        disableCloseOnSelect
+        getOptionLabel={(option) => option.attributes.name}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
+            />
+            {option.attributes.name}
+            <Box
+              sx={{
+                bgcolor: option.attributes.color,
+                width: "1.5rem",
+                height: "1.5rem",
+                borderRadius: "50%",
+                ml: 1,
+              }}
+            />
+          </li>
+        )}
+        renderInput={(params) => (
+          <TextField {...params} placeholder="Tìm kiếm màu" />
+        )}
+      />
 
-      {colors.map((item) => (
-        <FormGroup key={item.id}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                value={item.id}
-                onChange={handleColorChange}
-                checked={colorsFilter[item.id]}
-              />
-            }
-            label={
-              <Box
-                sx={{
-                  display: "flex",
-                }}
-                key={item.id}
-              >
-                {item.attributes.name}:
-                <Box
-                  sx={{
-                    bgcolor: item.attributes.color,
-                    width: "1.5rem",
-                    height: "1.5rem",
-                    borderRadius: "50%",
-                    ml: 1,
-                  }}
-                />
-              </Box>
-            }
-          ></FormControlLabel>
-        </FormGroup>
-      ))}
       <Box
         sx={{
           display: "flex",

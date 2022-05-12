@@ -27,6 +27,18 @@ export default function ProductSection({
     });
     return Object.keys(temp);
   }
+
+  function sortColor(filter) {
+    console.log(filter);
+    let data = [];
+    let temp = filter;
+    temp.forEach((item) => {
+      data.push(item.id);
+    });
+    console.log(data);
+
+    return data;
+  }
   const fetchData = async () => {
     const query = qs.stringify(
       {
@@ -55,7 +67,7 @@ export default function ProductSection({
 
           color: {
             id: {
-              $in: getKeySort(colorsFilter),
+              $in: sortColor(colorsFilter),
             },
           },
           origin: {
