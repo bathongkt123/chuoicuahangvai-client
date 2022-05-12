@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { Slide } from "@mui/material";
 import { useState, useEffect } from "react";
+import useAuth from "auth/useAuth";
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -38,6 +39,7 @@ export default function Header({
   const [search, setSearch] = useState("");
   const [mainFilter, setMainFilter] = useState("");
   const [categories, setCategories] = useState([]);
+  const { token } = useAuth();
 
   const fetchData = async () => {
     let result = await axios.get(
@@ -49,17 +51,23 @@ export default function Header({
       `${process.env.REACT_APP_STRAPI_URL}/api/homepage`
     );
     setAds(result.data.data.attributes.header_banner);
-
-    result = await axios.get(
-      `${process.env.REACT_APP_STRAPI_URL}/api/customer-info`
-    );
-    // console.log(result);
-    setHeaderlastname(result.data.lastname);
-    setHeaderFirstname(result.data.firstname);
   };
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await axios.get(
+        `${process.env.REACT_APP_STRAPI_URL}/api/customer-info`
+      );
+      setHeaderlastname(result.data.lastname);
+      setHeaderFirstname(result.data.firstname);
+    };
+    if (token) {
+      fetchUser();
+    }
+  }, [token]);
+
   return (
     <React.Fragment>
       <HideOnScroll>
