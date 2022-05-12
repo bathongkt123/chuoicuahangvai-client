@@ -42,7 +42,6 @@ export default function FilterSection({
   const [widths, setWidths] = useState([]);
   const [stretches, setStretches] = useState([]);
   const { state } = useLocation();
-  console.log(colorsFilter);
   const handleCategoryChange = (event) => {
     setCategoriesFilter({
       ...categoriesFilter,
@@ -156,7 +155,7 @@ export default function FilterSection({
   return (
     <FormControl
       variant="standard"
-      sx={{ mt: 5, maxWidth: 250, textAlign: "left" }}
+      sx={{ mt: 5, minWidth: 250, textAlign: "left" }}
     >
       <InputLabel id="sort">Sắp xếp theo</InputLabel>
       <Select
@@ -225,6 +224,7 @@ export default function FilterSection({
         style={{ maxWidth: 250 }}
         disableCloseOnSelect
         getOptionLabel={(option) => option.attributes.name}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox

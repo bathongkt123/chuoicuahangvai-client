@@ -29,13 +29,11 @@ export default function ProductSection({
   }
 
   function sortColor(filter) {
-    console.log(filter);
     let data = [];
     let temp = filter;
     temp.forEach((item) => {
       data.push(item.id);
     });
-    console.log(data);
 
     return data;
   }
