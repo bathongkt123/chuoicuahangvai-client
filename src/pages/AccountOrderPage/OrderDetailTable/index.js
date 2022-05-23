@@ -38,7 +38,7 @@ export default function OrderDetailTable({ orderId }) {
       const result = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders/${orderId}?${query}`
       );
-      // console.log(result)
+      console.log(result);
       setOrder(result.data);
     };
     fetchData();

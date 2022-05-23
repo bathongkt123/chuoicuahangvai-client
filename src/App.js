@@ -21,6 +21,8 @@ import EmailConfirmPage from "pages/EmailConfirmPage";
 import ChangePasswordPage from "pages/ChangePasswordPage";
 import ResetPasswordPage from "pages/ResetPasswordPage";
 import VNPayReturnPage from "pages/VNPayReturnPage";
+import NotFound from "pages/NotFoundPage";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -126,6 +128,7 @@ function App() {
           <Route path="order-success" element={<OrderSuccess />} />
           <Route path="order-failure" element={<OrderFailer />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
