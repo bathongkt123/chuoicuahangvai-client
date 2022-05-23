@@ -144,7 +144,7 @@ export default function AccountDropdown({ headerLastname, headerFirstname }) {
       >
         {" "}
         <AccountCircleIcon sx={{ pr: 0.5 }} />
-        Xin chào, {headerLastname} {headerFirstname}
+        Xin chào, {headerFirstname}
       </ButtonBase>
       {renderAccountMenu}
     </Fragment>

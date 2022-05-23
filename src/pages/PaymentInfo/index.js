@@ -8,17 +8,6 @@ export default function PaymentInfo() {
   const { state } = useLocation();
   //fetch data from api and insert to current state
   const [paymentInfo, setPaymentInfo] = useState(state);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.post(
-        `${process.env.REACT_APP_STRAPI_URL}/api/cart/information`,
-        paymentInfo
-      );
-      setPaymentInfo({ ...paymentInfo, ...response.data });
-      // console.log({ ...paymentInfo, ...response.data })
-    };
-    fetchData();
-  }, []);
   //set state to form contact info'
   const [contact, setContact] = useState(
     paymentInfo.deliveryInfo || {
@@ -33,6 +22,19 @@ export default function PaymentInfo() {
       phone: "",
     }
   );
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.post(
+        `${process.env.REACT_APP_STRAPI_URL}/api/cart/information`,
+        paymentInfo
+      );
+      if (!paymentInfo.deliveryInfo) setContact({ ...contact, email: response.data.email })
+      setPaymentInfo({ ...paymentInfo, ...response.data });
+      // console.log({ ...paymentInfo, ...response.data })
+    };
+    fetchData();
+  }, []);
+
   return (
     <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}>
       <Container sx={{ flexGrow: 1, flexBasis: 0, bgcolor: "#EEEDE8" }}>

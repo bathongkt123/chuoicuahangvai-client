@@ -43,23 +43,17 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     onChange={handleChange}
                     sx={{ mx: 'auto', mt: 2 }} />
             </Stack>
-            <Box sx={{ display: 'flex' }}>
-                <TextField label='Mã giảm giá' fullWidth />
-                <Box width={20} />
-                <Button
-                    variant="contained"
-                    size='large'
-                    sx={{
-                        px: 4,
-                        whiteSpace: 'nowrap',
-                        textDecoration: 'none',
-                        bgcolor: "#384257",
-                        "&:hover": { bgcolor: "#242e45" },
-                    }}
-                >
-                    Áp dụng
-                </Button>
-            </Box>
+            <Stack spacing={2}>
+                <Box sx={{ display: 'flex' }}>
+                    <Typography variant='h6'>
+                        Giảm giá từ Voucher
+                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        0
+                    </Box>
+                </Box>
+            </Stack>
 
             <Stack spacing={2}>
 

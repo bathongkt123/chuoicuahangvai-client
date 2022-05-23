@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import { Typography, Stack, Box, FormControl, RadioGroup, FormControlLabel, Radio, Divider } from "@mui/material"
+import formatPrice from "helper/formatPrice"
 export default function Form({ deliveryInfo, deliveryMethods, method, setMethod }) {
     return (
         <Fragment>
@@ -106,7 +107,7 @@ export default function Form({ deliveryInfo, deliveryMethods, method, setMethod 
                                             label={`${deliveryMethods[key].name} - Thời gian: ${deliveryMethods[key].estimate_time}`}
                                         />
                                         <Typography variant="subtitle1">
-                                            <Box sx={{ fontWeight: "bold" }}>{deliveryMethods[key].cost}</Box>
+                                            <Box sx={{ fontWeight: "bold" }}>{formatPrice(deliveryMethods[key].cost)}</Box>
                                         </Typography>
                                     </Stack>
                                 )

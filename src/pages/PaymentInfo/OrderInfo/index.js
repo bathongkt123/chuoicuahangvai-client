@@ -64,6 +64,18 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
             <Stack spacing={2}>
                 <Box sx={{ display: 'flex' }}>
                     <Typography variant='h6'>
+                        Giảm giá từ Voucher
+                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        0
+                    </Box>
+                </Box>
+            </Stack>
+
+            <Stack spacing={2}>
+                <Box sx={{ display: 'flex' }}>
+                    <Typography variant='h6'>
                         Phí vận chuyển
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />

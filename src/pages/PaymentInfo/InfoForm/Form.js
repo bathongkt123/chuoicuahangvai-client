@@ -3,9 +3,10 @@ import { MenuItem, TextField, Box, Select, FormControl, InputLabel, Typography, 
 import AdressesDiaglog from './AdressesDiaglog'
 import axios from 'axios'
 import qs from 'qs'
-
+import useAuth from "auth/useAuth";
 
 export default function Form({ contact, setContact, receiveAddress, errors }) {
+    const { token } = useAuth()
     const handleEmail = (e) => {
         setContact({ ...contact, email: e.target.value })
     }
@@ -114,6 +115,7 @@ export default function Form({ contact, setContact, receiveAddress, errors }) {
                 required
                 error={Boolean(errors.email.message())}
                 helperText={errors.email.message()}
+                disabled={Boolean(token)}
             ></TextField>
             <Box sx={{ display: 'flex', alignItems: 'center', my: 3 }}>
                 <Typography variant="h5">Địa chỉ liên lạc</Typography>
