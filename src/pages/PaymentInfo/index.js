@@ -32,6 +32,7 @@ export default function PaymentInfo() {
 
       if (!paymentInfo.deliveryInfo) setContact({ ...contact, email: response.data.email })
       setPaymentInfo({ ...paymentInfo, ...response.data });
+      console.log(response.data)
     };
     fetchData();
   }, []);

@@ -69,6 +69,14 @@ export default function ProductTable({ invoice, sx }) {
                         </CustomTableCell>
                     </TableRow>
                     <TableRow>
+                        <CustomTableCell colSpan={2} align="right">
+                            GIẢM GIÁ TỪ VOUCHER
+                        </CustomTableCell>
+                        <CustomTableCell align="right" colSpan={2}>
+                            {formatPrice(-invoice.discount_value || 0)}
+                        </CustomTableCell>
+                    </TableRow>
+                    <TableRow>
                         <CustomTableCell colSpan={2} align="right">TỔNG PHẢI TRẢ</CustomTableCell>
                         <CustomTableCell align="right" colSpan={2}>
                             <Typography variant="body1" fontWeight='bold' color='red'>

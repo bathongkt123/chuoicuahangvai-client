@@ -112,6 +112,14 @@ export default function OrderDetailTable({ orderId }) {
             </TableRow>
             <TableRow>
               <CustomTableCell colSpan={2} align="right">
+                GIẢM GIÁ TỪ VOUCHER
+              </CustomTableCell>
+              <CustomTableCell align="right" colSpan={2}>
+                {formatPrice(-order.discount_value || 0)}
+              </CustomTableCell>
+            </TableRow>
+            <TableRow>
+              <CustomTableCell colSpan={2} align="right">
                 TỔNG PHẢI TRẢ
               </CustomTableCell>
               <CustomTableCell align="right" colSpan={2}>

@@ -14,7 +14,6 @@ export default function OrderInfo({ skus, price, deliveryMethod, voucher, setVou
     const subTotal = item => item.price / 100 * item.length
     const { token } = useAuth()
     const [vouchers, setVouchers] = useState([])
-
     useEffect(() => {
         const fetchData = async () => {
             if (!price) return
@@ -23,7 +22,7 @@ export default function OrderInfo({ skus, price, deliveryMethod, voucher, setVou
             setVouchers(response.data)
         };
         fetchData()
-    }, [])
+    }, [price])
     return (
         <Stack
             divider={<Divider />}
@@ -63,7 +62,7 @@ export default function OrderInfo({ skus, price, deliveryMethod, voucher, setVou
                             onChange={(event, newValue) => {
                                 setVoucher(newValue);
                             }}
-                            getOptionLabel={(voucher) => voucher.description}
+                            getOptionLabel={(voucher) => voucher.code + ' - ' + voucher.description}
                             isOptionEqualToValue={(option, value) => option.code === value.code}
                             options={vouchers}
                             fullWidth
