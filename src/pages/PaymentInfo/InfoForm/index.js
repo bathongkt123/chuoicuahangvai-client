@@ -7,7 +7,7 @@ function validateEmail(elementValue) {
   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   return emailPattern.test(elementValue);
 }
-export default function InfoForm({ paymentInfo, contact, setContact }) {
+export default function InfoForm({ paymentInfo, contact, setContact, voucher }) {
 
   const [showError, setShowError] = useState(false)
   const errors = {
@@ -92,7 +92,7 @@ export default function InfoForm({ paymentInfo, contact, setContact }) {
     <Fragment>
       <Header paymentInfo={{ ...paymentInfo, deliveryInfo: contact }} />
       <Form contact={contact} setContact={setContact} receiveAddress={paymentInfo.receiveAddress} errors={errors} />
-      <Footer paymentInfo={{ ...paymentInfo, deliveryInfo: contact }} setShowError={setShowError} validate={validate} />
+      <Footer paymentInfo={{ ...paymentInfo, deliveryInfo: contact, voucher }} setShowError={setShowError} validate={validate} />
     </Fragment>
   );
 }

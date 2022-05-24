@@ -3,8 +3,12 @@ import { Stack, Button } from '@mui/material'
 export default function Footer({ paymentInfo, setShowError, validate }) {
     const navigate = useNavigate()
     const handleToDelivery = () => {
-        if (validate)
+        if (validate) {
+            if (!paymentInfo.voucher)
+                delete paymentInfo.voucher
             navigate("/payment/delivery", { state: paymentInfo })
+        }
+
         setShowError(true)
     }
     return (

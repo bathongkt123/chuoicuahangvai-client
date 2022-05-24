@@ -1,19 +1,29 @@
 
-import { Button, Divider, TextField, Box, Typography, Stack, Pagination } from "@mui/material";
+import { Button, Divider, TextField, Box, Typography, Stack, Pagination, Autocomplete } from "@mui/material";
 import ProductRow from "./ProductRow";
-import { useState } from "react";
-import { useCookies } from 'react-cookie';
+import { Fragment, useEffect, useState } from "react";
 import formatPrice from "helper/formatPrice";
-export default function OrderInfo({ skus, price, deliveryMethod }) {
-    const [cookies] = useCookies(['cart']);
-    const products = cookies.cart || {}
+import axios from "axios";
+import useAuth from "auth/useAuth";
+export default function OrderInfo({ skus, price, deliveryMethod, voucher, setVoucher }) {
     const [page, setPage] = useState(1);
     const handleChange = (event, value) => {
         setPage(value);
     };
     const rowsPerPage = 3
-    const keys = Object.keys(products)
     const subTotal = item => item.price / 100 * item.length
+    const { token } = useAuth()
+    const [vouchers, setVouchers] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!price) return
+            const response = await axios.post(
+                `${process.env.REACT_APP_STRAPI_URL}/api/vouchers-available`, { orderAmount: price });
+            setVouchers(response.data)
+        };
+        fetchData()
+    }, [])
     return (
         <Stack
             divider={<Divider />}
@@ -35,7 +45,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     )
                 }
                 )}
-                <Pagination count={Math.ceil(keys.length / rowsPerPage)}
+                <Pagination count={Math.ceil(skus.length / rowsPerPage)}
                     page={page}
                     variant="outlined"
                     shape="rounded"
@@ -43,35 +53,53 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     onChange={handleChange}
                     sx={{ mx: 'auto', mt: 2 }} />
             </Stack>
-            <Box sx={{ display: 'flex' }}>
-                <TextField label='Mã giảm giá' fullWidth />
-                <Box width={20} />
-                <Button
-                    variant="contained"
-                    size='large'
-                    sx={{
-                        px: 4,
-                        whiteSpace: 'nowrap',
-                        textDecoration: 'none',
-                        bgcolor: "#384257",
-                        "&:hover": { bgcolor: "#242e45" },
-                    }}
-                >
-                    Áp dụng
-                </Button>
-            </Box>
-
-            <Stack spacing={2}>
-                <Box sx={{ display: 'flex' }}>
-                    <Typography variant='h6'>
-                        Giảm giá từ Voucher
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        0
+            {Boolean(token) &&
+                <Fragment>
+                    <Box sx={{ display: 'flex' }}>
+                        <Autocomplete
+                            disablePortal
+                            id="voucher"
+                            value={voucher}
+                            onChange={(event, newValue) => {
+                                setVoucher(newValue);
+                            }}
+                            getOptionLabel={(voucher) => voucher.description}
+                            isOptionEqualToValue={(option, value) => option.code === value.code}
+                            options={vouchers}
+                            fullWidth
+                            renderInput={(params) => <TextField {...params} label="Chọn một Voucher" />}
+                        />
+                        {/* <Box width={20} />
+                        <Button
+                            variant="contained"
+                            size='large'
+                            sx={{
+                                px: 4,
+                                whiteSpace: 'nowrap',
+                                textDecoration: 'none',
+                                bgcolor: "#384257",
+                                "&:hover": { bgcolor: "#242e45" },
+                            }}
+                        >
+                            Áp dụng
+                        </Button> */}
                     </Box>
-                </Box>
-            </Stack>
+
+
+                    <Stack spacing={2}>
+                        <Box sx={{ display: 'flex' }}>
+                            <Typography variant='h6'>
+                                Giảm giá từ Voucher
+                            </Typography>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                                {formatPrice(voucher ? -voucher.amount : 0)}
+                            </Box>
+                        </Box>
+                    </Stack>
+                </Fragment>
+
+            }
 
             <Stack spacing={2}>
                 <Box sx={{ display: 'flex' }}>
@@ -92,7 +120,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                    {formatPrice(Number(deliveryMethod && deliveryMethod.id ? price + deliveryMethod.cost : price))}
+                    {formatPrice(Number(deliveryMethod && deliveryMethod.id ? price + deliveryMethod.cost + (voucher ? -voucher.amount : 0) : price + (voucher ? -voucher.amount : 0)))}
                 </Box>
             </Box>
         </Stack>

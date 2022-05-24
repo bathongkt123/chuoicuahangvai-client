@@ -24,7 +24,7 @@ export default function PaymentComplete() {
                 <CompleteForm paymentInfo={paymentInfo} paymentType={paymentType} setPaymentType={setPaymentType} />
             </Container>
             <Container sx={{ flexGrow: 1, flexBasis: 0 }}>
-                <OrderInfo skus={paymentInfo.skus} price={paymentInfo.price} deliveryMethod={paymentInfo.deliveryMethod} />
+                <OrderInfo skus={paymentInfo.skus} price={paymentInfo.price} deliveryMethod={paymentInfo.deliveryMethod} voucher={paymentInfo.voucher} />
             </Container>
         </Box>
     )

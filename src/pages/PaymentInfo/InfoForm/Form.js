@@ -115,6 +115,9 @@ export default function Form({ contact, setContact, receiveAddress, errors }) {
                 required
                 error={Boolean(errors.email.message())}
                 helperText={errors.email.message()}
+                // inputProps={
+                //     { readOnly: Boolean(token), }
+                // }
                 disabled={Boolean(token)}
             ></TextField>
             <Box sx={{ display: 'flex', alignItems: 'center', my: 3 }}>

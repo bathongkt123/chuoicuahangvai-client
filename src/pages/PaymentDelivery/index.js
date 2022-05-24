@@ -25,7 +25,7 @@ export default function PaymentDelivery() {
                 <DeliveryForm paymentInfo={paymentInfo} method={method} setMethod={setMethod} />
             </Container>
             <Container sx={{ flexGrow: 1, flexBasis: 0 }}>
-                <OrderInfo skus={paymentInfo.skus} price={paymentInfo.price} deliveryMethod={method} />
+                <OrderInfo skus={paymentInfo.skus} price={paymentInfo.price} deliveryMethod={method} voucher={paymentInfo.voucher} />
             </Container>
         </Box>
     )

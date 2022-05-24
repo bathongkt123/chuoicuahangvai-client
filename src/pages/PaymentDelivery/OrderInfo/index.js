@@ -1,27 +1,24 @@
 
-import { Button, Divider, TextField, Box, Typography, Stack, Pagination } from "@mui/material";
+import { Divider, Box, Typography, Stack, Pagination } from "@mui/material";
 import ProductRow from "./ProductRow";
 import { useState } from "react";
-import { useCookies } from 'react-cookie';
 import formatPrice from 'helper/formatPrice'
-export default function OrderInfo({ skus, price, deliveryMethod }) {
-    const [cookies] = useCookies(['cart']);
-    const products = cookies.cart || {}
+import useAuth from "auth/useAuth";
+export default function OrderInfo({ skus, price, deliveryMethod, voucher }) {
     const [page, setPage] = useState(1);
     const handleChange = (event, value) => {
         setPage(value);
     };
     const rowsPerPage = 3
-    const keys = Object.keys(products)
     const subTotal = item => item.price / 100 * item.length
+    const { token } = useAuth()
     return (
         <Stack
             divider={<Divider />}
             spacing={2}
             my={2}
         >
-            <Stack
-            >
+            <Stack>
                 {skus.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((item, i) => {
                     return (<ProductRow
                         attr={{
@@ -35,7 +32,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     )
                 }
                 )}
-                <Pagination count={Math.ceil(keys.length / rowsPerPage)}
+                <Pagination count={Math.ceil(skus.length / rowsPerPage)}
                     page={page}
                     variant="outlined"
                     shape="rounded"
@@ -43,19 +40,21 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                     onChange={handleChange}
                     sx={{ mx: 'auto', mt: 2 }} />
             </Stack>
-            <Stack spacing={2}>
-                <Box sx={{ display: 'flex' }}>
-                    <Typography variant='h6'>
-                        Giảm giá từ Voucher
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                        0
+            {Boolean(token) &&
+                <Stack spacing={2}>
+                    <Box sx={{ display: 'flex' }}>
+                        <Typography variant='h6'>
+                            Giảm giá từ Voucher
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                            {formatPrice(voucher ? -voucher.amount : 0)}
+                        </Box>
                     </Box>
-                </Box>
-            </Stack>
-            <Stack spacing={2}>
+                </Stack>
+            }
 
+            <Stack spacing={2}>
                 <Box sx={{ display: 'flex' }}>
                     <Typography variant='h6'>
                         Phí vận chuyển
@@ -74,7 +73,7 @@ export default function OrderInfo({ skus, price, deliveryMethod }) {
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                    {formatPrice(price + deliveryMethod.cost)}
+                    {formatPrice(price + deliveryMethod.cost + (voucher ? -voucher.amount : 0))}
                 </Box>
             </Box>
         </Stack>

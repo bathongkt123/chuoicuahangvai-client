@@ -22,15 +22,16 @@ export default function PaymentInfo() {
       phone: "",
     }
   );
+  const [voucher, setVoucher] = useState(paymentInfo.voucher || null)
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.post(
         `${process.env.REACT_APP_STRAPI_URL}/api/cart/information`,
         paymentInfo
       );
+
       if (!paymentInfo.deliveryInfo) setContact({ ...contact, email: response.data.email })
       setPaymentInfo({ ...paymentInfo, ...response.data });
-      // console.log({ ...paymentInfo, ...response.data })
     };
     fetchData();
   }, []);
@@ -42,6 +43,7 @@ export default function PaymentInfo() {
           paymentInfo={paymentInfo}
           contact={contact}
           setContact={setContact}
+          voucher={voucher}
         />
       </Container>
       <Container sx={{ flexGrow: 1, flexBasis: 0 }}>
@@ -49,6 +51,8 @@ export default function PaymentInfo() {
           skus={paymentInfo.skus}
           price={paymentInfo.price}
           deliveryMethod={paymentInfo.deliveryMethod}
+          voucher={voucher}
+          setVoucher={setVoucher}
         />
       </Container>
     </Box>
