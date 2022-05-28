@@ -29,8 +29,18 @@ export default function PaymentInfo() {
         `${process.env.REACT_APP_STRAPI_URL}/api/cart/information`,
         paymentInfo
       );
-
-      if (!paymentInfo.deliveryInfo) setContact({ ...contact, email: response.data.email })
+      const defaultAddress = response.data.receiveAddress.find(address => address.is_default)
+      if (!paymentInfo.deliveryInfo) setContact({
+        firstname: defaultAddress.name.firstname,
+        lastname: defaultAddress.name.lastname,
+        address: defaultAddress.address.address,
+        city: defaultAddress.address.address_three_levels.city,
+        district: defaultAddress.address.address_three_levels.district,
+        wardId: defaultAddress.address.address_three_levels.id,
+        ward: defaultAddress.address.address_three_levels.ward,
+        phone: defaultAddress.phone,
+        email: response.data.email
+      })
       setPaymentInfo({ ...paymentInfo, ...response.data });
       console.log(response.data)
     };
