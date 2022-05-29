@@ -20,6 +20,7 @@ export default function ProductPage() {
   const [productWidth, setProductWidth] = useState("");
   const [productStretch, setProductStretch] = useState("");
   const [productImages, setProductImages] = useState([]);
+  const [productInventory, setProductInventory] = useState(0);
   const [largeImage, setLargeImage] = useState("");
 
   const { productId } = useParams();
@@ -43,38 +44,30 @@ export default function ProductPage() {
         { encodeValuesOnly: true }
       );
       const response = await axios.get(
-        `${process.env.REACT_APP_STRAPI_URL}/api/product-skus/${productId}?${query}`,
+        `${process.env.REACT_APP_STRAPI_URL}/api/product-sku-inventory/${productId}?${query}`,
         { signal: signal }
       );
-      const data = response.data.data;
-      data.attributes.product.data &&
-        setProductName(data.attributes.product.data.attributes.name);
+      const data = response.data;
+      console.log(response);
+      data.product && setProductName(data.product.name);
 
-      setProductSKU(data.attributes.sku);
+      setProductSKU(data.sku);
 
-      setProductPrice(data.attributes.price);
+      setProductPrice(data.price);
+      setProductInventory(data.inventoryLength);
+      data.product && setProductDescription(data.product.description);
 
-      data.attributes.product.data &&
-        setProductDescription(
-          data.attributes.product.data.attributes.description
-        );
+      data.pattern && setProductPattern(data.pattern.name);
 
-      data.attributes.pattern.data &&
-        setProductPattern(data.attributes.pattern.data.attributes.name);
+      data.origin && setProductOrigin(data.origin.name);
 
-      data.attributes.origin.data &&
-        setProductOrigin(data.attributes.origin.data.attributes.name);
+      data.width && setProductWidth(data.width.name);
 
-      data.attributes.width.data &&
-        setProductWidth(data.attributes.width.data.attributes.name);
-
-      data.attributes.stretch.data &&
-        setProductStretch(data.attributes.stretch.data.attributes.name);
-
+      data.stretch && setProductStretch(data.stretch.name);
       let imagesURL = [];
-      const temp = data.attributes.images.data;
+      const temp = data.images;
       for (var i = 0; i < temp.length; i++) {
-        imagesURL[i] = temp[i].attributes.url;
+        imagesURL[i] = temp[i].url;
       }
       setProductImages(imagesURL);
       setLargeImage(imagesURL[0]);
@@ -151,6 +144,7 @@ export default function ProductPage() {
             productOrigin={productOrigin}
             productWidth={productWidth}
             productStretch={productStretch}
+            productInventory={productInventory}
           />
         </Grid>
       </Grid>
