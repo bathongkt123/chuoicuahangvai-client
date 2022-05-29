@@ -37,13 +37,13 @@ export default function OrderTable() {
       const result = await axios.get(
         `${process.env.REACT_APP_STRAPI_URL}/api/customer-orders?${query}`
       );
-      // console.log(result);
+      console.log(result);
       const newOrders = {};
       result.data.forEach((order) => {
         const createdAt = new Date(order.createdAt);
         newOrders[order.id] = {
           code: order.code,
-          status: statusTranslate(order.order_statuses.pop().status),
+          status: statusTranslate(order.current_status),
           createdAt: createdAt.toLocaleDateString(),
           invoice: order.order_invoice && order.order_invoice.id,
           total: formatPrice(Number(order.orderAmount)),
