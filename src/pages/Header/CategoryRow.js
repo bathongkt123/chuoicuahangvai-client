@@ -33,12 +33,10 @@ export default function CategoryRow({ categories }) {
             >
               {item}
             </Link>
-            <Box width={10} />
-            <Divider sx={{ bgcolor: "#dbd9ce" }} orientation="vertical" />
           </React.Fragment>
         ))}
       </Box>
     </Box>
   );
 }
-const items = ["Hàng mới về", "Bán chạy nhất"];
+const items = ["Danh sách sản phẩm"];

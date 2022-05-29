@@ -26,7 +26,7 @@ export default function MenuPage({ search, setSearch }) {
       }}
       maxWidth="xl"
     >
-      <h1>HÀNG BÁN CHẠY NHẤT</h1>
+      <h1>DANH SÁCH SẢN PHẨM</h1>
       <Breadcrumbs aria-label="breadcrumb">
         <Link
           underline="hover"
