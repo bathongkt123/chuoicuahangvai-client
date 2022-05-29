@@ -69,13 +69,13 @@ export default function ProductInfoSection({
   productWidth,
   productStretch,
   productImages,
+  productInventory,
 }) {
   const [length, setLength] = useState(0.5);
   const total = length * productPrice;
   const parse = require("html-react-parser");
   const description = productDescription;
   const htmlParse = parse(description);
-
   const [cookies, setCookie] = useCookies(["cart"]);
 
   const addToCart = () => {
@@ -111,20 +111,37 @@ export default function ProductInfoSection({
       <h4>Xuất xứ: {productOrigin}</h4>
       <h4>Chiều rộng: {productWidth}</h4>
       <h4>Co giãn: {productStretch}</h4>
-      <UnitSelect length={length} setLength={setLength} />
-      <h2 style={{ display: "inline" }}>{length} mét</h2>
+      {productInventory > 100 && (
+        <div>
+          <UnitSelect length={length} setLength={setLength} />
+          <h2 style={{ display: "inline" }}>{length} mét</h2>
+        </div>
+      )}
+
       <br></br>
       <div style={{ margin: "10px" }}>
-        <Button
-          onClick={addToCart}
-          variant="contained"
-          sx={{ p: 2, backgroundColor: "#384257" }}
-        >
-          Thêm vào giỏ hàng
-        </Button>
-        <h2 style={{ display: "inline", padding: "10px" }}>
-          {formatPrice(total)} đồng
-        </h2>
+        {productInventory > 100 ? (
+          <Button
+            onClick={addToCart}
+            variant="contained"
+            sx={{ p: 2, backgroundColor: "#384257" }}
+          >
+            Thêm vào giỏ hàng
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            disabled={true}
+            sx={{ p: 2, backgroundColor: "#384257" }}
+          >
+            Sản phẩm tạm hết
+          </Button>
+        )}
+        {productInventory > 100 && (
+          <h2 style={{ display: "inline", padding: "10px" }}>
+            {formatPrice(total)} đồng
+          </h2>
+        )}
       </div>
     </div>
   );
